@@ -22,7 +22,7 @@ BNF Mode with older versions of Emacs will most like not be addressed.
 The master of all the material is the Git repository at
 https://github.com/sergeyklay/bnf-mode .
 
-**NOTE:** The ~master~ branch will always contain the latest unstable version.
+NOTE: The ~master~ branch will always contain the latest unstable version.
 If you wish to check older versions or formal, tagged release, please switch
 to the relevant [[https://github.com/sergeyklay/bnf-mode/tags][tag]].
 
@@ -39,18 +39,18 @@ TODO
 1. Download ~bnf-mode.el~
 2. Put the file in your Elisp common folder like ~$HOME/.emacs.d/lisp/~
 3. Then you can include like this:
-#+begin_src emacs-lisp
-(add-to-list 'load-path
-             (expand-file-name "lisp" user-emacs-directory))
-#+end_src
+   #+begin_src emacs-lisp
+   (add-to-list 'load-path
+                (expand-file-name "lisp" user-emacs-directory))
+   #+end_src
 4. Add /either/ of the two following lines to your initialization file.
-  The first only loads BNF Mode when necessary, the 2nd always during startup
-  of GNU Emacs.
-#+begin_src emacs-lisp
-(autoload 'bnf-mode "bnf-mode" nil t)
-;; OR
-(require 'zephir-mode)
-#+end_src
+   The first only loads BNF Mode when necessary, the 2nd always during startup
+   of GNU Emacs.
+   #+begin_src emacs-lisp
+   (autoload 'bnf-mode "bnf-mode" nil t)
+   ;; OR
+   (require 'zephir-mode)
+   #+end_src
 5. Optionally byte compile ~bnf-mode.el~ for faster startup: ~M-x byte-compile~
 
 ** Usage
@@ -74,8 +74,8 @@ To see what has changed in recent versions of BNF Mode, see the [[https://github
 
 ** External Links
 
-- [[https://tools.ietf.org/html/rfc5234][{RFC 5234} Augmented BNF for Syntax Specifications: ABNF]]
-- [[https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form][{Wikipedia} Backus–Naur form]]
+- [[https://tools.ietf.org/html/rfc5234][RFC 5234: Augmented BNF for Syntax Specifications: ABNF]]
+- [[https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form][Wikipedia: Backus–Naur form]]
 
 ** License
 
