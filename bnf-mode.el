@@ -50,7 +50,7 @@
 ;;; Compatibility
 
 ;; Work around emacs bug#18845, cc-mode expects cl to be loaded
-;; while zephir-mode only uses cl-lib (without compatibility aliases)
+;; while bnf-mode only uses cl-lib (without compatibility aliases)
 (eval-and-compile
   (if (and (= emacs-major-version 24) (>= emacs-minor-version 4))
       (require 'cl)))
@@ -61,6 +61,9 @@
 ;; Tell the byte compiler about autoloaded functions from packages
 (declare-function pkg-info-version-info "pkg-info" (package))
 
+(eval-when-compile
+  (require 'rx))
+
 (require 'cl-lib)
 (require 'pkg-info)
 
@@ -68,7 +71,7 @@
 ;;; Customization
 
 ;;;###autoload
-(defgroup zephir nil
+(defgroup bnf nil
   "Major mode for editing BNF grammars."
   :tag "BNF"
   :prefix "bnf-"
@@ -85,7 +88,7 @@
 
 ;;; Version information
 
-(defun zephir-mode-version (&optional show-version)
+(defun bnf-mode-version (&optional show-version)
   "Display string describing the version of BNF Mode.
 
 If called interactively or if SHOW-VERSION is non-nil, show the
@@ -98,21 +101,70 @@ If the version number could not be determined, signal an error,
 if called interactively, or if SHOW-VERSION is non-nil, otherwise
 just return nil."
   (interactive (list t))
-  (let ((version (pkg-info-version-info 'zephir-mode)))
+  (let ((version (pkg-info-version-info 'bnf-mode)))
     (when show-version
       (message "BNF Mode version: %s" version))
     version))
 
-(defvar bnf-mode-syntax-table
-  (let ((table (make-syntax-table)))
-    (modify-syntax-entry ?#  "<" table)
-    (modify-syntax-entry ?\n ">" table)
-    table)
-  "Syntax table in use in `bnf-mode' buffers.")
+
+;;; Specialized rx
+
+(eval-when-compile
+  (defconst bnf-rx-constituents
+    `(
+      ;; non-terminal
+      (non-terminal . ,(rx (and
+                            "<"
+                            symbol-start
+                            (1+ (not blank))
+                            symbol-end
+                            ">")))
+    "Additional special sexps for `bnf-rx'."))
+
+  (defmacro bnf-rx (&rest sexps)
+     "BNF-specific replacement for `rx'.
+
+In addition to the standard forms of `rx', the following forms
+are available:
+
+`non-terminal'
+      Any valid non-terminal.
+
+See `rx' documentation for more information about REGEXPS param."
+     (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
+       (cond ((null sexps)
+              (error "No regexp"))
+             ((cdr sexps)
+              (rx-to-string `(and ,@sexps) t))
+             (t
+              (rx-to-string (car sexps) t))))))
+
+
+;;; Font Locking
+(defvar bnf-font-lock-keywords
+  `(
+    ;; Non-terminals
+    (,(bnf-rx (and line-start
+                      (group non-terminal)))
+     1 font-lock-function-name-face))
+  "Font lock keywords for BNF Mode.")
 
 
 ;;; Initialization
 
+(defvar bnf-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    ;; Give CR the same syntax as newline
+    (modify-syntax-entry ?\^m "> b" table)
+    ;; Characters used to delimit string constants
+    (modify-syntax-entry ?\"  "\""  table)
+    ;; Comments setup
+    (modify-syntax-entry ?#   "<"   table)
+    (modify-syntax-entry ?\n  ">"   table)
+    table)
+  "Syntax table in use in `bnf-mode' buffers.")
+
+;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
   "A major mode for editing BNF grammars."
   :group 'bnf-mode
@@ -120,7 +172,9 @@ just return nil."
   (setq-local comment-use-syntax t)
   (setq-local comment-auto-fill-only-comments t)
   (setq-local comment-start "# ")
-  (setq-local comment-end ""))
+  (setq-local comment-end "")
+  ;; Font locking
+  (setq font-lock-defaults '((bnf-font-lock-keywords) nil nil)))
 
 ;; Invoke bnf-mode when appropriate
 
