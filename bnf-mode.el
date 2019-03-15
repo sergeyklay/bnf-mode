@@ -112,13 +112,12 @@ just return nil."
 (eval-when-compile
   (defconst bnf-rx-constituents
     `(
-      ;; non-terminal
-      (non-terminal . ,(rx (and
-                            "<"
-                            symbol-start
-                            (1+ (not blank))
-                            symbol-end
-                            ">")))
+      ;; rulename
+      (rulename . ,(rx (and
+                        symbol-start
+                        letter
+                        (0+ (or "-" alnum))
+                        symbol-end)))
     "Additional special sexps for `bnf-rx'."))
 
   (defmacro bnf-rx (&rest sexps)
@@ -127,8 +126,13 @@ just return nil."
 In addition to the standard forms of `rx', the following forms
 are available:
 
-`non-terminal'
-      Any valid non-terminal.
+`rulename'
+      Any valid rule name.  The name of a rule is simply the
+      name itself, that is, a sequence of characters, beginning
+      with an alphabetic character, and followed by a combination
+      of alphabetics, digits, and hyphens (dashes).
+
+      For more see: https://tools.ietf.org/html/rfc5234#section-2.1
 
 See `rx' documentation for more information about REGEXPS param."
      (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
@@ -141,12 +145,34 @@ See `rx' documentation for more information about REGEXPS param."
 
 
 ;;; Font Locking
+
 (defvar bnf-font-lock-keywords
   `(
-    ;; Non-terminals
+    ;; LHS nonterminals
     (,(bnf-rx (and line-start
-                      (group non-terminal)))
-     1 font-lock-function-name-face))
+                   "<"
+                   (group rulename)
+                   ">"))
+     1 font-lock-function-name-face)
+    ;; other nonterminals
+    (,(bnf-rx (and "<"
+                   (group rulename)
+                   ">"))
+     1 font-lock-builtin-face)
+    ;; "may expand into" symbol
+    (,(bnf-rx (and (0+ space)
+                   symbol-start
+                   (group "::=")
+                   symbol-end
+                   (0+ space)))
+     1 font-lock-constant-face)
+    ;; Alternatives
+    (,(bnf-rx (and (0+ space)
+                   symbol-start
+                   (group "|")
+                   symbol-end
+                   (0+ space)))
+     1 font-lock-warning-face))
   "Font lock keywords for BNF Mode.")
 
 
@@ -161,20 +187,39 @@ See `rx' documentation for more information about REGEXPS param."
     ;; Comments setup
     (modify-syntax-entry ?#   "<"   table)
     (modify-syntax-entry ?\n  ">"   table)
+    ;; Treat ::= as sequence of symbols
+    (modify-syntax-entry ?\:  "_"   table)
+    (modify-syntax-entry ?\=  "_"   table)
+    ;; Treat | as a symbol
+    (modify-syntax-entry ?\|  "_"   table)
+    ;; Group angle brackets
+    (modify-syntax-entry ?\<  "(>"  table)
+    (modify-syntax-entry ?\>  ")<"  table)
     table)
   "Syntax table in use in `bnf-mode' buffers.")
 
 ;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
   "A major mode for editing BNF grammars."
+  :syntax-table bnf-mode-syntax-table
   :group 'bnf-mode
   ;; Comment setup
   (setq-local comment-use-syntax t)
   (setq-local comment-auto-fill-only-comments t)
   (setq-local comment-start "# ")
   (setq-local comment-end "")
+  (setq-local font-lock-keyword-face 'php-keyword)
   ;; Font locking
-  (setq font-lock-defaults '((bnf-font-lock-keywords) nil nil)))
+  (setq font-lock-defaults '(
+                             ;; Keywords
+                             bnf-font-lock-keywords
+                             ;; keywords-only
+                             nil
+                             ;; Regarding RFC-5234
+                             ;; The names <rulename>, <Rulename>, <RULENAME>,
+                             ;; and <rUlENamE> all refer to the same rule.
+                             t
+                             )))
 
 ;; Invoke bnf-mode when appropriate
 
