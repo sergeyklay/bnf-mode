@@ -1,0 +1,6 @@
+#+TITLE: BNF Mode for GNU Emacs
+
+[[https://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg]]
+[[https://travis-ci.org/sergeyklay/bnf-mode][https://travis-ci.com/sergeyklay/bnf-mode.svg]]
+
+Work In Progress
