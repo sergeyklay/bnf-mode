@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this project adheres to [[http://semver.org][Semantic Versioning]].
 
-** [[https://github.com/sergeyklay/bnf-mode/compare/0.1.0...HEAD][Unreleased]]
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.2.0...HEAD][Unreleased]]
 
 *** Changed
 - LHS nonterminals may be preceded by an unlimited number of spaces
 - Regarding to [[https://tools.ietf.org/html/rfc5234#section-2.1][RFC5234#2.1]] angle brackets to use for nonterminals are optional
 
-** 0.2.0 - 2019-03-16
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.1.0...0.2.0][0.2.0]] - 2019-03-16
 *** Changed
 - Comments are no longer use syntax table.  For more see `comment-use-syntax'
 
