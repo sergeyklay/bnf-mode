@@ -146,23 +146,41 @@ See `rx' documentation for more information about REGEXPS param."
 
 (defvar bnf-font-lock-keywords
   `(
-    ;; LHS nonterminals
+    ;; LHS nonterminals may be preceded
+    ;; by an unlimited number of spaces
     (,(bnf-rx (and line-start
+                   (0+ space)
+                   "<"
+                   (group rulename)
+                   ">"
+                   (1+ space)
+                   "::="))
+     1 font-lock-function-name-face)
+    ;; Regarding to RFC5234#2.1 angle brackets
+    ;; (“<”, “>”) for LHS nonterminals are optional.
+    (,(bnf-rx (and line-start
+                   (0+ space)
+                   (group rulename)
+                   (1+ space)
+                   "::="))
+     1 font-lock-function-name-face)
+    ;; RHS nonterminals
+    (,(bnf-rx (and "::="
+                   (1+ space)
                    "<"
                    (group rulename)
                    ">"))
-     1 font-lock-function-name-face)
-    ;; other nonterminals
-    (,(bnf-rx (and "<"
-                   (group rulename)
-                   ">"))
      1 font-lock-builtin-face)
-    ;; "may expand into" symbol
-    (,(bnf-rx (and (0+ space)
-                   symbol-start
+     ;; Regarding to RFC5234#2.1 angle brackets
+     ;; (“<”, “>”) for RHS nonterminals are optional.
+     (,(bnf-rx (and "::="
+                   (1+ space)
+                   (group rulename)))
+     1 font-lock-builtin-face)
+    ;; “may expand into” symbol
+    (,(bnf-rx (and symbol-start
                    (group "::=")
-                   symbol-end
-                   (0+ space)))
+                   symbol-end))
      1 font-lock-constant-face)
     ;; Alternatives
     (,(bnf-rx (and (0+ space)

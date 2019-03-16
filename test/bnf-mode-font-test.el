@@ -61,27 +61,35 @@ buffer."
                              (should (eq (bnf-test-face-at 1) 'font-lock-comment-face))
                              (should (eq (bnf-test-face-at 3) 'font-lock-comment-face))
                              (should-not (bnf-test-face-at 5))
-                             (should (eq (bnf-test-face-at 24) '
-                                         font-lock-comment-face))))
+                             (should (eq (bnf-test-face-at 24) 'font-lock-comment-face))))
 
 (ert-deftest bnf-mode-syntax-table/fontify-nonterminals ()
   :tags '(fontification syntax-table)
-  (bnf-test-with-temp-buffer "<stm> ::= <decl>"
+  (bnf-test-with-temp-buffer "<stm> ::= <decl>
+angle-brackets ::= are-optional"
                              ;; angle bracket
                              (should-not (bnf-test-face-at 1))
-                             ;; "stm"
+                             ;; “stm”
                              (should (eq (bnf-test-face-at 2) 'font-lock-function-name-face))
                              (should (eq (bnf-test-face-at 4) 'font-lock-function-name-face))
                              ;; angle bracket
                              (should-not (bnf-test-face-at 5))
-                             ;; "may expand into" symbol
-                             (should-not (eq (bnf-test-face-at 7) 'font-lock-function-name-face))
-                             (should-not (eq (bnf-test-face-at 9) 'font-lock-function-name-face))
+                             ;; “::=” symbol
+                             (should (eq (bnf-test-face-at 7) 'font-lock-constant-face))
+                             (should (eq (bnf-test-face-at 9) 'font-lock-constant-face))
                              ;; angle bracket
                              (should-not (bnf-test-face-at 11))
-                             ;; "dec" symbol
+                             ;; “dec” symbol
                              (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
-                             (should (eq (bnf-test-face-at 15) 'font-lock-builtin-face))))
+                             (should (eq (bnf-test-face-at 15) 'font-lock-builtin-face))
+                             ;; “angle-brackets”
+                             (should (eq (bnf-test-face-at 18) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 31) 'font-lock-function-name-face))
+                             ;; space
+                             (should-not (bnf-test-face-at 32))
+                             ;; “are-optional” symbol
+                             (should (eq (bnf-test-face-at 37) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 48) 'font-lock-builtin-face))))
 
 (ert-deftest bnf-mode-syntax-table/fontify-nonterminals-case ()
   :tags '(fontification syntax-table)
@@ -95,6 +103,17 @@ buffer."
                              (should (eq (bnf-test-face-at 28) 'font-lock-builtin-face))
                              (should (eq (bnf-test-face-at 30) 'font-lock-builtin-face))
                              (should-not (bnf-test-face-at 31))))
+
+(ert-deftest bnf-mode-syntax-table/fontify-nonterminals-start-pos ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer "   <rule> ::= doo"
+                             (should-not (bnf-test-face-at 4))
+                             (should (eq (bnf-test-face-at 5) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 6) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 7) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 8) 'font-lock-function-name-face))
+                             (should-not (bnf-test-face-at 9))))
+
 
 (provide 'bnf-mode-font-test)
 
