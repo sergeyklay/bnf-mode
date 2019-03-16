@@ -49,9 +49,37 @@ buffer."
 
 ;;;; Font locking
 
-(ert-deftest bnf-mode-syntax-table/fontify-dq-string ()
+(ert-deftest bnf-mode-syntax-table/fontify-strings ()
   :tags '(fontification syntax-table)
   (should (eq (bnf-test-face-at 11 "<foo> ::= \"bar\"") 'font-lock-string-face)))
+
+(ert-deftest bnf-mode-syntax-table/fontify-line-comment ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer "; A
+
+<stm> ::= <decl> ; foo"
+                             (should (eq (bnf-test-face-at 1) 'font-lock-comment-face))
+                             (should (eq (bnf-test-face-at 3) 'font-lock-comment-face))
+                             (should-not (bnf-test-face-at 5))
+                             (should (eq (bnf-test-face-at 24) 'font-lock-comment-face))))
+
+(ert-deftest bnf-mode-syntax-table/fontify-nonterminals ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer "<stm> ::= <decl>"
+                             ;; angle bracket
+                             (should-not (bnf-test-face-at 1))
+                             ;; "stm"
+                             (should (eq (bnf-test-face-at 2) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 4) 'font-lock-function-name-face))
+                             ;; angle bracket
+                             (should-not (bnf-test-face-at 5))
+                             ;; "may expand into" symbol
+                             (should-not (eq (bnf-test-face-at 7) 'font-lock-function-name-face))
+                             ;; angle bracket
+                             (should-not (bnf-test-face-at 11))
+                             ;; "dec" symbol
+                             (should-not (eq (bnf-test-face-at 12) 'font-lock-function-name-face))
+                             (should-not (eq (bnf-test-face-at 15) 'font-lock-function-name-face))))
 
 (provide 'bnf-mode-font-test)
 

@@ -21,7 +21,7 @@
 
 SHELL := $(shell which bash)
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-EMACS = emacs
+EMACS := emacs
 CASK = cask
 EMACSFLAGS ?=
 TESTFLAGS ?=
