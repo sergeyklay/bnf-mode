@@ -21,6 +21,7 @@ When developing this mode, the following RFCs were taken into account:
 
 - [[https://www.ietf.org/rfc/rfc822.txt][RFC822]]: Standard for ARPA Internet Text Messages
 - [[https://www.ietf.org/rfc/rfc5234.txt][RFC5234]]: Augmented BNF for Syntax Specifications: ABNF
+- [[https://tools.ietf.org/html/rfc7405][RFC7405]]: Case-Sensitive String Support in ABNF
 
 ** Features
 
@@ -90,6 +91,8 @@ To see what has changed in recent versions of BNF Mode, see the [[https://github
 ** External Links
 
 - [[https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form][Wikipedia: Backus–Naur form]]
+- [[https://en.wikipedia.org/wiki/Extended_Backus%25E2%2580%2593Naur_form][Wikipedia: Extended Backus–Naur form]]
+- [[https://en.wikipedia.org/wiki/Augmented_Backus%25E2%2580%2593Naur_form][Wikipedia: Augmented Backus–Naur form]]
 - [[https://www.cl.cam.ac.uk/~mgk25/iso-14977.pdf][ISO/IEC 14977: EBNF]]
 - [[https://www.ics.uci.edu/~pattis/ICS-33/lectures/ebnf.pdf][EBNF: A Notation to Describe Syntax]]
 

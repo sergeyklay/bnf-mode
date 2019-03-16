@@ -34,19 +34,6 @@
 ;;; Code:
 
 
-;;;; Utilities
-
-(defun bnf-test-face-at (pos &optional content)
-  "Get the face at POS in CONTENT.
-
-If CONTENT is not given, return the face at POS in the current
-buffer."
-  (if content
-      (bnf-test-with-temp-buffer content
-                                 (get-text-property pos 'face))
-    (get-text-property pos 'face)))
-
-
 ;;;; Font locking
 
 (ert-deftest bnf-mode-syntax-table/fontify-strings ()
@@ -81,32 +68,25 @@ angle-brackets ::= are-optional"
                              (should-not (bnf-test-face-at 11))
                              ;; “dec” symbol
                              (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
-                             (should (eq (bnf-test-face-at 15) 'font-lock-builtin-face))
-                             ;; “angle-brackets”
-                             (should (eq (bnf-test-face-at 18) 'font-lock-function-name-face))
-                             (should (eq (bnf-test-face-at 31) 'font-lock-function-name-face))
-                             ;; space
-                             (should-not (bnf-test-face-at 32))
-                             ;; “are-optional” symbol
-                             (should (eq (bnf-test-face-at 37) 'font-lock-builtin-face))
-                             (should (eq (bnf-test-face-at 48) 'font-lock-builtin-face))))
+                             (should (eq (bnf-test-face-at 15) 'font-lock-builtin-face))))
 
 (ert-deftest bnf-mode-syntax-table/fontify-nonterminals-case ()
   :tags '(fontification syntax-table)
-  (bnf-test-with-temp-buffer "<RULE> ::= foo
+  (bnf-test-with-temp-buffer "<RULE> ::= <foo>
 <RuLe> ::= <foO>"
                              (should (eq (bnf-test-face-at 2) 'font-lock-function-name-face))
                              (should (eq (bnf-test-face-at 5) 'font-lock-function-name-face))
-                             (should (eq (bnf-test-face-at 17) 'font-lock-function-name-face))
-                             (should (eq (bnf-test-face-at 20) 'font-lock-function-name-face))
-                             (should-not (bnf-test-face-at 21))
-                             (should (eq (bnf-test-face-at 28) 'font-lock-builtin-face))
+                             (should-not (bnf-test-face-at 17))
+                             (should (eq (bnf-test-face-at 19) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 22) 'font-lock-function-name-face))
+                             (should-not (bnf-test-face-at 23))
                              (should (eq (bnf-test-face-at 30) 'font-lock-builtin-face))
-                             (should-not (bnf-test-face-at 31))))
+                             (should (eq (bnf-test-face-at 32) 'font-lock-builtin-face))
+                             (should-not (bnf-test-face-at 33))))
 
 (ert-deftest bnf-mode-syntax-table/fontify-nonterminals-start-pos ()
   :tags '(fontification syntax-table)
-  (bnf-test-with-temp-buffer "   <rule> ::= doo"
+  (bnf-test-with-temp-buffer "   <rule> ::= <foo>"
                              (should-not (bnf-test-face-at 4))
                              (should (eq (bnf-test-face-at 5) 'font-lock-function-name-face))
                              (should (eq (bnf-test-face-at 6) 'font-lock-function-name-face))
@@ -116,23 +96,44 @@ angle-brackets ::= are-optional"
 
 (ert-deftest bnf-mode-syntax-table/fontify-sequence ()
   :tags '(fontification syntax-table)
-  (bnf-test-with-temp-buffer "rule ::= foo bar baz"
+  (bnf-test-with-temp-buffer "<rule> ::= <foo> <bar> <baz>"
+                             ;; “<” angle bracket
+                             (should-not (bnf-test-face-at 1))
                              ;; “rule”
-                             (should (eq (bnf-test-face-at 1) 'font-lock-function-name-face))
-                             (should (eq (bnf-test-face-at 4) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 2) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 5) 'font-lock-function-name-face))
+                             ;; “>” angle bracket
+                             (should-not (bnf-test-face-at 6))
                              ;; “foo”
-                             (should (eq (bnf-test-face-at 10) 'font-lock-builtin-face))
-                             (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
-                             ;; space
-                             (should-not (bnf-test-face-at 13))
-                             ;; “bar”
-                             (should (eq (bnf-test-face-at 14) 'font-lock-builtin-face))
-                             (should (eq (bnf-test-face-at 16) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 13) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 15) 'font-lock-builtin-face))
                              ;; space
                              (should-not (bnf-test-face-at 17))
+                             ;; “bar”
+                             (should (eq (bnf-test-face-at 19) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 21) 'font-lock-builtin-face))
+                             ;; space
+                             (should-not (bnf-test-face-at 23))
                              ;; “baz”
+                             (should (eq (bnf-test-face-at 25) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 27) 'font-lock-builtin-face))))
+
+(ert-deftest bnf-mode-syntax-table/fontify-alternatives ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer "<foo> | <bar> | <baz>"
+                             ;; foo
+                             (should (eq (bnf-test-face-at 2) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 4) 'font-lock-builtin-face))
+                             ;; |
+                             (should (eq (bnf-test-face-at 7) 'font-lock-warning-face))
+                             ;; bar
+                             (should (eq (bnf-test-face-at 10) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
+                             ;; |
+                             (should (eq (bnf-test-face-at 15) 'font-lock-warning-face))
+                             ;; baz
                              (should (eq (bnf-test-face-at 18) 'font-lock-builtin-face))
-                             (should (eq (bnf-test-face-at 10) 'font-lock-builtin-face))))
+                             (should (eq (bnf-test-face-at 20) 'font-lock-builtin-face))))
 
 (provide 'bnf-mode-font-test)
 

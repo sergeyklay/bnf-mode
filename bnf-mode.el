@@ -31,15 +31,17 @@
 ;;; Commentary:
 
 ;;   GNU Emacs major mode for editing BNF grammars.  Currently this mode
-;; provides basic syntax and font-locking for "*.bnf" files.
+;; provides basic syntax and font-locking for BNF files.
 ;;
 ;; When developing this mode, the following RFCs were taken into account:
 ;;
 ;; - RFC822: Standard for ARPA Internet Text Messages [1]
 ;; - RFC5234: Augmented BNF for Syntax Specifications: ABNF [2]
+;; - FRC7405: Case-Sensitive String Support in ABNF [3]
 ;;
 ;; [1]: https://www.ietf.org/rfc/rfc822.txt
 ;; [2]: https://www.ietf.org/rfc/rfc5234.txt
+;; [3]: https://www.ietf.org/rfc/rfc7405.txt
 ;;
 ;; Usage:  Put this file in your Emacs Lisp path (eg. site-lisp) and add to
 ;; your .emacs file:
@@ -111,12 +113,11 @@ just return nil."
 (eval-when-compile
   (defconst bnf-rx-constituents
     `(
-      ;; rulename
-      (rulename . ,(rx (and
-                        symbol-start
-                        letter
-                        (0+ (or "-" alnum))
-                        symbol-end)))
+      (bnf-rule-name . ,(rx (and
+                             symbol-start
+                             letter
+                             (0+ (or "-" alnum))
+                             symbol-end)))
     "Additional special sexps for `bnf-rx'."))
 
   (defmacro bnf-rx (&rest sexps)
@@ -125,12 +126,12 @@ just return nil."
 In addition to the standard forms of `rx', the following forms
 are available:
 
-`rulename'
-      Any valid rule name.  The name of a rule is simply the
+`bnf-rule-name'
+      Any valid BNF rule name.  The name of a rule is simply the
       name itself, that is, a sequence of characters, beginning
       with an alphabetic character, and followed by a combination
       of alphabetics, digits, and hyphens (dashes).
-      For more see RFC5234#2.1
+      For examle see RFC5234#2.1
 
 See `rx' documentation for more information about REGEXPS param."
      (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
@@ -151,29 +152,17 @@ See `rx' documentation for more information about REGEXPS param."
     (,(bnf-rx (and line-start
                    (0+ space)
                    "<"
-                   (group rulename)
+                   (group bnf-rule-name)
                    ">"
-                   (1+ space)
-                   "::="))
-     1 font-lock-function-name-face)
-    ;; Regarding to RFC5234#2.1 angle brackets
-    ;; (“<”, “>”) for LHS nonterminals are optional.
-    (,(bnf-rx (and line-start
                    (0+ space)
-                   (group rulename)
-                   (1+ space)
                    "::="))
      1 font-lock-function-name-face)
-    ;; RHS nonterminals
-    (,(bnf-rx (and (1+ space)
+    ;; Other nonterminals
+    (,(bnf-rx (and (0+ space)
                    "<"
-                   (group rulename)
-                   ">"))
-     1 font-lock-builtin-face)
-    ;; Regarding to RFC5234#2.1 angle brackets
-    ;; (“<”, “>”) for RHS nonterminals are optional.
-    (,(bnf-rx (and (1+ space)
-                   (group rulename)))
+                   (group bnf-rule-name)
+                   ">"
+                   (0+ space)))
      1 font-lock-builtin-face)
     ;; “may expand into” symbol
     (,(bnf-rx (and symbol-start
@@ -187,7 +176,7 @@ See `rx' documentation for more information about REGEXPS param."
                    symbol-end
                    (0+ space)))
      1 font-lock-warning-face))
-  "Font lock keywords for BNF Mode.")
+  "Font lock BNF keywords for BNF Mode.")
 
 
 ;;; Initialization

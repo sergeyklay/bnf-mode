@@ -92,6 +92,16 @@
                                               (insert indented)
                                               (should (equal indented ,expected-output)))))))
 
+(defun bnf-test-face-at (pos &optional content)
+  "Get the face at POS in CONTENT.
+
+If CONTENT is not given, return the face at POS in the current
+buffer."
+  (if content
+      (bnf-test-with-temp-buffer content
+                                 (get-text-property pos 'face))
+    (get-text-property pos 'face)))
+
 (when (s-contains? "--win" (getenv "ERT_RUNNER_ARGS"))
   (defun ert-runner/run-tests-batch-and-exit (selector)
     (ert-run-tests-interactively selector)))
