@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this project adheres to [[http://semver.org][Semantic Versioning]].
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.1.0...HEAD][Unreleased]]
+*** Changed
+- Changed comment syntax from ~#~ to ~;~ to follow [[https://tools.ietf.org/html/rfc822#section-2.8][RFC822#2.8]] .
+- Comments no longer use syntax table.  For more see `comment-use-syntax'.
 
 ** 0.1.0 - 2019-03-16
 *** Added

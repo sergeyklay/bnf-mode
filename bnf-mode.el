@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (pkg-info "0.4") (emacs "24.3"))
@@ -33,6 +33,14 @@
 ;;   GNU Emacs major mode for editing BNF grammars.  Currently this mode
 ;; provides basic syntax and font-locking for "*.bnf" files.
 ;;
+;; When developing this mode, the following RFCs were taken into account:
+;;
+;; - RFC822: Standard for ARPA Internet Text Messages [1]
+;; - RFC5234: Augmented BNF for Syntax Specifications: ABNF [2]
+;;
+;; [1]: https://www.ietf.org/rfc/rfc822.txt
+;; [2]: https://www.ietf.org/rfc/rfc5234.txt
+;;
 ;; Usage:  Put this file in your Emacs Lisp path (eg. site-lisp) and add to
 ;; your .emacs file:
 ;;
@@ -45,15 +53,6 @@
 ;; See https://github.com/sergeyklay/bnf-mode/blob/master/CHANGELOG.org
 
 ;;; Code:
-
-
-;;; Compatibility
-
-;; Work around emacs bug#18845, cc-mode expects cl to be loaded
-;; while bnf-mode only uses cl-lib (without compatibility aliases)
-(eval-and-compile
-  (if (and (= emacs-major-version 24) (>= emacs-minor-version 4))
-      (require 'cl)))
 
 
 ;;; Requirements
@@ -185,7 +184,7 @@ See `rx' documentation for more information about REGEXPS param."
     ;; Characters used to delimit string constants
     (modify-syntax-entry ?\"  "\""  table)
     ;; Comments setup
-    (modify-syntax-entry ?#   "<"   table)
+    (modify-syntax-entry ?\;  "<"   table)
     (modify-syntax-entry ?\n  ">"   table)
     ;; Treat ::= as sequence of symbols
     (modify-syntax-entry ?\:  "_"   table)
@@ -204,9 +203,8 @@ See `rx' documentation for more information about REGEXPS param."
   :syntax-table bnf-mode-syntax-table
   :group 'bnf-mode
   ;; Comment setup
-  (setq-local comment-use-syntax t)
-  (setq-local comment-auto-fill-only-comments t)
-  (setq-local comment-start "# ")
+  (setq-local comment-use-syntax nil)
+  (setq-local comment-start "; ")
   (setq-local comment-end "")
   (setq-local font-lock-keyword-face 'php-keyword)
   ;; Font locking
@@ -215,7 +213,7 @@ See `rx' documentation for more information about REGEXPS param."
                              bnf-font-lock-keywords
                              ;; keywords-only
                              nil
-                             ;; Regarding RFC-5234
+                             ;; Regarding RFC5234
                              ;; The names <rulename>, <Rulename>, <RULENAME>,
                              ;; and <rUlENamE> all refer to the same rule.
                              t
