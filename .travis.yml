@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2019 Serghei Iakovlev
+# Copyright (C) 2019 Serghei Iakovlev
 #
 # This file is not part of GNU Emacs.
 #

@@ -1,6 +1,6 @@
 ;;; bnf-mode.el --- Major mode for editing BNF grammars -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2017-2019 Serghei Iakovlev
+;; Copyright (C) 2019 Serghei Iakovlev
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
