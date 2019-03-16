@@ -1,4 +1,5 @@
 #+TITLE: Change Log
+#+AUTHOR: Serghei Iakovlev
 
 All notable changes to this project will be documented in this file.
 

@@ -61,10 +61,10 @@
 (declare-function pkg-info-version-info "pkg-info" (package))
 
 (eval-when-compile
-  (require 'rx))
+  (require 'rx))    ; `rx'
 
-(require 'cl-lib)
-(require 'pkg-info)
+(require 'cl-lib)   ; `cl-defmacro'
+(require 'pkg-info) ; `pkg-info-version-info'
 
 
 ;;; Customization
@@ -130,8 +130,7 @@ are available:
       name itself, that is, a sequence of characters, beginning
       with an alphabetic character, and followed by a combination
       of alphabetics, digits, and hyphens (dashes).
-
-      For more see: https://tools.ietf.org/html/rfc5234#section-2.1
+      For more see RFC5234#2.1
 
 See `rx' documentation for more information about REGEXPS param."
      (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
@@ -183,7 +182,7 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\^m "> b" table)
     ;; Characters used to delimit string constants
     (modify-syntax-entry ?\"  "\""  table)
-    ;; Comments setup
+    ;; Comments setup (see RFC822#2.8)
     (modify-syntax-entry ?\;  "<"   table)
     (modify-syntax-entry ?\n  ">"   table)
     ;; Treat ::= as sequence of symbols
@@ -202,7 +201,7 @@ See `rx' documentation for more information about REGEXPS param."
   "A major mode for editing BNF grammars."
   :syntax-table bnf-mode-syntax-table
   :group 'bnf-mode
-  ;; Comment setup
+  ;; Comment setup (for more see RFC822#2.8)
   (setq-local comment-use-syntax nil)
   (setq-local comment-start "; ")
   (setq-local comment-end "")
@@ -213,7 +212,7 @@ See `rx' documentation for more information about REGEXPS param."
                              bnf-font-lock-keywords
                              ;; keywords-only
                              nil
-                             ;; Regarding RFC5234
+                             ;; Regarding to RFC5234#2.1
                              ;; The names <rulename>, <Rulename>, <RULENAME>,
                              ;; and <rUlENamE> all refer to the same rule.
                              t
