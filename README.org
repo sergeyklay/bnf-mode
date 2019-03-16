@@ -7,7 +7,8 @@
 A GNU Emacs major mode for editing BNF grammars.
 
 #+begin_quote
-Precise language is not the problem.  Clear language is the problem.
+“Precise language is not the problem.  Clear language is the problem.”
+
 Richard Feynman
 #+end_quote
 
