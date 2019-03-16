@@ -5,8 +5,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this project adheres to [[http://semver.org][Semantic Versioning]].
 
-** [[https://github.com/sergeyklay/bnf-mode/compare/0.2.0...HEAD][Unreleased]]
-
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.3.0...HEAD][Unreleased]]
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.2.0...0.3.0][0.3.0]] - 2019-03-17
 *** Changed
 - LHS nonterminals may be preceded by an unlimited number of spaces
 

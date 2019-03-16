@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.2.0
+;; Version: 0.3.0
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (pkg-info "0.4") (emacs "24.3"))
@@ -31,7 +31,8 @@
 ;;; Commentary:
 
 ;;   GNU Emacs major mode for editing BNF grammars.  Currently this mode
-;; provides basic syntax and font-locking for BNF files.
+;; provides basic syntax and font-locking for BNF files.  BNF notation is
+;; supported exactly form as it was first announced in the ALGOL 60 report.
 ;;
 ;; When developing this mode, the following RFCs were taken into account:
 ;;
