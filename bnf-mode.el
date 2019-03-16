@@ -212,9 +212,10 @@ See `rx' documentation for more information about REGEXPS param."
                              bnf-font-lock-keywords
                              ;; keywords-only
                              nil
-                             ;; Regarding to RFC5234#2.1
-                             ;; The names <rulename>, <Rulename>, <RULENAME>,
-                             ;; and <rUlENamE> all refer to the same rule.
+                             ;; Regarding to RFC5234#2.1 rule names are case
+                             ;; insensitive.  The names <rulename>, <Rulename>,
+                             ;; <RULENAME>, and <rUlENamE> all refer to the
+                             ;; same rule.
                              t
                              )))
 

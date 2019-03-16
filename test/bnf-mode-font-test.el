@@ -61,7 +61,8 @@ buffer."
                              (should (eq (bnf-test-face-at 1) 'font-lock-comment-face))
                              (should (eq (bnf-test-face-at 3) 'font-lock-comment-face))
                              (should-not (bnf-test-face-at 5))
-                             (should (eq (bnf-test-face-at 24) 'font-lock-comment-face))))
+                             (should (eq (bnf-test-face-at 24) '
+                                         font-lock-comment-face))))
 
 (ert-deftest bnf-mode-syntax-table/fontify-nonterminals ()
   :tags '(fontification syntax-table)
@@ -75,11 +76,25 @@ buffer."
                              (should-not (bnf-test-face-at 5))
                              ;; "may expand into" symbol
                              (should-not (eq (bnf-test-face-at 7) 'font-lock-function-name-face))
+                             (should-not (eq (bnf-test-face-at 9) 'font-lock-function-name-face))
                              ;; angle bracket
                              (should-not (bnf-test-face-at 11))
                              ;; "dec" symbol
-                             (should-not (eq (bnf-test-face-at 12) 'font-lock-function-name-face))
-                             (should-not (eq (bnf-test-face-at 15) 'font-lock-function-name-face))))
+                             (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 15) 'font-lock-builtin-face))))
+
+(ert-deftest bnf-mode-syntax-table/fontify-nonterminals-case ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer "<RULE> ::= foo
+<RuLe> ::= <foO>"
+                             (should (eq (bnf-test-face-at 2) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 5) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 17) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 20) 'font-lock-function-name-face))
+                             (should-not (bnf-test-face-at 21))
+                             (should (eq (bnf-test-face-at 28) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 30) 'font-lock-builtin-face))
+                             (should-not (bnf-test-face-at 31))))
 
 (provide 'bnf-mode-font-test)
 
