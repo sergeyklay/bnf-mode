@@ -38,7 +38,7 @@ OBJS = $(SRCS:.el=.elc)
 Makefile: ; # skip prerequisite discovery
 
 # Run make help by default
-.DEFAULT_GOAL = help
+.DEFAULT_GOAL = build
 
 # Internal variables
 EMACSBATCH = $(EMACS) -Q --batch -L . $(EMACSFLAGS)
