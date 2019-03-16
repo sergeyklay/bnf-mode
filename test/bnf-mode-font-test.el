@@ -114,6 +114,25 @@ angle-brackets ::= are-optional"
                              (should (eq (bnf-test-face-at 8) 'font-lock-function-name-face))
                              (should-not (bnf-test-face-at 9))))
 
+(ert-deftest bnf-mode-syntax-table/fontify-sequence ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer "rule ::= foo bar baz"
+                             ;; “rule”
+                             (should (eq (bnf-test-face-at 1) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 4) 'font-lock-function-name-face))
+                             ;; “foo”
+                             (should (eq (bnf-test-face-at 10) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
+                             ;; space
+                             (should-not (bnf-test-face-at 13))
+                             ;; “bar”
+                             (should (eq (bnf-test-face-at 14) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 16) 'font-lock-builtin-face))
+                             ;; space
+                             (should-not (bnf-test-face-at 17))
+                             ;; “baz”
+                             (should (eq (bnf-test-face-at 18) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 10) 'font-lock-builtin-face))))
 
 (provide 'bnf-mode-font-test)
 

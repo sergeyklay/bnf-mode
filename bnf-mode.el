@@ -165,16 +165,14 @@ See `rx' documentation for more information about REGEXPS param."
                    "::="))
      1 font-lock-function-name-face)
     ;; RHS nonterminals
-    (,(bnf-rx (and "::="
-                   (1+ space)
+    (,(bnf-rx (and (1+ space)
                    "<"
                    (group rulename)
                    ">"))
      1 font-lock-builtin-face)
-     ;; Regarding to RFC5234#2.1 angle brackets
-     ;; (“<”, “>”) for RHS nonterminals are optional.
-     (,(bnf-rx (and "::="
-                   (1+ space)
+    ;; Regarding to RFC5234#2.1 angle brackets
+    ;; (“<”, “>”) for RHS nonterminals are optional.
+    (,(bnf-rx (and (1+ space)
                    (group rulename)))
      1 font-lock-builtin-face)
     ;; “may expand into” symbol
