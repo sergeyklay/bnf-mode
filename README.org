@@ -97,4 +97,4 @@ To see what has changed in recent versions of BNF Mode, see the [[https://github
 
 ** License
 
-Zephir Mode is open source software licensed under the [[https://github.com/sergeyklay/bnf-mode/blob/master/LICENSE][GNU General Public Licence version 3]] .
+BNF Mode is open source software licensed under the [[https://github.com/sergeyklay/bnf-mode/blob/master/LICENSE][GNU General Public Licence version 3]] .
