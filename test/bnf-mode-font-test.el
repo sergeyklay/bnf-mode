@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.4.0
+;; Version: 0.3.1
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
 ;; This file is not part of GNU Emacs.
@@ -121,19 +121,35 @@ angle-brackets ::= are-optional"
 (ert-deftest bnf-mode-syntax-table/fontify-alternatives ()
   :tags '(fontification syntax-table)
   (bnf-test-with-temp-buffer "<foo> | <bar> | <baz>"
-                             ;; foo
+                             ;; “foo”
                              (should (eq (bnf-test-face-at 2) 'font-lock-builtin-face))
                              (should (eq (bnf-test-face-at 4) 'font-lock-builtin-face))
-                             ;; |
+                             ;; “|”
                              (should (eq (bnf-test-face-at 7) 'font-lock-warning-face))
-                             ;; bar
+                             ;; “bar”
                              (should (eq (bnf-test-face-at 10) 'font-lock-builtin-face))
                              (should (eq (bnf-test-face-at 12) 'font-lock-builtin-face))
-                             ;; |
+                             ;; “|”
                              (should (eq (bnf-test-face-at 15) 'font-lock-warning-face))
-                             ;; baz
+                             ;; “baz”
                              (should (eq (bnf-test-face-at 18) 'font-lock-builtin-face))
                              (should (eq (bnf-test-face-at 20) 'font-lock-builtin-face))))
+
+(ert-deftest bnf-mode-syntax-table/fontify-rule-punctuation ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer"
+<proper string> ::=
+        <any sequence of symbols not containing ` or ' >
+        | <empty>"
+                             ;; “proper string”
+                             (should (eq (bnf-test-face-at 3) 'font-lock-function-name-face))
+                             (should (eq (bnf-test-face-at 15) 'font-lock-function-name-face))
+                             ;; “any sequence of symbols not containing ` or ' ”
+                             (should (eq (bnf-test-face-at 31) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 76) 'font-lock-builtin-face))
+                             ;; “empty”
+                             (should (eq (bnf-test-face-at 90) 'font-lock-builtin-face))
+                             (should (eq (bnf-test-face-at 94) 'font-lock-builtin-face))))
 
 (provide 'bnf-mode-font-test)
 

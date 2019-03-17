@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.4.0
+;; Version: 0.3.1
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (pkg-info "0.4") (emacs "24.3"))
@@ -39,10 +39,12 @@
 ;; - RFC822: Standard for ARPA Internet Text Messages [1]
 ;; - RFC5234: Augmented BNF for Syntax Specifications: ABNF [2]
 ;; - FRC7405: Case-Sensitive String Support in ABNF [3]
+;; - Revised Report on the Algorithmic Language Algol 60 [4]
 ;;
 ;; [1]: https://www.ietf.org/rfc/rfc822.txt
 ;; [2]: https://www.ietf.org/rfc/rfc5234.txt
 ;; [3]: https://www.ietf.org/rfc/rfc7405.txt
+;; [4]: https://www.masswerk.at/algol60/report.htm
 ;;
 ;; Usage:  Put this file in your Emacs Lisp path (eg. site-lisp) and add to
 ;; your .emacs file:
@@ -114,11 +116,12 @@ just return nil."
 (eval-when-compile
   (defconst bnf-rx-constituents
     `(
-      (bnf-rule-name . ,(rx (and
-                             symbol-start
-                             letter
-                             (0+ (or "-" alnum))
-                             symbol-end)))
+      (bnf-rule-name . ,(rx
+                         (and
+                          (1+ (or alnum digit))
+                          (0+ (or alnum digit
+                                  (in "!\"\#$%&'()*+,\-./:;=?@\[\\\]^_`{|}~")
+                                  (in " \t"))))))
     "Additional special sexps for `bnf-rx'."))
 
   (defmacro bnf-rx (&rest sexps)
@@ -128,11 +131,10 @@ In addition to the standard forms of `rx', the following forms
 are available:
 
 `bnf-rule-name'
-      Any valid BNF rule name.  The name of a rule is simply the
-      name itself, that is, a sequence of characters, beginning
-      with an alphabetic character, and followed by a combination
-      of alphabetics, digits, and hyphens (dashes).
-      For examle see RFC5234#2.1
+      Any valid BNF rule name.  This rule was obtained by studying
+      ALGOL 60 report, where the BNF was officially announced.
+      Please note: This rule is not suitable for ABNF or EBNF
+      (see URL `https://www.masswerk.at/algol60/report.htm').
 
 See `rx' documentation for more information about REGEXPS param."
      (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
@@ -207,23 +209,26 @@ See `rx' documentation for more information about REGEXPS param."
   "A major mode for editing BNF grammars."
   :syntax-table bnf-mode-syntax-table
   :group 'bnf-mode
-  ;; Comment setup (for more see RFC822#2.8)
+
+  ;; Comments setup.
   (setq-local comment-use-syntax nil)
   (setq-local comment-start "; ")
   (setq-local comment-end "")
-  (setq-local font-lock-keyword-face 'php-keyword)
+
   ;; Font locking
-  (setq font-lock-defaults '(
-                             ;; Keywords
-                             bnf-font-lock-keywords
-                             ;; keywords-only
-                             nil
-                             ;; Regarding to RFC5234#2.1 rule names are case
-                             ;; insensitive.  The names <rulename>, <Rulename>,
-                             ;; <RULENAME>, and <rUlENamE> all refer to the
-                             ;; same rule.
-                             t
-                             )))
+  (setq font-lock-defaults
+        '(
+          ;; Keywords
+          bnf-font-lock-keywords
+          ;; keywords-only
+          nil
+          ;; Regarding to RFC5234 rule names are case insensitive.
+          ;; The names <rulename>, <Rulename>, <RULENAME>, and <rUlENamE>
+          ;; all refer to the same rule.  As far as is known, this doesn't
+          ;; conflict with original BNF version
+          ;; (see URL `https://tools.ietf.org/html/rfc5234')
+          t
+          )))
 
 ;; Invoke bnf-mode when appropriate
 
