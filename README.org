@@ -16,7 +16,7 @@ Currently provides basic syntax and font-locking for BNF files. BNF notation is
 supported exactly form as it was first announced in the ALGOL 60 report.
 EBNF and ABNF are not supported but  in my plans for the near future.
 
-When developing this mode, the following RFCs were taken into account:
+When developing this mode, the following documents were taken into account:
 
 - [[https://www.masswerk.at/algol60/report.htm][Revised Report on the Algorithmic Language Algol 60]]
 - [[https://tools.ietf.org/html/rfc822][RFC822]]: Standard for ARPA Internet Text Messages
