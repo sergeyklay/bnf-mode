@@ -195,10 +195,18 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\=  "_"   table)
     ;; Treat | as a symbol
     (modify-syntax-entry ?\|  "_"   table)
-    ;; BNF has no strings so treat ' and "
-    ;; as a symbols
+    ;; In the BNF there are no strings
+    ;; so treat ' and " as a symbols
     (modify-syntax-entry ?\"  "_"  table)
     (modify-syntax-entry ?\'  "_"  table)
+    ;; In the BNF there are no grouping
+    ;; brackets except angle ones
+    (modify-syntax-entry ?\(  "_"  table)
+    (modify-syntax-entry ?\)  "_"  table)
+    (modify-syntax-entry ?\{  "_"  table)
+    (modify-syntax-entry ?\}  "_"  table)
+    (modify-syntax-entry ?\[  "_"  table)
+    (modify-syntax-entry ?\]  "_"  table)
     ;; Group angle brackets
     (modify-syntax-entry ?\<  "(>"  table)
     (modify-syntax-entry ?\>  ")<"  table)
