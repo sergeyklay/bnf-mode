@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.3.1
+;; Version: 0.3.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (pkg-info "0.4") (emacs "24.3"))
@@ -187,9 +187,7 @@ See `rx' documentation for more information about REGEXPS param."
   (let ((table (make-syntax-table)))
     ;; Give CR the same syntax as newline
     (modify-syntax-entry ?\^m "> b" table)
-    ;; Characters used to delimit string constants
-    (modify-syntax-entry ?\"  "\""  table)
-    ;; Comments setup (see RFC822#2.8)
+    ;; Comments setup
     (modify-syntax-entry ?\;  "<"   table)
     (modify-syntax-entry ?\n  ">"   table)
     ;; Treat ::= as sequence of symbols
@@ -197,6 +195,10 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\=  "_"   table)
     ;; Treat | as a symbol
     (modify-syntax-entry ?\|  "_"   table)
+    ;; BNF has no strings so treat ' and "
+    ;; as a symbols
+    (modify-syntax-entry ?\"  "_"  table)
+    (modify-syntax-entry ?\'  "_"  table)
     ;; Group angle brackets
     (modify-syntax-entry ?\<  "(>"  table)
     (modify-syntax-entry ?\>  ")<"  table)

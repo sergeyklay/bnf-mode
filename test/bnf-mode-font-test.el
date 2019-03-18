@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.3.1
+;; Version: 0.3.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
 ;; This file is not part of GNU Emacs.
@@ -38,7 +38,11 @@
 
 (ert-deftest bnf-mode-syntax-table/fontify-strings ()
   :tags '(fontification syntax-table)
-  (should (eq (bnf-test-face-at 11 "<foo> ::= \"bar\"") 'font-lock-string-face)))
+  (bnf-test-with-temp-buffer "<string delimers> ::= \" | ' | ` | ”"
+                             (should-not (bnf-test-face-at 23))
+                             (should-not (bnf-test-face-at 27))
+                             (should-not (bnf-test-face-at 31))
+                             (should-not (bnf-test-face-at 35))))
 
 (ert-deftest bnf-mode-syntax-table/fontify-line-comment ()
   :tags '(fontification syntax-table)

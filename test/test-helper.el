@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
 ;; Maintainer: Serghei Iakovlev
-;; Version: 0.3.1
+;; Version: 0.3.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
 ;; This file is not part of GNU Emacs.
