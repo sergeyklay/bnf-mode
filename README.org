@@ -65,7 +65,7 @@ TODO
    #+begin_src emacs-lisp
    (autoload 'bnf-mode "bnf-mode" nil t)
    ;; OR
-   (require 'zephir-mode)
+   (require 'bnf-mode)
    #+end_src
 5. Optionally byte compile ~bnf-mode.el~ for faster startup: ~M-x byte-compile~
 
