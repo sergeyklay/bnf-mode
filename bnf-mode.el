@@ -7,7 +7,7 @@
 ;; Version: 0.3.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
-;; Package-Requires: ((cl-lib "0.5") (pkg-info "0.4") (emacs "24.3"))
+;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -40,7 +40,7 @@
 ;;   (see URL `https://www.ietf.org/rfc/rfc822.txt')
 ;; - RFC5234: Augmented BNF for Syntax Specifications: ABNF
 ;;   (see URL `https://www.ietf.org/rfc/rfc5234.txt')
-;; - FRC7405: Case-Sensitive String Support in ABNF [3]
+;; - FRC7405: Case-Sensitive String Support in ABNF
 ;;   (see URL `https://www.ietf.org/rfc/rfc7405.txt')
 ;; - Revised Report on the Algorithmic Language Algol 60
 ;;   (see URL `https://www.masswerk.at/algol60/report.htm')
@@ -61,14 +61,10 @@
 
 ;;; Requirements
 
-;; Tell the byte compiler about autoloaded functions from packages
-(declare-function pkg-info-version-info "pkg-info" (package))
-
 (eval-when-compile
   (require 'rx))    ; `rx'
 
 (require 'cl-lib)   ; `cl-defmacro'
-(require 'pkg-info) ; `pkg-info-version-info'
 
 
 ;;; Customization
@@ -87,27 +83,6 @@
   :tag "Hook"
   :type 'hook
   :group 'bnf)
-
-
-;;; Version information
-
-(defun bnf-mode-version (&optional show-version)
-  "Display string describing the version of BNF Mode.
-
-If called interactively or if SHOW-VERSION is non-nil, show the
-version in the echo area and the messages buffer.
-
-The returned string includes both, the version from package.el
-and the library version, if both a present and different.
-
-If the version number could not be determined, signal an error,
-if called interactively, or if SHOW-VERSION is non-nil, otherwise
-just return nil."
-  (interactive (list t))
-  (let ((version (pkg-info-version-info 'bnf-mode)))
-    (when show-version
-      (message "BNF Mode version: %s" version))
-    version))
 
 
 ;;; Specialized rx
