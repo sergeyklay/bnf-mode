@@ -118,7 +118,6 @@ Add following to your init file:
 | Command (For the ~M-x~ prompt.) | Description                      |
 |---------------------------------+----------------------------------|
 | ~bnf-mode~                      | Switches to BNF Mode.            |
-| ~bnf-mode-version~              | Print version info for BNF Mode. |
 
 Any file that matches the glob ~*.bnf~ is automatically opened in ~bnf-mode~.
 
