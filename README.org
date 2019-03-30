@@ -48,7 +48,8 @@ to the relevant [[https://github.com/sergeyklay/bnf-mode/tags][tag]].
 
 The best way of installing this major mode, at least for GNU Emacs 24, is to
 use the packaging system.  Add MELPA or MELPA Stable to the list of repositories
-to access this mode. For those who want only formal, tagged releases use MELPA Stable:
+to access this mode. For those who want only formal, tagged releases use MELPA
+Stable:
 
 #+begin_src emacs-lisp
 (require 'package)
@@ -56,8 +57,6 @@ to access this mode. For those who want only formal, tagged releases use MELPA S
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 #+end_src
-
-Or manually from MELPA with ~M-x package-refresh-contents~ and ~M-x package-install RET bnf-mode~ .
 
 For those who want rolling releases as they happen use MELPA :
 
@@ -68,13 +67,22 @@ For those who want rolling releases as they happen use MELPA :
 (package-initialize)
 #+end_src
 
-and then use ~M-x package-list-packages~ to get to the package listing and install from there.
-MELPA tracks this Git repository and updates relatively soon after each commit or formal release.
-For more detail on setting up see [[https://melpa.org/#/getting-started][MELPA Getting Started]].
+and then use ~M-x package-refresh-contents~ and ~M-x package-list-packages~ to get to
+the package listing and install ~bnf-mode~ from there.  MELPA tracks this Git repository
+and updates relatively soon after each commit or formal release.  For more detail on
+setting up see [[https://melpa.org/#/getting-started][MELPA Getting Started]].
+
+You can install ~bnf-mode~ manually by adding following to your init file :
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'bnf-mode)
+    (package-refresh-contents)
+    (package-install 'bnf-mode))
+#+end_src
 
 **** Using Cask
 
-Add following to your [[https://cask.github.io/][Cask]] file:
+Add following to your [[https://cask.github.io/][Cask]] file :
 
 #+begin_src emacs-lisp
 (source melpa)
@@ -84,7 +92,7 @@ Add following to your [[https://cask.github.io/][Cask]] file:
 
 **** Using use-package
 
-Add following to your init file:
+Add following to your init file :
 
 #+begin_src emacs-lisp
 (use-package bnf-mode
@@ -105,8 +113,8 @@ If you use el-get, just create a recipe file ~bnf.rcp~ :
        :pkgname "sergeyklay/bnf-mode")
 #+end_src
 
-and add it to a directory present in ~el-get-recipe-path~.  Then, use ~M-x el-get-install <RET> bnf-mode~
-or add :
+and add it to a directory present in ~el-get-recipe-path~.
+Then, use ~M-x el-get-install <RET> bnf-mode~ or add :
 
 #+begin_src emacs-lisp
 (el-get-bundle bnf-mode)
