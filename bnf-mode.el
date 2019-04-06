@@ -1,4 +1,4 @@
-;;; bnf-mode.el --- Major mode for editing BNF grammars -*- lexical-binding: t; -*-
+;;; bnf-mode.el --- Major mode for editing BNF grammars. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019 Serghei Iakovlev
 

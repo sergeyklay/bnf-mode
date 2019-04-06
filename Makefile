@@ -21,8 +21,14 @@
 
 SHELL := $(shell which bash)
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+
 EMACS := emacs
 CASK = cask
+PANDOC ?= pandoc \
+	--fail-if-warnings \
+	--reference-links \
+	--atx-headers
+
 EMACSFLAGS ?=
 TESTFLAGS ?=
 PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
@@ -30,6 +36,8 @@ PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 # File lists
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
+
+VERSION ?= $(shell $(CASK) version)
 
 .SILENT: ;               # no need for @
 .ONESHELL: ;             # recipes execute in same shell
@@ -60,12 +68,17 @@ $(PKGDIR): Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
+README: README.org2
+	$(PANDOC) -f org+empty_paragraphs -t plain -o $@ $^
+
+README.org2: README.org
+	$(shell cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"  > $@)
+
 # Public targets
 
 .PHONY: .title
 .title:
-	$(info BNF Mode $(shell cat $(ROOT_DIR)/$(SRCS) | grep ";; Version:" | awk -F': ' '{print $$2}'))
-	$(info )
+	$(info BNF Mode $(VERSION))
 
 .PHONY: init
 init: $(PKGDIR)
@@ -84,6 +97,7 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
+	$(RM) -f README README.org2
 
 .PHONY: help
 help: .title
