@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2019 Serghei Iakovlev
 
-;; Author: Serghei Iakovlev (concat "sadhooklay" "@" "gmail" ".com")
+;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
 ;; Maintainer: Serghei Iakovlev
 ;; Version: 0.3.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
