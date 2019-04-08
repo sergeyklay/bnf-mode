@@ -24,13 +24,14 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 EMACS := emacs
 CASK = cask
-PANDOC ?= pandoc \
-	--fail-if-warnings \
-	--reference-links \
-	--atx-headers
+PANDOC ?= pandoc
 
 EMACSFLAGS ?=
 TESTFLAGS ?=
+PANDOCLAGS ?= --fail-if-warnings \
+	--reference-links \
+	--atx-headers
+
 PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
 # File lists
@@ -69,7 +70,7 @@ $(PKGDIR): Cask
 	touch $(PKGDIR)
 
 README: README.org2
-	$(PANDOC) -f org+empty_paragraphs -t plain -o $@ $^
+	$(PANDOC) $(PANDOCLAGS) -f org+empty_paragraphs -t plain -o $@ $^
 
 README.org2: README.org
 	$(shell cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"  > $@)
