@@ -205,8 +205,9 @@ See `rx' documentation for more information about REGEXPS param."
           ;; all refer to the same rule.  As far as is known, this doesn't
           ;; conflict with original BNF version
           ;; (see URL `https://tools.ietf.org/html/rfc5234')
-          t
-          )))
+          t))
+  (setq-local comment-start ";")
+  (setq-local comment-end ""))
 
 ;; Invoke bnf-mode when appropriate
 
