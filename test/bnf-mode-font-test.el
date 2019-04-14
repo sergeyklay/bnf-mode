@@ -156,5 +156,4 @@ angle-brackets ::= are-optional"
                              (should (eq (bnf-test-face-at 94) 'font-lock-builtin-face))))
 
 (provide 'bnf-mode-font-test)
-
 ;;; bnf-mode-font-test.el ends here
