@@ -32,11 +32,11 @@ cache:
     # Cache Cask bootstrap dependencies
     - "$HOME/.emacs.d/.cask"
 
-# Allow Emacs snapshot builds to fail and don't wait for it
-matrix:
-  fast_finish: true
-  allow_failures:
-    - env: EMACS_VERSION=git-snapshot
+addons:
+  apt:
+    packages:
+      - bsdtar
+      - texinfo
 
 git:
   depth: 1
@@ -53,6 +53,12 @@ env:
     - EMACS_VERSION=git-snapshot
   global:
     - PATH="$HOME/bin:$HOME/.cask/bin:$HOME/.evm/bin:$PATH"
+
+# Allow Emacs snapshot builds to fail and don't wait for it
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMACS_VERSION=git-snapshot
 
 before_install:
   # Setup Emacs Version Manager
@@ -74,6 +80,26 @@ script:
   # The 'checkdoc-file' present on Emacs >= 25.1
   - '[[ "$EMACS_MAJOR_VERSION" = "24" ]] || make checkdoc'
   - make test
+
+before_deploy:
+  - git config --global user.name cicdbot
+  - git config --global user.email team@zephir-lang.com
+  - wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb -o /dev/null
+  - sudo dpkg -i pandoc-2.7.2-1-amd64.deb
+  - make package
+
+deploy:
+  provider: releases
+  api_key:
+    secure:
+      SUFVzrJwPz29I6x4SFB5vNboKxX8pEIdB67+d6w4/hgeifYbDl7BSWLq1HFYvTIIye439uVCIN0zkwNGFUJsjIfw4Yn0N3dasgD7dlxguUz7mBg5JV8BOzQqguv/XmY3ze2aXTkk+nbx37wvTt5SsGOyq9pT/Vrufxli7YbAglFl648Nc8fshQSioBpQKWXTD3Msgs5QNjM6ShAgeEA11GBaRgO2aZaokxv+9xsdM00O7ADHulaC+jniO3BucQrENQeGI5mLIzPZdHpfOrlQ600J4jU3cC8C7NTgkQDBpNhN5eiDallvHxTl0sb5EvTwznMAGi+YXGmorgkCnGT+glnj1zWYaV2T4O038h7xT/Kub/iSpi3GQVmxMNrS09JbZXuQcXyvyvNPYJhQZG8M8MYPb1N7u6MfMav88SDTZkxGzJ9gI5l4CyPaMAO2GdVdXeY0ANGtyg7ntDZpFtxIRRjIpSthU/QQ3Ss0yLVay0w86w52Tjc2p0CXwt0YxcJSkKIcI+Ld6ouKWofyEqlKMbgwzNyBnJ8GdTuBlE2+9HwVxG/38GUsqjsW2NH+rgpPd0Uxj8SltXVkkebXe+aSiyfzHdMVqYrVbbmQFfK+lN18+ZUeG9kXiXCb5hDuDJU3PcKSYVTrFrpKieYTv6phYwnbKpM1hP2n5r7XfsDuWlM=
+  file_glob: true
+  file: bnf-mode-*.tar
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $EMACS_VERSION = 26.1
+    repo: sergeyklay/bnf-mode
 
 notifications:
   email: false
