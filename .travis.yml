@@ -32,18 +32,11 @@ cache:
     # Cache Cask bootstrap dependencies
     - "$HOME/.emacs.d/.cask"
 
-# Allow Emacs snapshot builds to fail and don't wait for it
-matrix:
-  fast_finish: true
-  allow_failures:
-    - env: EMACS_VERSION=git-snapshot
-
 addons:
   apt:
     packages:
       - bsdtar
       - texinfo
-      - pandoc
 
 git:
   depth: 1
@@ -60,6 +53,12 @@ env:
     - EMACS_VERSION=git-snapshot
   global:
     - PATH="$HOME/bin:$HOME/.cask/bin:$HOME/.evm/bin:$PATH"
+
+# Allow Emacs snapshot builds to fail and don't wait for it
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMACS_VERSION=git-snapshot
 
 before_install:
   # Setup Emacs Version Manager
@@ -81,14 +80,13 @@ script:
   # The 'checkdoc-file' present on Emacs >= 25.1
   - '[[ "$EMACS_MAJOR_VERSION" = "24" ]] || make checkdoc'
   - make test
-  - wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb -o /dev/null
-  - sudo dpkg -i pandoc-2.7.2-1-amd64.deb
-  - make package
-  - ls -al
 
 before_deploy:
   - git config --global user.name cicdbot
   - git config --global user.email team@zephir-lang.com
+  - wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb -o /dev/null
+  - sudo dpkg -i pandoc-2.7.2-1-amd64.deb
+  - make package
 
 deploy:
   provider: releases
