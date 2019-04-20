@@ -193,6 +193,10 @@ See `rx' documentation for more information about REGEXPS param."
   "A major mode for editing BNF grammars."
   :syntax-table bnf-mode-syntax-table
   :group 'bnf-mode
+  ;; Comments setup.
+  (setq-local comment-use-syntax nil)
+  (setq-local comment-start "; ")
+  (setq-local comment-end "")
   ;; Font locking
   (setq font-lock-defaults
         '(
