@@ -154,7 +154,7 @@ See `rx' documentation for more information about REGEXPS param."
   "Font lock BNF keywords for BNF Mode.")
 
 
-;;; Initialization
+;;; Syntax
 
 (defvar bnf-mode-syntax-table
   (let ((table (make-syntax-table)))
@@ -186,6 +186,25 @@ See `rx' documentation for more information about REGEXPS param."
     table)
   "Syntax table in use in `bnf-mode' buffers.")
 
+(defun bnf--syntax-propertize (start end)
+  "Apply syntax table properties to special constructs in region START to END.
+Currently handled:
+
+ - Fontify terminals with ';' character correctly"
+  (save-excursion
+    (goto-char start)
+    ;; Search for terminals like "<abc;>" or "<a;bc>".
+    ;; Does not work for terminals like "<a;bc;>".
+    (while (re-search-forward "\\(?:<[^>]*\\);" end t)
+      (when (looking-at "\\(?:[^>]\\)*>")
+        ;; Mark the ";" character as an extra character used in terminals
+        ;; along with word constituents.
+        (put-text-property (1- (point)) (point)
+                           'syntax-table (string-to-syntax "_"))))))
+
+
+;;; Initialization
+
 ;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
   "A major mode for editing BNF grammars."
@@ -196,6 +215,8 @@ See `rx' documentation for more information about REGEXPS param."
   (setq-local comment-start "; ")
   (setq-local comment-end "")
   (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-*")
+  ;; Tune up syntax `syntax-table'
+  (setq-local syntax-propertize-function #'bnf--syntax-propertize)
   ;; Font locking
   (setq font-lock-defaults
         '(

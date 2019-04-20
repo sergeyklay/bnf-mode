@@ -163,5 +163,23 @@ angle-brackets ::= are-optional"
    (should (eq (bnf-test-face-at 90) 'font-lock-builtin-face))
    (should (eq (bnf-test-face-at 94) 'font-lock-builtin-face))))
 
+(ert-deftest bnf-mode-syntax-table/fontify-dotcomma-inside-rule ()
+  :tags '(fontification syntax-table)
+  (bnf-test-with-temp-buffer
+   "<a rule> ::= <abc;>
+; <foo> ::= <bar>
+<a> ::= <ab;c>"
+   ;; "abc;"
+   (should (eq (bnf-test-face-at 16) 'font-lock-builtin-face))
+   (should (eq (bnf-test-face-at 18) 'font-lock-builtin-face))
+   ;; "; <foo> ::= <bar>"
+   (should (eq (bnf-test-face-at 22) 'font-lock-comment-delimiter-face))
+   (should (eq (bnf-test-face-at 22) 'font-lock-comment-delimiter-face))
+   (should (eq (bnf-test-face-at 23) 'font-lock-comment-face))
+   (should (eq (bnf-test-face-at 37) 'font-lock-comment-face))
+   ;; "ab;c"
+   (should (eq (bnf-test-face-at 48) 'font-lock-builtin-face))
+   (should (eq (bnf-test-face-at 51) 'font-lock-builtin-face))))
+
 (provide 'bnf-mode-font-test)
 ;;; bnf-mode-font-test.el ends here
