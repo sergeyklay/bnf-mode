@@ -168,11 +168,11 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\=  "_"   table)
     ;; Treat | as a symbol
     (modify-syntax-entry ?\|  "_"   table)
-    ;; In the BNF there are no strings
+    ;; In BNF there are no strings
     ;; so treat ' and " as a symbols
     (modify-syntax-entry ?\"  "_"  table)
     (modify-syntax-entry ?\'  "_"  table)
-    ;; In the BNF there are no grouping
+    ;; In BNF there are no grouping
     ;; brackets except angle ones
     (modify-syntax-entry ?\(  "_"  table)
     (modify-syntax-entry ?\)  "_"  table)
@@ -195,6 +195,7 @@ See `rx' documentation for more information about REGEXPS param."
   (setq-local comment-use-syntax nil)
   (setq-local comment-start "; ")
   (setq-local comment-end "")
+  (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-*")
   ;; Font locking
   (setq font-lock-defaults
         '(

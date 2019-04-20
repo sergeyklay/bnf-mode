@@ -49,7 +49,7 @@
   (bnf-test-with-temp-buffer "; A
 
 <stm> ::= <decl> ; foo"
-                             (should (eq (bnf-test-face-at 1) 'font-lock-comment-face))
+                             (should (eq (bnf-test-face-at 1) 'font-lock-comment-delimiter-face))
                              (should (eq (bnf-test-face-at 3) 'font-lock-comment-face))
                              (should-not (bnf-test-face-at 5))
                              (should (eq (bnf-test-face-at 24) 'font-lock-comment-face))))
