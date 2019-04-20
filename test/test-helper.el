@@ -32,16 +32,10 @@
 
 ;;; Code:
 
-(require 'ert-x)          ; `ert-with-test-buffer'
-(require 'cl-lib)         ; `cl-defmacro'
+(require 'cl-lib) ; `cl-defmacro'
 
 ;; Make sure the exact Emacs version can be found in the build output
 (message "Running tests on Emacs %s" emacs-version)
-
-;; The test fixtures assume an indentation width of 4, so we need to set that
-;; up for the tests.
-(setq-default default-tab-width 4
-              indent-tabs-mode nil)
 
 (when (require 'undercover nil t)
   (undercover "bnf-mode.el"))
@@ -53,44 +47,18 @@
   ;; Load the file under test
   (load (expand-file-name "bnf-mode" source-directory)))
 
-;; Helpers
-
-(cl-defmacro bnf-deftest (name args &body body)
-  (declare (indent 2))
-  `(ert-deftest ,(intern (format "bnf-ert-%s" name)) ()
-     ""
-     ,@args))
-
-(cl-defmacro bnf-ert-with-test-buffer ((&rest args) initial-contents &body body)
-  (declare (indent 2))
-  `(ert-with-test-buffer (,@args)
-     (bnf-mode)
-     (insert ,initial-contents)
-     ,@body))
-
-(defmacro bnf-test-with-temp-buffer (content &rest body)
+(cl-defmacro bnf-test-with-temp-buffer (content &rest body)
   "Evaluate BODY in a temporary buffer with CONTENT."
   (declare (debug t)
            (indent 1))
   `(with-temp-buffer
      (insert ,content)
      (bnf-mode)
-     (font-lock-fontify-buffer)
+     ,(if (fboundp 'font-lock-ensure)
+          '(font-lock-ensure)
+        '(with-no-warnings (font-lock-fontify-buffer)))
      (goto-char (point-min))
      ,@body))
-
-(cl-defmacro bnf-def-indentation-test (name args initial-contents expected-output)
-  (declare (indent 2))
-  `(bnf-deftest ,name ,args
-                (bnf-ert-with-test-buffer (:name ,(format "(Expected)" name))
-                                          ,initial-contents
-                                          (let ((indented (ert-buffer-string-reindented)))
-                                            (delete-region (point-min) (point-max))
-                                            (insert ,expected-output)
-                                            (ert-with-test-buffer (:name ,(format "(Actual)" name))
-                                              (bnf-mode)
-                                              (insert indented)
-                                              (should (equal indented ,expected-output)))))))
 
 (defun bnf-test-face-at (pos &optional content)
   "Get the face at POS in CONTENT.

@@ -141,7 +141,7 @@ angle-brackets ::= are-optional"
 
 (ert-deftest bnf-mode-syntax-table/fontify-rule-punctuation ()
   :tags '(fontification syntax-table)
-  (bnf-test-with-temp-buffer"
+  (bnf-test-with-temp-buffer "
 <proper string> ::=
         <any sequence of symbols not containing ` or ' >
         | <empty>"
