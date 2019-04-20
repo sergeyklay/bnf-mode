@@ -27,7 +27,7 @@ CASK = cask
 PANDOC ?= pandoc
 
 EMACSFLAGS ?=
-TESTFLAGS ?=
+TESTFLAGS ?= --reporter ert+duration
 PANDOCLAGS ?= --fail-if-warnings \
 	--reference-links \
 	--atx-headers

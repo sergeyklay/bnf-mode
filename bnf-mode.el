@@ -89,16 +89,14 @@
 
 (eval-when-compile
   (defconst bnf-rx-constituents
-    `(
-      (bnf-rule-name . ,(rx
-                         (and
-                          (1+ (or alnum digit))
-                          (0+ (or alnum digit
-                                  (in "!\"\#$%&'()*+,\-./:;=?@\[\\\]^_`{|}~")
-                                  (in " \t"))))))
+    `((bnf-rule-name . ,(rx (and
+                             (1+ (or alnum digit))
+                             (0+ (or alnum digit
+                                     (in "!\"\#$%&'()*+,\-./:;=?@\[\\\]^_`{|}~")
+                                     (in " \t"))))))
     "Additional special sexps for `bnf-rx'."))
 
-  (defmacro bnf-rx (&rest sexps)
+  (cl-defmacro bnf-rx (&rest sexps)
      "BNF-specific replacement for `rx'.
 
 In addition to the standard forms of `rx', the following forms
@@ -209,8 +207,7 @@ See `rx' documentation for more information about REGEXPS param."
           ;; all refer to the same rule.  As far as is known, this doesn't
           ;; conflict with original BNF version
           ;; (see URL `https://tools.ietf.org/html/rfc5234')
-          t
-          )))
+          t)))
 
 ;; Invoke bnf-mode when appropriate
 
