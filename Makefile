@@ -112,10 +112,15 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README $(ARCHIVE_NAME).info $(ARCHIVE_NAME)-pkg.el
+	$(RM) -f README $(ARCHIVE_NAME).info
+	$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
 
 .PHONY: package
 package: $(PACKAGE_NAME).tar
+
+.PHONY: install
+install: $(PACKAGE_NAME).tar
+	$(EMACS) --batch -l package -f package-initialize --eval "(package-install-file \"$(PWD)/$(PACKAGE_NAME).tar\")"
 
 .PHONY: help
 help: .title
@@ -127,8 +132,10 @@ help: .title
 	echo '  checkdoc: Checks BNF Mode code for errors in documentation'
 	echo '  build:    Byte compile BNF Mode package'
 	echo '  test:     Run the non-interactive unit test suite'
-	echo '  clean:    Remove all byte compiled Elisp files'
+	echo '  clean:    Remove all byte compiled Elisp files as well as build'
+	echo '            artifacts'
 	echo '  package:  Build package'
+	echo '  install:  Install BNF Mode'
 	echo ''
 	echo 'Available programs:'
 	echo '  $(CASK): $(if $(HAVE_CASK),yes,no)'
