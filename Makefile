@@ -25,6 +25,7 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 EMACS ?= emacs
 CASK ?= cask
 PANDOC ?= pandoc
+TAR ?= COPYFILE_DISABLE=1 bsdtar
 
 EMACSFLAGS ?=
 TESTFLAGS ?= --reporter ert+duration
@@ -39,8 +40,9 @@ PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
 
-ARCHIVE_NAME=bnf-mode
+ARCHIVE_NAME = bnf-mode
 VERSION ?= $(shell $(CASK) version)
+PACKAGE_NAME = $(ARCHIVE_NAME)-$(VERSION)
 
 .SILENT: ;               # no need for @
 .ONESHELL: ;             # recipes execute in same shell
@@ -81,6 +83,12 @@ $(ARCHIVE_NAME).info: README.org
 README: README.org
 	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain -o $@
 
+$(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
+	$(CASK) pkg-file
+
+$(PACKAGE_NAME).tar: README $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
+	$(TAR) -c -s "@^@$(PACKAGE_NAME)/@" -f $(PACKAGE_NAME).tar $^
+
 # Public targets
 
 .PHONY: .title
@@ -104,7 +112,10 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README
+	$(RM) -f README $(ARCHIVE_NAME).info $(ARCHIVE_NAME)-pkg.el
+
+.PHONY: package
+package: $(PACKAGE_NAME).tar
 
 .PHONY: help
 help: .title
@@ -117,9 +128,11 @@ help: .title
 	echo '  build:    Byte compile BNF Mode package'
 	echo '  test:     Run the non-interactive unit test suite'
 	echo '  clean:    Remove all byte compiled Elisp files'
+	echo '  package:  Build package'
 	echo ''
 	echo 'Available programs:'
 	echo '  $(CASK): $(if $(HAVE_CASK),yes,no)'
 	echo ''
-	echo 'You need $(CASK) to develop BNF Mode.  See http://cask.readthedocs.io/ for more.'
+	echo 'You need $(CASK) to develop BNF Mode.'
+	echo 'See http://cask.readthedocs.io/ for more.'
 	echo ''

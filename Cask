@@ -9,7 +9,6 @@
 
 (development
  (depends-on "f")
- (depends-on "ert-x")
  (depends-on "cl-lib")
  (depends-on "ert-runner")
  (depends-on "undercover"))

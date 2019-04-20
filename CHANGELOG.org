@@ -11,6 +11,8 @@ The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this 
 - Return back =comment-start= and =comment-end= removed in [[https://github.com/sergeyklay/bnf-mode/commit/83f0e0fc144e453bcce459d2d655a7b48e77953e][83f0e0f]]
 - More intelligent terminal syntax recognition.
   Added support of "=;=" character as an extra character used in terminals.
+- Provided ability to build installation package.
+  See =make help= for more.
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.3.1...0.3.2][0.3.2]] - 2019-03-24
 *** Changed

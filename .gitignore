@@ -9,4 +9,6 @@
 *.elc
 .cask/
 bnf-mode.info
+bnf-mode-pkg.el
+bnf-mode-*.tar
 README
