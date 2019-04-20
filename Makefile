@@ -31,8 +31,7 @@ TESTFLAGS ?= --reporter ert+duration
 PANDOCLAGS ?= --fail-if-warnings \
 	--reference-links \
 	--atx-headers \
-	-f org+empty_paragraphs \
-	-t plain
+	-f org+empty_paragraphs
 
 PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
@@ -40,6 +39,7 @@ PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
 
+ARCHIVE_NAME=bnf-mode
 VERSION ?= $(shell $(CASK) version)
 
 .SILENT: ;               # no need for @
@@ -71,9 +71,15 @@ $(PKGDIR): Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
-RE_BADGES = "s/\[\[.*\.svg\]\]//g"
+define org-clean
+	cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
+endef
+
+$(ARCHIVE_NAME).info: README.org
+	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t texinfo | makeinfo -o $@
+
 README: README.org
-	$(shell cat $^ | sed -e $(RE_BADGES) | $(PANDOC) $(PANDOCLAGS) -o $@)
+	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain -o $@
 
 # Public targets
 

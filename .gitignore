@@ -8,4 +8,5 @@
 *~
 *.elc
 .cask/
+bnf-mode.info
 README
