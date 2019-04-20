@@ -81,6 +81,8 @@ script:
   # The 'checkdoc-file' present on Emacs >= 25.1
   - '[[ "$EMACS_MAJOR_VERSION" = "24" ]] || make checkdoc'
   - make test
+  - wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb -o /dev/null
+  - sudo dpkg -i pandoc-2.7.2-1-amd64.deb
   - make package
   - ls -al
 
