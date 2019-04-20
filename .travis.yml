@@ -90,9 +90,7 @@ before_deploy:
 
 deploy:
   provider: releases
-  api_key:
-    secure:
-      SUFVzrJwPz29I6x4SFB5vNboKxX8pEIdB67+d6w4/hgeifYbDl7BSWLq1HFYvTIIye439uVCIN0zkwNGFUJsjIfw4Yn0N3dasgD7dlxguUz7mBg5JV8BOzQqguv/XmY3ze2aXTkk+nbx37wvTt5SsGOyq9pT/Vrufxli7YbAglFl648Nc8fshQSioBpQKWXTD3Msgs5QNjM6ShAgeEA11GBaRgO2aZaokxv+9xsdM00O7ADHulaC+jniO3BucQrENQeGI5mLIzPZdHpfOrlQ600J4jU3cC8C7NTgkQDBpNhN5eiDallvHxTl0sb5EvTwznMAGi+YXGmorgkCnGT+glnj1zWYaV2T4O038h7xT/Kub/iSpi3GQVmxMNrS09JbZXuQcXyvyvNPYJhQZG8M8MYPb1N7u6MfMav88SDTZkxGzJ9gI5l4CyPaMAO2GdVdXeY0ANGtyg7ntDZpFtxIRRjIpSthU/QQ3Ss0yLVay0w86w52Tjc2p0CXwt0YxcJSkKIcI+Ld6ouKWofyEqlKMbgwzNyBnJ8GdTuBlE2+9HwVxG/38GUsqjsW2NH+rgpPd0Uxj8SltXVkkebXe+aSiyfzHdMVqYrVbbmQFfK+lN18+ZUeG9kXiXCb5hDuDJU3PcKSYVTrFrpKieYTv6phYwnbKpM1hP2n5r7XfsDuWlM=
+  api_key: $GITHUB_TOKEN
   file_glob: true
   file: bnf-mode-*.tar
   skip_cleanup: true
