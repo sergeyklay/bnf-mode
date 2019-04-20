@@ -22,15 +22,17 @@
 SHELL := $(shell which bash)
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-EMACS := emacs
-CASK = cask
+EMACS ?= emacs
+CASK ?= cask
 PANDOC ?= pandoc
 
 EMACSFLAGS ?=
 TESTFLAGS ?= --reporter ert+duration
 PANDOCLAGS ?= --fail-if-warnings \
 	--reference-links \
-	--atx-headers
+	--atx-headers \
+	-f org+empty_paragraphs \
+	-t plain
 
 PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
@@ -44,7 +46,7 @@ VERSION ?= $(shell $(CASK) version)
 .ONESHELL: ;             # recipes execute in same shell
 .NOTPARALLEL: ;          # wait for this target to finish
 .EXPORT_ALL_VARIABLES: ; # send all vars to shell
-Makefile: ; # skip prerequisite discovery
+Makefile: ;              # skip prerequisite discovery
 
 # Run make help by default
 .DEFAULT_GOAL = build
@@ -69,11 +71,9 @@ $(PKGDIR): Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
-README: README.org2
-	$(PANDOC) $(PANDOCLAGS) -f org+empty_paragraphs -t plain -o $@ $^
-
-README.org2: README.org
-	$(shell cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"  > $@)
+RE_BADGES = "s/\[\[.*\.svg\]\]//g"
+README: README.org
+	$(shell cat $^ | sed -e $(RE_BADGES) | $(PANDOC) $(PANDOCLAGS) -o $@)
 
 # Public targets
 
@@ -98,7 +98,7 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README README.org2
+	$(RM) -f README
 
 .PHONY: help
 help: .title
