@@ -1,6 +1,6 @@
 # Copyright (C) 2019 Serghei Iakovlev
 #
-# This file is not part of GNU Emacs.
+# This file is NOT part of GNU Emacs.
 #
 # License
 #
