@@ -6,11 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this project adheres to [[http://semver.org][Semantic Versioning]].
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.1...HEAD][Unreleased]]
-*** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.0...0.4.1][0.4.1]] - 2019-04-21
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.0...0.4.1][0.4.1]] - 2019-04-21
 *** Fixes
 - Minor fix related to build & deploy BNF Mode on Travis CI
 
-*** [[https://github.com/sergeyklay/bnf-mode/compare/0.3.2...0.4.0][0.4.0]] - 2019-04-21
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.3.2...0.4.0][0.4.0]] - 2019-04-21
 *** Added
 - Added =comment-start-skip= to help comment commands recognize comments
 - Return back =comment-start= and =comment-end= removed in [[https://github.com/sergeyklay/bnf-mode/commit/83f0e0fc144e453bcce459d2d655a7b48e77953e][83f0e0f]]
