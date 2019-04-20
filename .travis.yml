@@ -82,8 +82,8 @@ script:
   - make test
 
 before_deploy:
-  - git config --global user.name cicdbot
-  - git config --global user.email team@zephir-lang.com
+  - git config --global user.name "Serghei Iakovlev"
+  - git config --global user.email serghei@phalconphp.com
   - wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb -o /dev/null
   - sudo dpkg -i pandoc-2.7.2-1-amd64.deb
   - make package
