@@ -234,11 +234,10 @@ Currently handled:
 
 (defconst bnf--bnf-syntax-propertize-macro
   (syntax-propertize-rules
-   ("\\(?:begin\\_>\\|;\\)\\(?:$\\|\\s-\\|\n\\)+\\(\\(?:comment\\_>\\)[^;]*;\\)"
-    (1 "<")))
+   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
   "Fontify comments in ALGOL 60 style.
 Provide a macro to apply syntax table properties to comments in ALGOL 60 style.
-Will used only if `bnf-mode-algol-commets-style' is set to t")
+Will be used only if `bnf-mode-algol-commets-style' is set to t")
 
 ;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
@@ -252,7 +251,7 @@ Will used only if `bnf-mode-algol-commets-style' is set to t")
       (progn
         (setq-local comment-start "; comment ")
         (setq-local comment-end ";")
-        (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\)comment\\_>\\)\\s-+")
+        (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\)comment\\)\\s-+")
         (setq-local syntax-propertize-function
                     bnf--bnf-syntax-propertize-macro))
     (progn
