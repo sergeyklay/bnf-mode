@@ -77,6 +77,7 @@ before_script:
 script:
   - make help
   - make init
+  - make build
   # The 'checkdoc-file' present on Emacs >= 25.1
   - '[[ "$EMACS_MAJOR_VERSION" = "24" ]] || make checkdoc'
   - make test

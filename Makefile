@@ -67,7 +67,7 @@ RUNEMACS = $(CASK) exec $(EMACSBATCH)
 endif
 
 %.elc: %.el $(PKGDIR)
-	$(RUNEMACS) -f batch-byte-compile $<
+	$(RUNEMACS) --eval '(setq byte-compile-error-on-warn t)' -f batch-byte-compile $<
 
 $(PKGDIR): Cask
 	$(CASK) install
