@@ -57,6 +57,7 @@
      ,(if (fboundp 'font-lock-ensure)
           '(font-lock-ensure)
         '(with-no-warnings (font-lock-fontify-buffer)))
+
      (goto-char (point-min))
      ,@body))
 

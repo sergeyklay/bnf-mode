@@ -84,6 +84,24 @@
   :type 'hook
   :group 'bnf)
 
+(defcustom bnf-mode-algol-comments-style nil
+  "Non-nil means use for BNF comments style introduced in ALGOL 60.
+
+For the purpose of including text among the symbols of a program the
+following \"comment\" conventions will hold:
+
+  :------------------------------------------------:------------------:
+  | The sequence of basic symbols:                 | is equivalent to |
+  :------------------------------------------------:------------------:
+  | ; comment <any sequence not containing ;>;     | ;                |
+  | begin comment <any sequence not containing ;>; | begin            |
+  :------------------------------------------------:------------------:
+
+Note: Enabling this feature will disable comments recognition which use
+semicolon only (\";\")."
+  :group 'bnf
+  :type 'boolean)
+
 
 ;;; Specialized rx
 
@@ -160,47 +178,49 @@ See `rx' documentation for more information about REGEXPS param."
   (let ((table (make-syntax-table)))
     ;; Give CR the same syntax as newline
     (modify-syntax-entry ?\^m "> b" table)
-    ;; Comments setup
-    (modify-syntax-entry ?\;  "<"   table)
-    (modify-syntax-entry ?\n  ">"   table)
+
     ;; Treat ::= as sequence of symbols
-    (modify-syntax-entry ?\:  "_"   table)
-    (modify-syntax-entry ?\=  "_"   table)
+    (modify-syntax-entry ?\: "_" table)
+    (modify-syntax-entry ?\= "_" table)
+
     ;; Treat | as a symbol
-    (modify-syntax-entry ?\|  "_"   table)
+    (modify-syntax-entry ?\| "_" table)
+
     ;; In BNF there are no strings
     ;; so treat ' and " as a symbols
-    (modify-syntax-entry ?\"  "_"  table)
-    (modify-syntax-entry ?\'  "_"  table)
+    (modify-syntax-entry ?\" "_" table)
+    (modify-syntax-entry ?\' "_" table)
+
     ;; In BNF there are no grouping
     ;; brackets except angle ones
-    (modify-syntax-entry ?\(  "_"  table)
-    (modify-syntax-entry ?\)  "_"  table)
-    (modify-syntax-entry ?\{  "_"  table)
-    (modify-syntax-entry ?\}  "_"  table)
-    (modify-syntax-entry ?\[  "_"  table)
-    (modify-syntax-entry ?\]  "_"  table)
+    (modify-syntax-entry ?\( "_" table)
+    (modify-syntax-entry ?\) "_" table)
+    (modify-syntax-entry ?\{ "_" table)
+    (modify-syntax-entry ?\} "_" table)
+    (modify-syntax-entry ?\[ "_" table)
+    (modify-syntax-entry ?\] "_" table)
+
     ;; Group angle brackets
-    (modify-syntax-entry ?\<  "(>"  table)
-    (modify-syntax-entry ?\>  ")<"  table)
+    (modify-syntax-entry ?\< "(>" table)
+    (modify-syntax-entry ?\> ")<" table)
+
+    ;; Comments setup
+    (if bnf-mode-algol-comments-style
+        (modify-syntax-entry ?\; ">" table)
+      (progn
+        (modify-syntax-entry ?\; "<" table)
+        (modify-syntax-entry ?\n ">" table)))
+
     table)
   "Syntax table in use in `bnf-mode' buffers.")
 
-(defun bnf--syntax-propertize (start end)
-  "Apply syntax table properties to special constructs in region START to END.
-Currently handled:
-
- - Fontify terminals with ';' character correctly"
-  (save-excursion
-    (goto-char start)
-    ;; Search for terminals like "<abc;>" or "<a;bc>".
-    ;; Does not work for terminals like "<a;bc;>".
-    (while (re-search-forward "\\(?:<[^>]*\\);" end t)
-      (when (looking-at "\\(?:[^>]\\)*>")
-        ;; Mark the ";" character as an extra character used in terminals
-        ;; along with word constituents.
-        (put-text-property (1- (point)) (point)
-                           'syntax-table (string-to-syntax "_"))))))
+(defconst bnf--syntax-propertize
+  (syntax-propertize-rules
+   ;; Fontify comments in ALGOL 60 style.
+   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
+  "Apply syntax table properties to special constructs.
+Provide a macro to apply syntax table properties to comments in ALGOL 60 style.
+Will be used only if `bnf-mode-algol-comments-style' is set to t")
 
 
 ;;; Initialization
@@ -210,13 +230,35 @@ Currently handled:
   "A major mode for editing BNF grammars."
   :syntax-table bnf-mode-syntax-table
   :group 'bnf-mode
-  ;; Comments setup.
+
+  ;; Comments setup
   (setq-local comment-use-syntax nil)
-  (setq-local comment-start "; ")
-  (setq-local comment-end "")
-  (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-*")
-  ;; Tune up syntax `syntax-table'
-  (setq-local syntax-propertize-function #'bnf--syntax-propertize)
+  (if bnf-mode-algol-comments-style
+      (progn
+        (setq-local comment-start "; comment ")
+        (setq-local comment-end ";")
+        (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\)comment\\)\\s-+")
+        (setq-local syntax-propertize-function bnf--syntax-propertize))
+    (progn
+      (setq-local comment-start "; ")
+      (setq-local comment-end "")
+      (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")))
+
+  ;; Basically `syntax-propertize-function' is a construct which belongs
+  ;; to `font-lock'.  But correct indentation depends on
+  ;; syntax properties of the text, and that should ideally be
+  ;; independent of font-lock being activated or not.
+  ;;
+  ;; For `bnf-mode', this means that with `font-lock' disabled, we wont
+  ;; have our syntax properties set correctly, and indentation will
+  ;; suffer.
+  ;;
+  ;; To patch our way around this, we issue a `syntax-propertize' call
+  ;; manually, `font-lock' enabled or not.
+  (with-silent-modifications
+    (when bnf-mode-algol-comments-style
+        (funcall syntax-propertize-function (point-min) (point-max))))
+
   ;; Font locking
   (setq font-lock-defaults
         '(
