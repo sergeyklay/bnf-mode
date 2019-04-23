@@ -7,8 +7,10 @@
 
 (files "*.el")
 
+(depends-on "rx")
+(depends-on "cl-lib")
+
 (development
  (depends-on "f")
- (depends-on "cl-lib")
  (depends-on "ert-runner")
  (depends-on "undercover"))
