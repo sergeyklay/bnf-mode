@@ -81,12 +81,15 @@ $(ARCHIVE_NAME).info: README.org
 	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t texinfo | makeinfo -o $@
 
 README: README.org
-	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain -o $@
+	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
+
+ChangeLog: CHANGELOG.org
+	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
 $(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
 	$(CASK) pkg-file
 
-$(PACKAGE_NAME).tar: README $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
+$(PACKAGE_NAME).tar: README ChangeLog LICENSE $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
 	$(TAR) -c -s "@^@$(PACKAGE_NAME)/@" -f $(PACKAGE_NAME).tar $^
 
 # Public targets
@@ -112,7 +115,7 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README $(ARCHIVE_NAME).info
+	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info
 	$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
 
 .PHONY: package
@@ -124,7 +127,7 @@ install: $(PACKAGE_NAME).tar
 
 .PHONY: help
 help: .title
-	echo 'Run `make init` first to install and update all local dependencies.'
+	echo 'Run "make init" first to install and update all local dependencies.'
 	echo ''
 	echo 'Available targets:'
 	echo '  help:     Show this help and exit'
