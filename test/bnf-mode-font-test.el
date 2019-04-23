@@ -45,8 +45,9 @@
    (should-not (bnf-test-face-at 31))
    (should-not (bnf-test-face-at 35))))
 
-(ert-deftest bnf-mode-syntax-table/fontify-line-comment ()
+(ert-deftest bnf-mode-syntax-table/fontify-line-comments ()
   :tags '(fontification syntax-table)
+  (custom-set-variables '(bnf-mode-algol-comments-style nil))
   (bnf-test-with-temp-buffer
    "; A
 
@@ -55,6 +56,12 @@
    (should (eq (bnf-test-face-at 3) 'font-lock-comment-face))
    (should-not (bnf-test-face-at 5))
    (should (eq (bnf-test-face-at 24) 'font-lock-comment-face))))
+
+;; TODO
+(ert-deftest bnf-mode-syntax-table/fontify-algol-comments ()
+  :tags '(fontification syntax-table)
+  (custom-set-variables '(bnf-mode-algol-comments-style t))
+  (bnf-test-with-temp-buffer "" ))
 
 (ert-deftest bnf-mode-syntax-table/fontify-nonterminals ()
   :tags '(fontification syntax-table)
@@ -162,24 +169,6 @@ angle-brackets ::= are-optional"
    ;; "empty"
    (should (eq (bnf-test-face-at 90) 'font-lock-builtin-face))
    (should (eq (bnf-test-face-at 94) 'font-lock-builtin-face))))
-
-(ert-deftest bnf-mode-syntax-table/fontify-dotcomma-inside-rule ()
-  :tags '(fontification syntax-table)
-  (bnf-test-with-temp-buffer
-   "<a rule> ::= <abc;>
-; <foo> ::= <bar>
-<a> ::= <ab;c>"
-   ;; "abc;"
-   (should (eq (bnf-test-face-at 16) 'font-lock-builtin-face))
-   (should (eq (bnf-test-face-at 18) 'font-lock-builtin-face))
-   ;; "; <foo> ::= <bar>"
-   (should (eq (bnf-test-face-at 22) 'font-lock-comment-delimiter-face))
-   (should (eq (bnf-test-face-at 22) 'font-lock-comment-delimiter-face))
-   (should (eq (bnf-test-face-at 23) 'font-lock-comment-face))
-   (should (eq (bnf-test-face-at 37) 'font-lock-comment-face))
-   ;; "ab;c"
-   (should (eq (bnf-test-face-at 48) 'font-lock-builtin-face))
-   (should (eq (bnf-test-face-at 51) 'font-lock-builtin-face))))
 
 (provide 'bnf-mode-font-test)
 ;;; bnf-mode-font-test.el ends here

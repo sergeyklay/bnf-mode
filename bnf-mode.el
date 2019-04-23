@@ -84,11 +84,11 @@
   :type 'hook
   :group 'bnf)
 
-(defcustom bnf-mode-algol-commets-style nil
+(defcustom bnf-mode-algol-comments-style nil
   "Non-nil means use for BNF comments style introduced in ALGOL 60.
 
-For the purpose of including text among the symbols of a program the following
-\"comment\" conventions will hold:
+For the purpose of including text among the symbols of a program the
+following \"comment\" conventions will hold:
 
   :------------------------------------------------:------------------:
   | The sequence of basic symbols:                 | is equivalent to |
@@ -97,7 +97,8 @@ For the purpose of including text among the symbols of a program the following
   | begin comment <any sequence not containing ;>; | begin            |
   :------------------------------------------------:------------------:
 
-Note: Enabling this feature disables ABNF/EBN comments style (just \";\")."
+Note: Enabling this feature will disable comments recognition which use
+semicolon only (\";\")."
   :group 'bnf
   :type 'boolean)
 
@@ -204,7 +205,7 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\> ")<" table)
 
     ;; Comments setup
-    (if bnf-mode-algol-commets-style
+    (if bnf-mode-algol-comments-style
         (modify-syntax-entry ?\; ">" table)
       (progn
         (modify-syntax-entry ?\; "<" table)
@@ -213,31 +214,16 @@ See `rx' documentation for more information about REGEXPS param."
     table)
   "Syntax table in use in `bnf-mode' buffers.")
 
-(defun bnf--bnf-syntax-propertize-function (start end)
-  "Apply syntax table properties to special constructs in region START to END.
-Currently handled:
-
- - Fontify terminals with ';' character correctly"
-  (save-excursion
-    (goto-char start)
-    ;; Search for terminals like "<abc;>" or "<a;bc>".
-    ;; Does not work for terminals like "<a;bc;>".
-    (while (re-search-forward "\\(?:<[^>]*\\);" end t)
-      (when (looking-at "\\(?:[^>]\\)*>")
-        ;; Mark the ";" character as an extra character used in terminals
-        ;; along with word constituents.
-        (put-text-property (1- (point)) (point)
-                           'syntax-table (string-to-syntax "_"))))))
+(defconst bnf--syntax-propertize
+  (syntax-propertize-rules
+   ;; Fontify comments in ALGOL 60 style.
+   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
+  "Apply syntax table properties to special constructs.
+Provide a macro to apply syntax table properties to comments in ALGOL 60 style.
+Will be used only if `bnf-mode-algol-comments-style' is set to t")
 
 
 ;;; Initialization
-
-(defconst bnf--bnf-syntax-propertize-macro
-  (syntax-propertize-rules
-   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
-  "Fontify comments in ALGOL 60 style.
-Provide a macro to apply syntax table properties to comments in ALGOL 60 style.
-Will be used only if `bnf-mode-algol-commets-style' is set to t")
 
 ;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
@@ -247,19 +233,16 @@ Will be used only if `bnf-mode-algol-commets-style' is set to t")
 
   ;; Comments setup
   (setq-local comment-use-syntax nil)
-  (if bnf-mode-algol-commets-style
+  (if bnf-mode-algol-comments-style
       (progn
         (setq-local comment-start "; comment ")
         (setq-local comment-end ";")
         (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\)comment\\)\\s-+")
-        (setq-local syntax-propertize-function
-                    bnf--bnf-syntax-propertize-macro))
+        (setq-local syntax-propertize-function bnf--syntax-propertize))
     (progn
       (setq-local comment-start "; ")
       (setq-local comment-end "")
-      (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")
-      (setq-local syntax-propertize-function
-                  #'bnf--bnf-syntax-propertize-function)))
+      (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")))
 
   ;; Basically `syntax-propertize-function' is a construct which belongs
   ;; to `font-lock'.  But correct indentation depends on
@@ -273,9 +256,8 @@ Will be used only if `bnf-mode-algol-commets-style' is set to t")
   ;; To patch our way around this, we issue a `syntax-propertize' call
   ;; manually, `font-lock' enabled or not.
   (with-silent-modifications
-    (if bnf-mode-algol-commets-style
-        (funcall syntax-propertize-function (point-min) (point-max))
-      (bnf--bnf-syntax-propertize-function (point-min) (point-max))))
+    (when bnf-mode-algol-comments-style
+        (funcall syntax-propertize-function (point-min) (point-max))))
 
   ;; Font locking
   (setq font-lock-defaults

@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this project adheres to [[http://semver.org][Semantic Versioning]].
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.1...HEAD][Unreleased]]
+*** Added
+- Introduce ALGOL 60 comments style [[https://github.com/sergeyklay/bnf-mode/pull/4][#4]]
+
+*** Changed
+- Only setting =bnf-mode-algol-comments-style= to non-nil will allow use
+  semicolons as a regular terminal symbols
+
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.0...0.4.1][0.4.1]] - 2019-04-21
 *** Fixes
 - Minor fix related to build & deploy BNF Mode on Travis CI
@@ -21,7 +28,7 @@ The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this 
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.3.1...0.3.2][0.3.2]] - 2019-03-24
 *** Changed
-- Publish package on MELPA [[https://github.com/melpa/melpa/pull/6074][(melpa/melpa#6074)]]
+- Published package on MELPA [[https://github.com/melpa/melpa/pull/6074][(melpa/melpa#6074)]]
 
 *** Fixed
 - In the BNF there are no strings thus treat ' and " as a regular symbols
@@ -29,7 +36,7 @@ The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this 
 - In the BNF there are no grouping brackets except angle ones. Fixed
 
 *** Removed
-- Removing the ~bnf-mode-version~ function. Users can easily call ~describe-package~
+- Removed the ~bnf-mode-version~ function. Users can easily call ~describe-package~
   or ~pkg-info-package-version~ interactively if they want to get this information [[https://github.com/sergeyklay/bnf-mode/issues/1][(#1)]]
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.3.0...0.3.1][0.3.1]] - 2019-03-17
