@@ -279,9 +279,4 @@ Will be used only if `bnf-mode-algol-comments-style' is set to t")
 (add-to-list 'auto-mode-alist '("\\.bnf\\'" . bnf-mode))
 
 (provide 'bnf-mode)
-
-;; Local Variables:
-;; firestarter: ert-run-tests-interactively
-;; End:
-
 ;;; bnf-mode.el ends here
