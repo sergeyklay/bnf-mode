@@ -14,6 +14,9 @@ The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this 
 - Only setting =bnf-mode-algol-comments-style= to non-nil will allow use
   semicolons as a regular terminal symbols. For more see: [[https://github.com/sergeyklay/bnf-mode/pull/4][#4]] .
 
+** Removed
+- Removed wrongly used (and documented) =syntax-propertize-function= funcall
+
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.0...0.4.1][0.4.1]] - 2019-04-21
 *** Fixes
 - Minor fix related to build & deploy BNF Mode on Travis CI.

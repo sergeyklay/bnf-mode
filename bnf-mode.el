@@ -244,21 +244,6 @@ Will be used only if `bnf-mode-algol-comments-style' is set to t")
       (setq-local comment-end "")
       (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")))
 
-  ;; Basically `syntax-propertize-function' is a construct which belongs
-  ;; to `font-lock'.  But correct indentation depends on
-  ;; syntax properties of the text, and that should ideally be
-  ;; independent of font-lock being activated or not.
-  ;;
-  ;; For `bnf-mode', this means that with `font-lock' disabled, we wont
-  ;; have our syntax properties set correctly, and indentation will
-  ;; suffer.
-  ;;
-  ;; To patch our way around this, we issue a `syntax-propertize' call
-  ;; manually, `font-lock' enabled or not.
-  (with-silent-modifications
-    (when bnf-mode-algol-comments-style
-        (funcall syntax-propertize-function (point-min) (point-max))))
-
   ;; Font locking
   (setq font-lock-defaults
         '(
