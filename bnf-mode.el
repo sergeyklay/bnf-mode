@@ -1,6 +1,6 @@
 ;;; bnf-mode.el --- Major mode for editing BNF grammars. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Serghei Iakovlev
+;; Copyright (C) 2019 Free Software Foundation, Inc
 
 ;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
 ;; Maintainer: Serghei Iakovlev
@@ -11,7 +11,7 @@
 
 ;; This file is NOT part of GNU Emacs.
 
-;;; License
+;;;; License
 
 ;; This file is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -24,9 +24,7 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this file; if not, write to the Free Software
-;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-;; 02110-1301, USA.
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -78,12 +76,6 @@
   :link '(url-link :tag "GitHub Page" "https://github.com/sergeyklay/bnf-mode")
   :link '(emacs-commentary-link :tag "Commentary" "bnf-mode"))
 
-(defcustom bnf-mode-hook nil
-  "List of functions to call when entering BNF Mode."
-  :tag "Hook"
-  :type 'hook
-  :group 'bnf)
-
 (defcustom bnf-mode-algol-comments-style nil
   "Non-nil means use for BNF comments style introduced in ALGOL 60.
 
@@ -99,7 +91,6 @@ following \"comment\" conventions will hold:
 
 Note: Enabling this feature will disable comments recognition which use
 semicolon only (\";\")."
-  :group 'bnf
   :type 'boolean)
 
 
@@ -110,7 +101,7 @@ semicolon only (\";\")."
     `((bnf-rule-name . ,(rx (and
                              (1+ (or alnum digit))
                              (0+ (or alnum digit
-                                     (in "!\"\#$%&'()*+,\-./:;=?@\[\\\]^_`{|}~")
+                                     (in "!\"#$%&'()*+,-./:;=?@[\\]^_`{|}~")
                                      (in " \t"))))))
     "Additional special sexps for `bnf-rx'."))
 
@@ -128,12 +119,10 @@ are available:
 
 See `rx' documentation for more information about REGEXPS param."
      (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
-       (cond ((null sexps)
-              (error "No regexp"))
-             ((cdr sexps)
-              (rx-to-string `(and ,@sexps) t))
-             (t
-              (rx-to-string (car sexps) t))))))
+       (rx-to-string (cond ((null sexps) (error "No regexp"))
+                           ((cdr sexps)  `(and ,@sexps))
+                           (t            (car sexps)))
+                     t))))))
 
 
 ;;; Font Locking
@@ -177,7 +166,13 @@ See `rx' documentation for more information about REGEXPS param."
 (defvar bnf-mode-syntax-table
   (let ((table (make-syntax-table)))
     ;; Give CR the same syntax as newline
+    ;; FIXME: Why?
     (modify-syntax-entry ?\^m "> b" table)
+
+    ;; FIXME: "_" doesn't mean "symbol" but "symbol constituent".
+    ;; I.e. the settings below mean that Emacs will consider "a:b=(c" as one
+    ;; symbol (aka "identifier") which can be seen if you try to C-M-f and
+    ;; C-M-b to move by sexps.
 
     ;; Treat ::= as sequence of symbols
     (modify-syntax-entry ?\: "_" table)
@@ -229,7 +224,6 @@ Will be used only if `bnf-mode-algol-comments-style' is set to t")
 (define-derived-mode bnf-mode prog-mode "BNF"
   "A major mode for editing BNF grammars."
   :syntax-table bnf-mode-syntax-table
-  :group 'bnf-mode
 
   ;; Comments setup
   (setq-local comment-use-syntax nil)
@@ -251,7 +245,7 @@ Will be used only if `bnf-mode-algol-comments-style' is set to t")
           bnf-font-lock-keywords
           ;; keywords-only
           nil
-          ;; Regarding to RFC5234 rule names are case insensitive.
+          ;; According to RFC5234 rule names are case insensitive.
           ;; The names <rulename>, <Rulename>, <RULENAME>, and <rUlENamE>
           ;; all refer to the same rule.  As far as is known, this doesn't
           ;; conflict with original BNF version
