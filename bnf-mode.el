@@ -122,7 +122,7 @@ See `rx' documentation for more information about REGEXPS param."
        (rx-to-string (cond ((null sexps) (error "No regexp"))
                            ((cdr sexps)  `(and ,@sexps))
                            (t            (car sexps)))
-                     t))))))
+                     t))))
 
 
 ;;; Font Locking
