@@ -1,6 +1,6 @@
 ;;; bnf-mode-font-test.el --- BNF Mode: Font highlighting test suite -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Serghei Iakovlev
+;; Copyright (C) 2019 Free Software Foundation, Inc.
 
 ;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
 ;; Maintainer: Serghei Iakovlev
@@ -9,7 +9,7 @@
 
 ;; This file is NOT part of GNU Emacs.
 
-;;; License
+;;;; License
 
 ;; This file is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -22,9 +22,7 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this file; if not, write to the Free Software
-;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-;; 02110-1301, USA.
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
