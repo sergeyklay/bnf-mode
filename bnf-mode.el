@@ -3,7 +3,7 @@
 ;; Copyright (C) 2019 Free Software Foundation, Inc
 
 ;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Maintainer: Serghei Iakovlev
+;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
 ;; Version: 0.4.1
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
