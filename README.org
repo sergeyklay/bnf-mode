@@ -47,7 +47,7 @@ The best way of installing this major mode, at least for GNU Emacs 24, is to
 use the packaging system.  The following are ways to install using ELPA and
 MELPA.
 
-*** Using ELPA or MELPA
+*** Initializing packaging system
 **** ELPA
 
 Since version 0.4.1 BNF Mode is available for installation from ELPA.
@@ -84,6 +84,8 @@ For those who want rolling releases as they happen use MELPA:
 (package-initialize)
 #+end_src
 
+*** Installation from package archive
+
 After initializing packaging system you can install BNF Mode using preferred way:
 
 ***** =package-list-packages=
@@ -107,6 +109,8 @@ Add following to your [[https://cask.github.io/][Cask]] file:
 
 #+begin_src emacs-lisp
 (source melpa)
+;; In case of using ELPA
+;; (source elpa)
 
 (depends-on "bnf-mode")
 #+end_src
