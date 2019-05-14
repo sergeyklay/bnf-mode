@@ -99,7 +99,7 @@ semicolon only (\";\")."
     `((bnf-rule-name . ,(rx (and
                              (1+ (or alnum digit))
                              (0+ (or alnum digit
-                                     (in "!\"#$%&'()*+,-./:;=?@[\\]^_`{|}~")
+                                     (in "!\"#$%&'()*+,-./:;=?@[\]^_`{|}~")
                                      (in " \t"))))))
     "Additional special sexps for `bnf-rx'."))
 
@@ -120,7 +120,7 @@ See `rx' documentation for more information about REGEXPS param."
        (rx-to-string (cond ((null sexps) (error "No regexp"))
                            ((cdr sexps)  `(and ,@sexps))
                            (t            (car sexps)))
-                     t))))))
+                     t))))
 
 
 ;;; Font Locking
