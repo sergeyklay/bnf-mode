@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
 ;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Version: 0.4.1
+;; Version: 0.4.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
@@ -62,8 +62,6 @@
 (eval-when-compile
   (require 'rx))    ; `rx'
 
-;; (require 'cl-lib)   ; `cl-defmacro'
-
 
 ;;; Customization
 
@@ -101,7 +99,7 @@ semicolon only (\";\")."
     `((bnf-rule-name . ,(rx (and
                              (1+ (or alnum digit))
                              (0+ (or alnum digit
-                                     (in "!\"#$%&'()*+,-./:;=?@[\\]^_`{|}~")
+                                     (in "!\"#$%&'()*+,-./:;=?@[]^_`{|}~")
                                      (in " \t"))))))
     "Additional special sexps for `bnf-rx'."))
 

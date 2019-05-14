@@ -43,12 +43,30 @@ NOTE: The ~master~ branch will always contain the latest unstable version.
 If you wish to check older versions or formal, tagged release, please switch
 to the relevant [[https://github.com/sergeyklay/bnf-mode/tags][tag]].
 
-*** Using MELPA
-
 The best way of installing this major mode, at least for GNU Emacs 24, is to
-use the packaging system.  Add MELPA or MELPA Stable to the list of repositories
-to access this mode. For those who want only formal, tagged releases use MELPA
-Stable:
+use the packaging system.  The following are ways to install using ELPA and
+MELPA.
+
+*** Using ELPA or MELPA
+**** ELPA
+
+Since version 0.4.1 BNF Mode is available for installation from ELPA.
+Add ELPA to the list of repositories to access this mode:
+
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives
+             '("gnu" . "https://elpa.gnu.org/packages/") t)
+(package-initialize)
+#+end_src
+
+**** MELPA
+
+Add MELPA or MELPA Stable to the list of repositories to access this mode.
+MELPA tracks this Git repository and updates relatively soon after each commit
+or formal release.  For more detail on setting up see [[https://melpa.org/#/getting-started][MELPA Getting Started]].
+
+For those who want only formal, tagged releases use MELPA Stable:
 
 #+begin_src emacs-lisp
 (require 'package)
@@ -66,10 +84,14 @@ For those who want rolling releases as they happen use MELPA:
 (package-initialize)
 #+end_src
 
-and then use ~M-x package-refresh-contents~ and ~M-x package-list-packages~ to get to
-the package listing and install ~bnf-mode~ from there.  MELPA tracks this Git repository
-and updates relatively soon after each commit or formal release.  For more detail on
-setting up see [[https://melpa.org/#/getting-started][MELPA Getting Started]].
+After initializing packaging system you can install BNF Mode using preferred way:
+
+***** =package-list-packages=
+
+Use ~M-x package-refresh-contents~ and ~M-x package-list-packages~ to get to
+the package listing and install ~bnf-mode~ from there.
+
+***** Manual
 
 You can install ~bnf-mode~ manually by adding following to your init file:
 
@@ -79,7 +101,7 @@ You can install ~bnf-mode~ manually by adding following to your init file:
     (package-install 'bnf-mode))
 #+end_src
 
-**** Using Cask
+***** Cask
 
 Add following to your [[https://cask.github.io/][Cask]] file:
 
@@ -89,27 +111,29 @@ Add following to your [[https://cask.github.io/][Cask]] file:
 (depends-on "bnf-mode")
 #+end_src
 
-**** Using use-package
+***** =use-package=
 
 Add following to your init file:
 
 #+begin_src emacs-lisp
 (use-package bnf-mode
   :ensure t
+  ;; To use MELPA Stable use ":pin mepla-stable",
+  ;; to use ELPA remove ":pin" line
+  :pin melpa
   :mode "\\.bnf\\'")
 #+end_src
 
 *** El-get
 
-
 If you use el-get, just create a recipe file ~bnf.rcp~:
 
 #+begin_src emacs-lisp
 (:name bnf-mode
-       :website "https://github.com/sergeyklay/bnf-mode"
-       :description "BNF Mode: A major mode for editing BNF grammars"
-       :type github
-       :pkgname "sergeyklay/bnf-mode")
+ :website "https://github.com/sergeyklay/bnf-mode"
+ :description "BNF Mode: A major mode for editing BNF grammars"
+ :type github
+ :pkgname "sergeyklay/bnf-mode")
 #+end_src
 
 and add it to a directory present in ~el-get-recipe-path~.
@@ -168,4 +192,5 @@ To see what has changed in recent versions of BNF Mode, see the [[https://github
 
 ** License
 
-BNF Mode is open source software licensed under the [[https://github.com/sergeyklay/bnf-mode/blob/master/LICENSE][GNU General Public Licence version 3]] .
+BNF Mode is open source software licensed under the [[https://github.com/sergeyklay/bnf-mode/blob/master/LICENSE][GNU General Public Licence version 3]].
+Copyright © 2019, Free Software Foundation, Inc.

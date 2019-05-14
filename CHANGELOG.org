@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this project adheres to [[http://semver.org][Semantic Versioning]].
 
-** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.1...HEAD][Unreleased]]
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.2...HEAD][Unreleased]]
+** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.1...0.4.2][0.4.2]] - 2019-05-14
 *** Added
 - Introduced ALGOL 60 comments style. Disabled by default.
   For more see: [[https://github.com/sergeyklay/bnf-mode/pull/4][#4]] .
@@ -13,9 +14,6 @@ The format is based on [[http://keepachangelog.com][Keep a Changelog]] and this 
 *** Changed
 - Only setting =bnf-mode-algol-comments-style= to non-nil will allow use
   semicolons as a regular terminal symbols. For more see: [[https://github.com/sergeyklay/bnf-mode/pull/4][#4]] .
-
-** Removed
-- Removed wrongly used (and documented) =syntax-propertize-function= funcall
 
 ** [[https://github.com/sergeyklay/bnf-mode/compare/0.4.0...0.4.1][0.4.1]] - 2019-04-21
 *** Fixes

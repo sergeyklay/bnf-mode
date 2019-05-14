@@ -3,8 +3,8 @@
 ;; Copyright (C) 2019 Free Software Foundation, Inc
 
 ;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Maintainer: Serghei Iakovlev
-;; Version: 0.4.1
+;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
+;; Version: 0.4.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
 ;; This file is NOT part of GNU Emacs.
