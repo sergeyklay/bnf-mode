@@ -43,16 +43,33 @@
 ;; - Revised Report on the Algorithmic Language Algol 60
 ;;   (see URL `https://www.masswerk.at/algol60/report.htm')
 ;;
-;; Usage:  Put this file in your Emacs Lisp path (eg. site-lisp) and add to
-;; your .emacs file:
+;; Installation:
 ;;
-;;   (require 'bnf-mode)
+;; The recommended way is to use ELPA (see URL `https://elpa.gnu.org'),
+;; MELPA (see URL `https://melpa.org') or MELPA Stable
+;; (see URL `https://stable.melpa.org').  If either is in your
+;; `package-archives', do:
 ;;
-;; Bugs: Bug tracking is currently handled using the GitHub issue tracker
+;;   M-x package-install RET bnf-mode RET
+;;
+;; Usage:
+;;
+;; To toggle the mode in the current buffer:
+;;
+;;   M-x bnf-mode RET
+;;
+;; By default any file that matches the glob *.bnf is automatically opened
+;; in `bnf-mode'.
+;;
+;; Bugs:
+;;
+;; Bug tracking is currently handled using the GitHub issue tracker
 ;; (see URL `https://github.com/sergeyklay/bnf-mode/issues')
 ;;
-;; History: History is tracked in the Git repository rather than in this file.
-;; See URL `https://github.com/sergeyklay/bnf-mode/blob/master/CHANGELOG.org'
+;; History:
+;;
+;; History is tracked in the Git repository rather than in this file.
+;; (see URL `https://github.com/sergeyklay/bnf-mode/blob/master/CHANGELOG.org')
 
 ;;; Code:
 
@@ -99,7 +116,7 @@ semicolon only (\";\")."
     `((bnf-rule-name . ,(rx (and
                              (1+ (or alnum digit))
                              (0+ (or alnum digit
-                                     (in "!\"#$%&'()*+,-./:;=?@[\]^_`{|}~")
+                                     (in "!\"#$%&'()*+,-./:;=?@[]^_`{|}~")
                                      (in " \t"))))))
     "Additional special sexps for `bnf-rx'."))
 
