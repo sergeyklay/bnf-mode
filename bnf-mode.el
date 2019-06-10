@@ -52,6 +52,9 @@
 ;;
 ;;   M-x package-install RET bnf-mode RET
 ;;
+;; To learn on how to use any other installation methods refer to relevant
+;; documentation.
+;;
 ;; Usage:
 ;;
 ;; To toggle the mode in the current buffer:
