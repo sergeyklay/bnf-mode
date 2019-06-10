@@ -64,6 +64,14 @@ documentation.
 By default any file that matches the glob ~*.bnf~ is automatically opened
 in ~bnf-mode~.
 
+** Customization
+
+To customize various options, use command as follows:
+
+#+begin_src
+M-x customize-group bnf RET
+#+end_src
+
 ** Support
 
 Feel free to ask question or make suggestions in our [[https://github.com/sergeyklay/bnf-mode/issues][issue tracker]] .

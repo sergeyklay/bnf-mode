@@ -64,6 +64,12 @@
 ;; By default any file that matches the glob *.bnf is automatically opened
 ;; in `bnf-mode'.
 ;;
+;; Customization:
+;;
+;; To customize various options, use command as follows:
+;;
+;;   M-x customize-group bnf RET
+;;
 ;; Bugs:
 ;;
 ;; Bug tracking is currently handled using the GitHub issue tracker
