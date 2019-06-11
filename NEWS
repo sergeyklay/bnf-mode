@@ -6,13 +6,12 @@ See the end of the file for license conditions.
 This file is about changes in BNF Mode.
 
 * BNF Mode 0.4.2
+** First release in ELPA.
 ** Introduced ALGOL 60 comments style. Disabled by default.
-For more see: https://github.com/sergeyklay/bnf-mode/pull/4 .
 
 ** Use semicolons as a comments.
 Only setting bnf-mode-algol-comments-style to non-nil will allow use
 semicolons as a regular terminal symbols.
-For more see: https://github.com/sergeyklay/bnf-mode/pull/4 .
 
 * BNF Mode 0.4.1
 ** Minor fix related to build & deploy BNF Mode on Travis CI.
@@ -27,19 +26,17 @@ Added support of ";" character as an extra character used in terminals.
 See make help for more.
 
 * BNF Mode 0.3.2
-** Published package on MELPA.
-For more see https://github.com/melpa/melpa/pull/6074 .
+** First release in MELPA.
 
 ** Treat ' and " as a regular symbols.
 ** Removed no longer needed comment-* variables.
 ** In the BNF there are no grouping brackets except angle ones.
 ** Removed the bnf-mode-version function.
 Users can easily call describe-package or pkg-info-package-version
-interactively if they want to get this information. For more see: https://github.com/sergeyklay/bnf-mode/issues/1 .
+interactively if they want to get this information.
 
 * BNF Mode 0.3.1
 ** Fixed BNF rule name definition to follow ALGOL 60 report.
-For more see: https://www.masswerk.at/algol60/report.htm .
 
 * BNF Mode 0.3.0
 ** Nonterminals may be preceded by an unlimited number of spaces.
@@ -47,7 +44,6 @@ For more see: https://www.masswerk.at/algol60/report.htm .
 * BNF Mode 0.2.0
 ** Comments are no longer use syntax table.
 ** Changed comment syntax from "#" to ";" to follow RFC822#2.8 .
-For more see: https://tools.ietf.org/html/rfc822#section-2.8 .
 
 * BNF Mode 0.1.0
 ** Initial stable release.
