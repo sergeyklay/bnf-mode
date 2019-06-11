@@ -7,8 +7,6 @@
 ;; Version: 0.4.2
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
-;; This file is NOT part of GNU Emacs.
-
 ;;;; License
 
 ;; This file is free software; you can redistribute it and/or

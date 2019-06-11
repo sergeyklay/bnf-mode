@@ -9,8 +9,6 @@
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
 
-;; This file is NOT part of GNU Emacs.
-
 ;;;; License
 
 ;; This file is free software; you can redistribute it and/or
