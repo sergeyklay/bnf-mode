@@ -78,7 +78,8 @@ Feel free to ask question or make suggestions in our [[https://github.com/sergey
 
 ** Changes
 
-To see what has changed in recent versions of BNF Mode, see the [[https://github.com/sergeyklay/bnf-mode/blob/master/CHANGELOG.org][CHANGELOG.org]] .
+To see what has changed in recent versions of BNF Mode see:
+https://github.com/sergeyklay/bnf-mode/blob/master/NEWS .
 
 ** External Links
 

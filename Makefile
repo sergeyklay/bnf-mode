@@ -71,6 +71,7 @@ $(PKGDIR): Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
+# Remove badges
 define org-clean
 	cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
 endef
@@ -81,8 +82,8 @@ $(ARCHIVE_NAME).info: README.org
 README: README.org
 	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
-ChangeLog: CHANGELOG.org
-	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
+ChangeLog: NEWS
+	cp $^ $@
 
 $(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
 	$(CASK) pkg-file

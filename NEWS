@@ -1,0 +1,78 @@
+bnf-mode NEWS -- history of user-visible changes.
+
+Copyright (C) 2019 Free Software Foundation, Inc.
+See the end of the file for license conditions.
+
+This file is about changes in BNF Mode.
+
+* BNF Mode 0.4.2
+** Introduced ALGOL 60 comments style. Disabled by default.
+For more see: https://github.com/sergeyklay/bnf-mode/pull/4 .
+
+** Use semicolons as a comments.
+Only setting bnf-mode-algol-comments-style to non-nil will allow use
+semicolons as a regular terminal symbols.
+For more see: https://github.com/sergeyklay/bnf-mode/pull/4 .
+
+* BNF Mode 0.4.1
+** Minor fix related to build & deploy BNF Mode on Travis CI.
+
+* BNF Mode 0.4.0
+** Added comment-start-skip to improve recognize comments..
+** Return back comment-start and comment-end.
+** Use more intelligent terminal syntax recognition.
+Added support of ";" character as an extra character used in terminals.
+
+** Provided ability to build installation package.
+See make help for more.
+
+* BNF Mode 0.3.2
+** Published package on MELPA.
+For more see https://github.com/melpa/melpa/pull/6074 .
+
+** Treat ' and " as a regular symbols.
+** Removed no longer needed comment-* variables.
+** In the BNF there are no grouping brackets except angle ones.
+** Removed the bnf-mode-version function.
+Users can easily call describe-package or pkg-info-package-version
+interactively if they want to get this information. For more see: https://github.com/sergeyklay/bnf-mode/issues/1 .
+
+* BNF Mode 0.3.1
+** Fixed BNF rule name definition to follow ALGOL 60 report.
+For more see: https://www.masswerk.at/algol60/report.htm .
+
+* BNF Mode 0.3.0
+** Nonterminals may be preceded by an unlimited number of spaces.
+
+* BNF Mode 0.2.0
+** Comments are no longer use syntax table.
+** Changed comment syntax from "#" to ";" to follow RFC822#2.8 .
+For more see: https://tools.ietf.org/html/rfc822#section-2.8 .
+
+* BNF Mode 0.1.0
+** Initial stable release.
+
+
+
+----------------------------------------------------------------------
+This file is part of GNU Emacs.
+
+GNU Emacs is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GNU Emacs is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+
+
+Local variables:
+coding: utf-8
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:

@@ -76,7 +76,7 @@
 ;; History:
 ;;
 ;; History is tracked in the Git repository rather than in this file.
-;; (see URL `https://github.com/sergeyklay/bnf-mode/blob/master/CHANGELOG.org')
+;; (see URL `https://github.com/sergeyklay/bnf-mode/blob/master/NEWS')
 
 ;;; Code:
 
