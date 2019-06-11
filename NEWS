@@ -7,6 +7,7 @@ This file is about changes in BNF Mode.
 
 * BNF Mode 0.4.2
 ** First release in ELPA.
+
 ** Introduced ALGOL 60 comments style. Disabled by default.
 
 ** Use semicolons as a comments.
@@ -17,8 +18,10 @@ semicolons as a regular terminal symbols.
 ** Minor fix related to build & deploy BNF Mode on Travis CI.
 
 * BNF Mode 0.4.0
-** Added comment-start-skip to improve recognize comments..
+** Added comment-start-skip to improve recognize comments.
+
 ** Return back comment-start and comment-end.
+
 ** Use more intelligent terminal syntax recognition.
 Added support of ";" character as an extra character used in terminals.
 
@@ -29,8 +32,11 @@ See make help for more.
 ** First release in MELPA.
 
 ** Treat ' and " as a regular symbols.
+
 ** Removed no longer needed comment-* variables.
+
 ** In the BNF there are no grouping brackets except angle ones.
+
 ** Removed the bnf-mode-version function.
 Users can easily call describe-package or pkg-info-package-version
 interactively if they want to get this information.
@@ -43,7 +49,8 @@ interactively if they want to get this information.
 
 * BNF Mode 0.2.0
 ** Comments are no longer use syntax table.
-** Changed comment syntax from "#" to ";" to follow RFC822#2.8 .
+
+** Changed comment syntax from "#" to ";" to follow RFC822#2.8.
 
 * BNF Mode 0.1.0
 ** Initial stable release.
