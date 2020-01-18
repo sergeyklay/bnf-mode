@@ -70,7 +70,7 @@ jobs:
         run: make help
 
       - name: Initialize the Project
-        run: make help
+        run: make init
 
       - name: Byte Compile BNF Mode
         run: make build
