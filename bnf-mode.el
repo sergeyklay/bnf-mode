@@ -1,10 +1,10 @@
 ;;; bnf-mode.el --- Major mode for editing BNF grammars. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Free Software Foundation, Inc
+;; Copyright (C) 2019-2020 Free Software Foundation, Inc
 
-;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Version: 0.4.2
+;; Author: Serghei Iakovlev <egrep@protonmail.ch>
+;; Maintainer: Serghei Iakovlev <egrep@protonmail.ch>
+;; Version: 0.4.3
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))

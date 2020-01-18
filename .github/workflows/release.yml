@@ -1,0 +1,97 @@
+# Copyright (C) 2019-2020 Serghei Iakovlev
+#
+# License
+#
+# This file is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version.
+#
+# This file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this file; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2-beta
+        with:
+          fetch-depth: 1
+
+      - name: Setup GNU Emacs
+        uses: purcell/setup-emacs@master
+        with:
+          version: 26.3
+
+      - name: Setup Cask
+        run: curl -fsSkL https://raw.github.com/cask/cask/master/go | python
+
+      - name: Set Environment Variables
+        run: |
+          echo "::set-env name=PATH::$HOME/.cask/bin:$PATH"
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - name: Common settings
+        run: |
+          git config --global user.name "Serghei Iakovlev"
+          git config --global user.email egrep@protonmail.ch
+
+      - name: Setup Prerequisites
+        run: |
+          # I don't need this at all. However I noticed
+          # that builds often fails because Microsoft
+          # servers are unstable or even offline.
+          sudo rm -f /etc/apt/sources.list.d/dotnetdev.list
+          sudo rm -f /etc/apt/sources.list.d/azure*.list
+
+          sudo apt-get update --quiet --yes 1>/dev/null
+          sudo apt-get install texinfo bsdtar pandoc
+
+      - name: Initialize the Project
+        run: make init
+
+      - name: Build Package
+        run: make package
+
+      - name: Minimal Package Test
+        run: |
+          test "$(tar --list --file bnf-mode-${VERSION}.tar | wc -l)" = 7
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: $VERSION
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "bnf-mode-${VERSION}.tar"
+          asset_name: "bnf-mode-${VERSION}.tar"
+          asset_content_type: application/x-tar

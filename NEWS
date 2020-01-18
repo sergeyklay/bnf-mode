@@ -1,9 +1,12 @@
 bnf-mode NEWS -- history of user-visible changes.
 
-Copyright (C) 2019 Free Software Foundation, Inc.
+Copyright (C) 2019-2020 Free Software Foundation, Inc.
 See the end of the file for license conditions.
 
 This file is about changes in BNF Mode.
+
+* BNF Mode 0.4.3
+** CI/CD process was moved on GitHub Actions.
 
 * BNF Mode 0.4.2
 ** First release in ELPA.

@@ -1,10 +1,10 @@
 ;;; test-helper.el --- BNF Mode: Non-interactive unit-test setup -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Free Software Foundation, Inc
+;; Copyright (C) 2019-2020 Free Software Foundation, Inc
 
-;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Version: 0.4.2
+;; Author: Serghei Iakovlev <egrep@protonmail.ch>
+;; Maintainer: Serghei Iakovlev <egrep@protonmail.ch>
+;; Version: 0.4.3
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
 ;;;; License
@@ -34,7 +34,12 @@
 (message "Running tests on Emacs %s" emacs-version)
 
 (when (require 'undercover nil t)
-  (undercover "bnf-mode.el"))
+  ;; Track coverage, but don't send to coveralls. Save in parent
+  ;; directory as undercover saves paths relative to the repository
+  ;; root.
+  (undercover "*.el"
+              (:report-file "coverage-final.json")
+              (:send-report nil)))
 
 (let* ((current-file (if load-in-progress load-file-name (buffer-file-name)))
        (source-directory (locate-dominating-file current-file "Cask"))
