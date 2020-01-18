@@ -64,7 +64,12 @@ jobs:
         run: curl -fsSkL https://raw.github.com/cask/cask/master/go | python
 
       - name: Set Environment Variables
-        run: echo "::set-env name=PATH::$HOME/.cask/bin:$PATH"
+        run: |
+          echo "::set-env name=PATH::$HOME/.cask/bin:$PATH"
+
+          if [ "${{ matrix.emacs_version }}" != "snapshot" ]; then
+            echo "::set-env name=UNDERCOVER_FORCE::1"
+          fi
 
       - name: Fast Makefile Test
         run: make help
@@ -80,8 +85,6 @@ jobs:
         run: make checkdoc
 
       - name: Run Unit Tests
-        env:
-          UNDERCOVER_FORCE: 1
         run: make test
 
       - name: Build Reporting
