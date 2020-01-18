@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2019-2020 Free Software Foundation, Inc
 
-;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
+;; Author: Serghei Iakovlev <egrep@protonmail.ch>
+;; Maintainer: Serghei Iakovlev <egrep@protonmail.ch>
 ;; Version: 0.4.3
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
