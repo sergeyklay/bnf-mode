@@ -81,3 +81,7 @@ jobs:
 
       - name: Run Unit Tests
         run: make test
+
+      - name: Build Reporting
+        if: success()
+        run: git log --format=fuller -5
