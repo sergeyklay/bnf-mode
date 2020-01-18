@@ -15,4 +15,4 @@ File: dir,	Node: Top	This is the top of the INFO tree
 * Menu:
 
 Languages
-* BNF Mode: (bnf-mode).               Major mode for editing BNF grammars.
+* BNF Mode: (bnf-mode).         Major mode for editing BNF grammars.
