@@ -7,10 +7,11 @@
 
 *~
 *.elc
-.cask/
+.cask
 bnf-mode.info
 bnf-mode-pkg.el
 bnf-mode-autoloads.el
 bnf-mode-*.tar
+coverage-final.json
 ChangeLog
 README

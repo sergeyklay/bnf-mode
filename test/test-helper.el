@@ -34,7 +34,12 @@
 (message "Running tests on Emacs %s" emacs-version)
 
 (when (require 'undercover nil t)
-  (undercover "bnf-mode.el"))
+  ;; Track coverage, but don't send to coveralls. Save in parent
+  ;; directory as undercover saves paths relative to the repository
+  ;; root.
+  (undercover "*.el"
+              (:report-file "coverage-final.json")
+              (:send-report nil)))
 
 (let* ((current-file (if load-in-progress load-file-name (buffer-file-name)))
        (source-directory (locate-dominating-file current-file "Cask"))
