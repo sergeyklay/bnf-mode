@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
 ;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Version: 0.4.2
+;; Version: 0.4.3
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
