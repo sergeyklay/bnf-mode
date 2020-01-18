@@ -36,21 +36,36 @@ jobs:
     strategy:
       fail-fast: false
 
-    matrix:
-      emacs_version:
-        - '24.3'
-        - '24.4'
-        - '24.5'
-        - '25.1'
-        - '25.2'
-        - '25.3'
-        - '26.1'
-        - '26.2'
-        - '26.3'
-        - snapshot
+      matrix:
+        emacs_version:
+          - '24.3'
+          - '24.4'
+          - '24.5'
+          - '25.1'
+          - '25.2'
+          - '25.3'
+          - '26.1'
+          - '26.2'
+          - '26.3'
+          - snapshot
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2-beta
         with:
           fetch-depth: 5
+
+      - name: Setup GNU Emacs
+        uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+
+      - name: Setup Cask
+        run: curl -fsSkL https://raw.github.com/cask/cask/master/go | python
+
+      - name: Set Environment Variables
+        run: echo "::set-env name=PATH::$HOME/.cask/bin:$PATH"
+
+      - name: Fast Makefile Test
+        run: |
+          make help
