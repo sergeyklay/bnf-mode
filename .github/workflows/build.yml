@@ -67,5 +67,14 @@ jobs:
         run: echo "::set-env name=PATH::$HOME/.cask/bin:$PATH"
 
       - name: Fast Makefile Test
-        run: |
-          make help
+        run: make help
+
+      - name: Initialize the Project
+        run: make help
+
+      - name: Byte Compile BNF Mode
+        run: make build
+
+      - name: Check for Errors in the Documentation
+        if: matrix.emacs_version >= '25.1'
+        run: make checkdoc
