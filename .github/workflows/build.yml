@@ -78,3 +78,6 @@ jobs:
       - name: Check for Errors in the Documentation
         if: matrix.emacs_version >= '25.1'
         run: make checkdoc
+
+      - name: Run Unit Tests
+        run: make test
