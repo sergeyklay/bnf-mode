@@ -92,7 +92,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          # yml: ./.codecov.yml
+          yml: ./.codecov.yml
           name: codecov-umbrella
           flags: unittests
           fail_ci_if_error: false
