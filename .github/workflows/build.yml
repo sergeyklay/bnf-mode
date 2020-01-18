@@ -80,8 +80,19 @@ jobs:
         run: make checkdoc
 
       - name: Run Unit Tests
+        env:
+          UNDERCOVER_FORCE: 1
         run: make test
 
       - name: Build Reporting
         if: success()
         run: git log --format=fuller -5
+
+      - name: Upload Code Coverage Report
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          # yml: ./.codecov.yml
+          name: codecov-umbrella
+          flags: unittests
+          fail_ci_if_error: false
