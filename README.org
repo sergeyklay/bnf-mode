@@ -70,7 +70,7 @@ in ~bnf-mode~.
 To customize various options, use command as follows:
 
 #+begin_src
-M-x customize-group bnf RET
+M-x customize-group RET bnf RET
 #+end_src
 
 ** Support

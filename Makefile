@@ -23,7 +23,7 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 EMACS ?= emacs
 CASK ?= cask
 PANDOC ?= pandoc
-TAR ?= COPYFILE_DISABLE=1 bsdtar
+TAR ?= tar
 
 EMACSFLAGS ?=
 TESTFLAGS ?= --reporter ert+duration
@@ -89,7 +89,7 @@ $(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
 	$(CASK) pkg-file
 
 $(PACKAGE_NAME).tar: README ChangeLog LICENSE $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
-	$(TAR) -c -s "@^@$(PACKAGE_NAME)/@" -f $(PACKAGE_NAME).tar $^
+	$(TAR) -c -v -f $(PACKAGE_NAME).tar --transform "s@^@$(PACKAGE_NAME)/@" $^
 
 # Public targets
 
@@ -114,7 +114,7 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info
+	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info coverage-final.json
 	$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
 
 .PHONY: package
@@ -122,7 +122,8 @@ package: $(PACKAGE_NAME).tar
 
 .PHONY: install
 install: $(PACKAGE_NAME).tar
-	$(EMACS) --batch -l package -f package-initialize --eval "(package-install-file \"$(PWD)/$(PACKAGE_NAME).tar\")"
+	$(EMACS) --batch -l package -f package-initialize --eval \
+		"(let ((debug-on-error t))(package-install-file \"$(PWD)/$(PACKAGE_NAME).tar\"))"
 
 .PHONY: help
 help: .title
