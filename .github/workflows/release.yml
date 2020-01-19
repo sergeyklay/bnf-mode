@@ -62,7 +62,7 @@ jobs:
           sudo rm -f /etc/apt/sources.list.d/azure*.list
 
           sudo apt-get update --quiet --yes 1>/dev/null
-          sudo apt-get install texinfo bsdtar pandoc
+          sudo apt-get install texinfo pandoc
 
       - name: Initialize the Project
         run: make init
@@ -72,7 +72,8 @@ jobs:
 
       - name: Minimal Package Test
         run: |
-          test "$(tar --list --file bnf-mode-${VERSION}.tar | wc -l)" = 7
+          make install
+          head "$HOME/.emacs.d/elpa/bnf-mode-$VERSION/bnf-mode.el" | grep -q "$VERSION"
 
       - name: Create Release
         id: create_release
