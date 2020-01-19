@@ -114,7 +114,7 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info
+	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info coverage-final.json
 	$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
 
 .PHONY: package
