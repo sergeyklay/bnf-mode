@@ -1,6 +1,4 @@
-# Copyright (C) 2019 Serghei Iakovlev
-#
-# This file is NOT part of GNU Emacs.
+# Copyright (C) 2019-2020 Serghei Iakovlev
 #
 # License
 #
@@ -25,7 +23,7 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 EMACS ?= emacs
 CASK ?= cask
 PANDOC ?= pandoc
-TAR ?= COPYFILE_DISABLE=1 bsdtar
+TAR ?= tar
 
 EMACSFLAGS ?=
 TESTFLAGS ?= --reporter ert+duration
@@ -73,6 +71,7 @@ $(PKGDIR): Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
+# Remove badges
 define org-clean
 	cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
 endef
@@ -83,14 +82,14 @@ $(ARCHIVE_NAME).info: README.org
 README: README.org
 	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
-ChangeLog: CHANGELOG.org
-	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
+ChangeLog: NEWS
+	cp $^ $@
 
 $(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
 	$(CASK) pkg-file
 
 $(PACKAGE_NAME).tar: README ChangeLog LICENSE $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
-	$(TAR) -c -s "@^@$(PACKAGE_NAME)/@" -f $(PACKAGE_NAME).tar $^
+	$(TAR) -c -v -f $(PACKAGE_NAME).tar --transform "s@^@$(PACKAGE_NAME)/@" $^
 
 # Public targets
 
@@ -115,7 +114,7 @@ test:
 .PHONY: clean
 clean:
 	$(CASK) clean-elc
-	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info
+	$(RM) -f README ChangeLog $(ARCHIVE_NAME).info coverage-final.json
 	$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
 
 .PHONY: package
@@ -123,7 +122,8 @@ package: $(PACKAGE_NAME).tar
 
 .PHONY: install
 install: $(PACKAGE_NAME).tar
-	$(EMACS) --batch -l package -f package-initialize --eval "(package-install-file \"$(PWD)/$(PACKAGE_NAME).tar\")"
+	$(EMACS) --batch -l package -f package-initialize --eval \
+		"(let ((debug-on-error t))(package-install-file \"$(PWD)/$(PACKAGE_NAME).tar\"))"
 
 .PHONY: help
 help: .title
@@ -131,8 +131,8 @@ help: .title
 	echo ''
 	echo 'Available targets:'
 	echo '  help:     Show this help and exit'
-	echo '  init:     Initialise the project (has to be launched first)'
-	echo '  checkdoc: Checks BNF Mode code for errors in documentation'
+	echo '  init:     Initialize the project (has to be launched first)'
+	echo '  checkdoc: Checks BNF Mode code for errors in the documentation'
 	echo '  build:    Byte compile BNF Mode package'
 	echo '  test:     Run the non-interactive unit test suite'
 	echo '  clean:    Remove all byte compiled Elisp files as well as build'

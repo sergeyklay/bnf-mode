@@ -1,15 +1,13 @@
 ;;; bnf-mode.el --- Major mode for editing BNF grammars. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Free Software Foundation, Inc
+;; Copyright (C) 2019-2020 Free Software Foundation, Inc
 
-;; Author: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Maintainer: Serghei Iakovlev <sadhooklay@gmail.com>
-;; Version: 0.4.2
+;; Author: Serghei Iakovlev <egrep@protonmail.ch>
+;; Maintainer: Serghei Iakovlev <egrep@protonmail.ch>
+;; Version: 0.4.3
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
-
-;; This file is NOT part of GNU Emacs.
 
 ;;;; License
 
@@ -43,16 +41,42 @@
 ;; - Revised Report on the Algorithmic Language Algol 60
 ;;   (see URL `https://www.masswerk.at/algol60/report.htm')
 ;;
-;; Usage:  Put this file in your Emacs Lisp path (eg. site-lisp) and add to
-;; your .emacs file:
+;; Installation:
 ;;
-;;   (require 'bnf-mode)
+;; The recommended way is to use ELPA (see URL `https://elpa.gnu.org'),
+;; MELPA (see URL `https://melpa.org') or MELPA Stable
+;; (see URL `https://stable.melpa.org').  If either is in your
+;; `package-archives', do:
 ;;
-;; Bugs: Bug tracking is currently handled using the GitHub issue tracker
+;;   M-x package-install RET bnf-mode RET
+;;
+;; To learn on how to use any other installation methods refer to relevant
+;; documentation.
+;;
+;; Usage:
+;;
+;; To toggle the mode in the current buffer:
+;;
+;;   M-x bnf-mode RET
+;;
+;; By default any file that matches the glob *.bnf is automatically opened
+;; in `bnf-mode'.
+;;
+;; Customization:
+;;
+;; To customize various options, use command as follows:
+;;
+;;   M-x customize-group bnf RET
+;;
+;; Bugs:
+;;
+;; Bug tracking is currently handled using the GitHub issue tracker
 ;; (see URL `https://github.com/sergeyklay/bnf-mode/issues')
 ;;
-;; History: History is tracked in the Git repository rather than in this file.
-;; See URL `https://github.com/sergeyklay/bnf-mode/blob/master/CHANGELOG.org'
+;; History:
+;;
+;; History is tracked in the Git repository rather than in this file.
+;; (see URL `https://github.com/sergeyklay/bnf-mode/blob/master/NEWS')
 
 ;;; Code:
 

@@ -7,8 +7,7 @@
 
 (files "*.el")
 
-(depends-on "rx")
-(depends-on "cl-lib")
+(depends-on "cl-lib" "0.5")
 
 (development
  (depends-on "f")
