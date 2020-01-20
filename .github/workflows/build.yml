@@ -48,6 +48,9 @@ jobs:
           - '26.2'
           - '26.3'
           - snapshot
+        include:
+          - emacs_version: snapshot
+            allow_failure: true
 
     steps:
       - name: Checkout Code
@@ -85,7 +88,12 @@ jobs:
         run: make checkdoc
 
       - name: Run Unit Tests
+        if: matrix.allow_failure != true
         run: make test
+
+      - name: Run Unit Tests
+        if: matrix.allow_failure == true
+        run: 'make test || true'
 
       - name: After Success Reporting
         if: success()
