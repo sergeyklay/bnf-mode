@@ -236,15 +236,22 @@ See `rx' documentation for more information about REGEXPS param."
    ;; Fontify comments in ALGOL 60 style.
    ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
   "Apply syntax table properties to special constructs.
-Provide a macro to apply syntax table properties to comments in ALGOL 60 style.
-Will be used only if `bnf-mode-algol-comments-style' is set to t")
+Provide a macro to apply syntax table properties to comments in ALGOL 60
+style.  Will be used only if `bnf-mode-algol-comments-style' is set to t")
 
 
 ;;; Initialization
 
 ;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
-  "A major mode for editing BNF grammars."
+  "A major mode for editing BNF grammars.
+
+\\{bnf-mode-map}
+The variable `bnf-mode-algol-comments-style' can be changed to control
+comments style used in grammars.
+
+Turning on BNF mode calls the value of `prog-mode-hook' and then of
+`bnf-mode-hook', if they are non-nil."
   :syntax-table bnf-mode-syntax-table
 
   ;; Comments setup
