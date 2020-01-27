@@ -17,7 +17,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
-SHELL := $(shell which bash)
+## Sane defaults
+SHELL ?= $(shell which sh)
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 EMACS ?= emacs
@@ -32,16 +33,13 @@ PANDOCLAGS ?= --fail-if-warnings \
 	--atx-headers \
 	-f org+empty_paragraphs
 
-PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
-
-## File lists
-
-SRCS = bnf-mode.el
-OBJS = $(SRCS:.el=.elc)
+PKGDIR = $(ROOT_DIR)
 
 ARCHIVE_NAME = bnf-mode
-VERSION ?= $(shell $(CASK) version)
+VERSION = $(shell sh -c "grep -oh -E 'Version:.*' bnf-mode.el | cut -d' ' -f2")
 PACKAGE_NAME = $(ARCHIVE_NAME)-$(VERSION)
+
+.DEFAULT_GOAL = build
 
 .SILENT: ;               # no need for @
 .ONESHELL: ;             # recipes execute in same shell
@@ -49,8 +47,10 @@ PACKAGE_NAME = $(ARCHIVE_NAME)-$(VERSION)
 .EXPORT_ALL_VARIABLES: ; # send all vars to shell
 Makefile: ;              # skip prerequisite discovery
 
-# Run make help by default
-.DEFAULT_GOAL = build
+## File lists
+
+SRCS = bnf-mode.el
+OBJS = $(SRCS:.el=.elc)
 
 ## Internal variables
 
@@ -67,10 +67,20 @@ else
 RUNEMACS = $(CASK) exec $(EMACSBATCH)
 endif
 
+.PHONY: pkg-dir
+pkg-dir:
+ifeq ($(PKGDIR),$(ROOT_DIR))
+ifndef HAVE_CASK
+	$(error "$(CASK) is not available.  Please run make help")
+else
+	PKGDIR=$(shell EMACS=$(EMACS) $(CASK) package-directory)
+endif
+endif
+
 %.elc: %.el $(PKGDIR)
 	$(RUNEMACS) --eval '(setq byte-compile-error-on-warn t)' -f batch-byte-compile $<
 
-$(PKGDIR): Cask
+$(PKGDIR): pkg-dir Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
