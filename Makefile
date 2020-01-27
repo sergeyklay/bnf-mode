@@ -34,7 +34,8 @@ PANDOCLAGS ?= --fail-if-warnings \
 
 PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
-# File lists
+## File lists
+
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
 
@@ -51,11 +52,13 @@ Makefile: ;              # skip prerequisite discovery
 # Run make help by default
 .DEFAULT_GOAL = build
 
-# Internal variables
+## Internal variables
+
 EMACSBATCH = $(EMACS) -Q --batch -L . $(EMACSFLAGS)
 RUNEMACS =
 
-# Program availability
+## Programs availability
+
 HAVE_CASK := $(shell sh -c "command -v $(CASK)")
 ifndef HAVE_CASK
 $(warning "$(CASK) is not available.  Please run make help")
@@ -71,7 +74,8 @@ $(PKGDIR): Cask
 	$(CASK) install
 	touch $(PKGDIR)
 
-# Remove badges
+## Remove badges
+
 define org-clean
 	cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
 endef
@@ -91,7 +95,7 @@ $(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
 $(PACKAGE_NAME).tar: README ChangeLog LICENSE $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
 	$(TAR) -c -v -f $(PACKAGE_NAME).tar --transform "s@^@$(PACKAGE_NAME)/@" $^
 
-# Public targets
+## Public targets
 
 .PHONY: .title
 .title:
