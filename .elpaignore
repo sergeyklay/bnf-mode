@@ -2,4 +2,5 @@
 .ert-runner
 .gitignore
 Makefile
+default.mk
 test
