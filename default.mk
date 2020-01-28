@@ -17,8 +17,6 @@
 
 TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 
-PKGDIR = $(TOP)
-
 EMACS  ?= emacs
 CASK   ?= cask
 PANDOC ?= pandoc

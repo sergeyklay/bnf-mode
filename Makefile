@@ -19,26 +19,11 @@ include default.mk
 
 .DEFAULT_GOAL = build
 
-.PHONY: pkg-dir
-pkg-dir:
-ifeq ($(PKGDIR),$(TOP))
-ifndef HAVE_CASK
-	$(error "$(CASK) is not available.  Please run make help")
-else
-	@PKGDIR=$(shell EMACS=$(EMACS) $(CASK) package-directory)
-endif
-endif
-
-%.elc: %.el $(PKGDIR)
+%.elc: %.el
 	@printf "Compiling $<\n"
 	@$(RUNEMACS) --eval '(setq byte-compile-error-on-warn t)' -f batch-byte-compile $<
 
-$(PKGDIR): pkg-dir Cask
-	@$(CASK) install
-	@touch $(PKGDIR)
-
-## Remove badges
-
+# Remove badges
 define org-clean
 	@cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
 endef
@@ -65,7 +50,8 @@ $(PACKAGE_NAME).tar: README ChangeLog LICENSE $(ARCHIVE_NAME).el $(ARCHIVE_NAME)
 	$(info BNF Mode $(VERSION))
 
 .PHONY: init
-init: $(PKGDIR)
+init: Cask
+	@$(CASK) install
 
 .PHONY: checkdoc
 checkdoc:
@@ -80,7 +66,9 @@ test:
 
 .PHONY: clean
 clean:
+	$(info Remove all byte compiled Elisp files...)
 	@$(CASK) clean-elc
+	$(info Remove build artefacts...)
 	@$(RM) -f README ChangeLog $(ARCHIVE_NAME).info coverage-final.json
 	@$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
 
@@ -103,7 +91,7 @@ help: .title
 	@echo '  build:    Byte compile BNF Mode package'
 	@echo '  test:     Run the non-interactive unit test suite'
 	@echo '  clean:    Remove all byte compiled Elisp files as well as build'
-	@echo '            artifacts'
+	@echo '            artefacts'
 	@echo '  package:  Build package'
 	@echo '  install:  Install BNF Mode'
 	@echo ''
