@@ -22,6 +22,9 @@ CASK   ?= cask
 PANDOC ?= pandoc
 TAR    ?= tar
 
+INSTALL_INFO ?= $(shell command -v ginstall-info || printf install-info)
+MAKEINFO     ?= makeinfo
+
 EMACSBATCH = $(EMACS) -Q --batch -L . $(EMACSFLAGS)
 RUNEMACS   =
 
@@ -40,10 +43,12 @@ PANDOCLAGS ?= --fail-if-warnings \
 	--atx-headers \
 	-f org+empty_paragraphs
 
-ARCHIVE_NAME = bnf-mode
-PACKAGE_NAME = $(ARCHIVE_NAME)-$(VERSION)
+PACKAGE = bnf-mode
+ARCHIVE_NAME = $(PACKAGE)-$(VERSION)
 
 VERSION = 0.4.4
 
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
+
+INFOPAGES = $(addsuffix .info,$(PACKAGE))

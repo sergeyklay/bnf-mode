@@ -1,4 +1,4 @@
-# Copyright (C) 2019-2020 Serghei Iakovlev
+# Copyright (C) 2019, 2020 Free Software Foundation, Inc.
 #
 # License
 #
@@ -28,8 +28,9 @@ define org-clean
 	@cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
 endef
 
-$(ARCHIVE_NAME).info: README.org
-	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t texinfo | makeinfo -o $@
+# TODO: Move to docs
+$(PACKAGE).info: README.org
+	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t texinfo | $(MAKEINFO) -o $@
 
 README: README.org
 	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
@@ -37,11 +38,11 @@ README: README.org
 ChangeLog: NEWS
 	@cp $^ $@
 
-$(ARCHIVE_NAME)-pkg.el: $(ARCHIVE_NAME).el
+$(PACKAGE)-pkg.el: $(PACKAGE).el
 	@$(CASK) pkg-file
 
-$(PACKAGE_NAME).tar: README ChangeLog LICENSE $(ARCHIVE_NAME).el $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME).info dir
-	@$(TAR) -c -v -f $(PACKAGE_NAME).tar --transform "s@^@$(PACKAGE_NAME)/@" $^
+$(ARCHIVE_NAME).tar: README ChangeLog LICENSE $(PACKAGE).el $(PACKAGE)-pkg.el $(PACKAGE).info dir
+	@$(TAR) -c -v -f $(ARCHIVE_NAME).tar --transform "s@^@$(ARCHIVE_NAME)/@" $^
 
 ## Public targets
 
@@ -65,35 +66,45 @@ test:
 	@$(CASK) exec ert-runner $(TESTFLAGS)
 
 .PHONY: clean
-clean:
+clean: clean-docs
 	$(info Remove all byte compiled Elisp files...)
 	@$(CASK) clean-elc
 	$(info Remove build artefacts...)
-	@$(RM) -f README ChangeLog $(ARCHIVE_NAME).info coverage-final.json
-	@$(RM) -f $(ARCHIVE_NAME)-pkg.el $(ARCHIVE_NAME)-*.tar
+	@$(RM) README ChangeLog $(PACKAGE).info coverage-final.json
+	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar
+
+.PHONY:
+clean-docs:
+	@$(MAKE) -C docs clean
 
 .PHONY: package
-package: $(PACKAGE_NAME).tar
+package: $(ARCHIVE_NAME).tar
 
 .PHONY: install
-install: $(PACKAGE_NAME).tar
+install: $(ARCHIVE_NAME).tar
 	@$(EMACS) --batch -l package -f package-initialize --eval \
-		"(let ((debug-on-error t))(package-install-file \"$(PWD)/$(PACKAGE_NAME).tar\"))"
+		"(let ((debug-on-error t))(package-install-file \"$(PWD)/$(ARCHIVE_NAME).tar\"))"
+
+.PHONY: info
+info:
+	@$(MAKE) -C docs info
 
 .PHONY: help
 help: .title
 	@echo 'Run "make init" first to install and update all local dependencies.'
 	@echo ''
 	@echo 'Available targets:'
-	@echo '  help:     Show this help and exit'
-	@echo '  init:     Initialize the project (has to be launched first)'
-	@echo '  checkdoc: Checks BNF Mode code for errors in the documentation'
-	@echo '  build:    Byte compile BNF Mode package'
-	@echo '  test:     Run the non-interactive unit test suite'
-	@echo '  clean:    Remove all byte compiled Elisp files as well as build'
-	@echo '            artefacts'
-	@echo '  package:  Build package'
-	@echo '  install:  Install BNF Mode'
+	@echo '  help:       Show this help and exit'
+	@echo '  init:       Initialize the project (has to be launched first)'
+	@echo '  checkdoc:   Checks BNF Mode code for errors in the documentation'
+	@echo '  build:      Byte compile BNF Mode package'
+	@echo '  test:       Run the non-interactive unit test suite'
+	@echo '  clean:      Remove all byte compiled Elisp files, documentation,'
+	@echo '              build artefacts and tarball'
+	@echo '  clean-docs: Remove all ganerated documentation'
+	@echo '  package:    Build package'
+	@echo '  install:    Install BNF Mode'
+	@echo '  info:       Generate info manual'
 	@echo ''
 	@echo 'Available programs:'
 	@echo '  $(CASK): $(if $(HAVE_CASK),yes,no)'
