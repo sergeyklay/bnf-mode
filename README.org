@@ -94,4 +94,4 @@ https://github.com/sergeyklay/bnf-mode/blob/master/NEWS .
 ** License
 
 BNF Mode is open source software licensed under the [[https://github.com/sergeyklay/bnf-mode/blob/master/LICENSE][GNU General Public Licence version 3]].
-Copyright © 2019-2020, Free Software Foundation, Inc.
+Copyright © 2019, 2020, Free Software Foundation, Inc.

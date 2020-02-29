@@ -1,6 +1,6 @@
 ;;; test-helper.el --- BNF Mode: Non-interactive unit-test setup -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019-2020 Free Software Foundation, Inc
+;; Copyright (C) 2019, 2020 Free Software Foundation, Inc
 
 ;; Author: Serghei Iakovlev <egrep@protonmail.ch>
 ;; Maintainer: Serghei Iakovlev <egrep@protonmail.ch>

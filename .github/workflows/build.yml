@@ -1,4 +1,4 @@
-# Copyright (C) 2019-2020 Serghei Iakovlev
+# Copyright (C) 2019, 2020 Free Software Foundation, Inc.
 #
 # License
 #
