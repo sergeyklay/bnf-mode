@@ -26,9 +26,9 @@
 
 ;;; Commentary:
 
-;;   GNU Emacs major mode for editing BNF grammars.  Currently this mode
-;; provides basic syntax and font-locking for BNF files.  BNF notation is
-;; supported exactly form as it was first announced in the ALGOL 60 report.
+;;   BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Currently
+;; this mode provides basic syntax and font-locking for BNF files.  BNF notation
+;; is supported exactly form as it was first announced in the ALGOL 60 report.
 ;;
 ;; When developing this mode, the following documents were taken into account:
 ;;
