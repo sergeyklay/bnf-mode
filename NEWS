@@ -5,10 +5,16 @@ See the end of the file for license conditions.
 
 This file is about changes in BNF Mode.
 
+* BNF Mode 0.4.4
+** Rework documentation and provide Info-file.
+Previous releases of BNF Mode were bundled with incorrect "dir" file
+which contained an invalid link to documentation.  This was
+resolved.  All documentation now lives in "info bnf-mode".
+
 * BNF Mode 0.4.3
 ** Fixed dependency list in the Cask file.
 Dependency list was fixed by specifying `cl-lib' version as well as
-removing `rx` (`rx' is part of GNU Emacs actually).  This fixed the
+removing `rx' (`rx' is part of GNU Emacs actually).  This fixed the
 issue reported in <https://github.com/sergeyklay/bnf-mode/issues/5>.
 The issue related to installation from the TAR file.
 
