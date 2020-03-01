@@ -7,11 +7,30 @@
 
 *~
 *.elc
+
+# Directories to ignore (do not add trailing '/'s, they skip symlinks).
 .cask
-bnf-mode.info
+
+# Documentation artefacts.
+*.aux
+*.cp
+*.cps
+*.epub
+*.html
+*.pdf
+*.toc
+*.vr
+*.vrs
+
+# Build artefacts.
 bnf-mode-pkg.el
 bnf-mode-autoloads.el
 bnf-mode-*.tar
-coverage-final.json
 ChangeLog
 README
+
+# Code coverage report.
+coverage-final.json
+
+# Use this as your own wish list or a temporary buffer.
+LATER

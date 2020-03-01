@@ -52,3 +52,9 @@ SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
 
 INFOPAGES = $(addsuffix .info,$(PACKAGE))
+ARCHIVE_CONTENTS = README \
+	ChangeLog \
+	LICENSE \
+	$(PACKAGE).el \
+	$(PACKAGE)-pkg.el \
+	$(INFOPAGES) dir

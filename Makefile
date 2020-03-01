@@ -19,9 +19,18 @@ include default.mk
 
 .DEFAULT_GOAL = build
 
+%.info: %.texi
+	$(info Generating $@)
+	@$(MAKEINFO) --no-split $< -o $@
+
 %.elc: %.el
 	@printf "Compiling $<\n"
-	@$(RUNEMACS) --eval '(setq byte-compile-error-on-warn t)' -f batch-byte-compile $<
+	@$(RUNEMACS) --eval '(setq byte-compile-error-on-warn t)' \
+		-f batch-byte-compile $<
+
+dir: $(INFOPAGES)
+	$(info Generating dir)
+	@echo $^ | xargs -n 1 $(INSTALL_INFO) --dir=$@
 
 # Remove badges
 define org-clean
@@ -29,7 +38,8 @@ define org-clean
 endef
 
 README: README.org
-	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
+	$(call org-clean,$^) | \
+		$(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
 ChangeLog: NEWS
 	@cp $^ $@
@@ -37,10 +47,9 @@ ChangeLog: NEWS
 $(PACKAGE)-pkg.el: $(PACKAGE).el
 	@$(CASK) pkg-file
 
-$(ARCHIVE_NAME).tar: README ChangeLog LICENSE $(PACKAGE).el $(PACKAGE)-pkg.el
-	@$(MAKE) info
-	@$(TAR) -c -v -f $(ARCHIVE_NAME).tar --transform "s@^@$(ARCHIVE_NAME)/@" $^
-	@cd docs && $(TAR) -r -f ../$(ARCHIVE_NAME).tar --transform "s@^@$(ARCHIVE_NAME)/@" $(PACKAGE).info dir
+$(ARCHIVE_NAME).tar: $(ARCHIVE_CONTENTS)
+	@$(TAR) -c -v -f $(ARCHIVE_NAME).tar \
+		--transform "s@^@$(ARCHIVE_NAME)/@" $^
 
 ## Public targets
 
@@ -64,16 +73,12 @@ test:
 	@$(CASK) exec ert-runner $(TESTFLAGS)
 
 .PHONY: clean
-clean: clean-docs
+clean:
 	$(info Remove all byte compiled Elisp files...)
 	@$(CASK) clean-elc
 	$(info Remove build artefacts...)
-	@$(RM) README ChangeLog $(PACKAGE).info coverage-final.json
+	@$(RM) README ChangeLog coverage-final.json
 	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar
-
-.PHONY: clean-docs
-clean-docs:
-	@$(MAKE) -C docs clean
 
 .PHONY: package
 package: $(ARCHIVE_NAME).tar
@@ -84,8 +89,7 @@ install: $(ARCHIVE_NAME).tar
 		"(let ((debug-on-error t))(package-install-file \"$(PWD)/$(ARCHIVE_NAME).tar\"))"
 
 .PHONY: info
-info:
-	@$(MAKE) -C docs info
+info: $(INFOPAGES) dir
 
 .PHONY: help
 help: .title
@@ -101,7 +105,6 @@ help: .title
 	@echo '  test:       Run the non-interactive unit test suite'
 	@echo '  clean:      Remove all byte compiled Elisp files, documentation,'
 	@echo '              build artefacts and tarball'
-	@echo '  clean-docs: Remove all ganerated documentation'
 	@echo '  package:    Build package'
 	@echo '  install:    Install BNF Mode'
 	@echo '  info:       Generate info manual'
