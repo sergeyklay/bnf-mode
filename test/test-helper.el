@@ -4,7 +4,7 @@
 
 ;; Author: Serghei Iakovlev <egrep@protonmail.ch>
 ;; Maintainer: Serghei Iakovlev <egrep@protonmail.ch>
-;; Version: 0.4.3
+;; Version: 0.4.4
 ;; URL: https://github.com/sergeyklay/bnf-mode
 
 ;;;; License
