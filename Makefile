@@ -91,7 +91,9 @@ info:
 
 .PHONY: help
 help: .title
+	@echo ''
 	@echo 'Run "make init" first to install and update all local dependencies.'
+	@echo 'See "default.mk" for variables you might want to set.'
 	@echo ''
 	@echo 'Available targets:'
 	@echo '  help:       Show this help and exit'
