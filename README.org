@@ -14,9 +14,10 @@ A GNU Emacs major mode for editing BNF grammars.
 Richard Feynman
 #+end_quote
 
-Currently provides basic syntax and font-locking for BNF files. BNF notation is
+Currently provides basic syntax and font-locking for BNF files.  BNF notation is
 supported exactly form as it was first announced in the ALGOL 60 report.
-EBNF and ABNF are not supported but  in my plans for the near future.
+EBNF and ABNF are not supported but their implementation is planned in the near
+future.
 
 When developing this mode, the following documents were taken into account:
 
@@ -93,4 +94,4 @@ https://github.com/sergeyklay/bnf-mode/blob/master/NEWS .
 ** License
 
 BNF Mode is open source software licensed under the [[https://github.com/sergeyklay/bnf-mode/blob/master/LICENSE][GNU General Public Licence version 3]].
-Copyright © 2019-2020, Free Software Foundation, Inc.
+Copyright © 2019, 2020, Free Software Foundation, Inc.
