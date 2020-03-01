@@ -28,10 +28,6 @@ define org-clean
 	@cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
 endef
 
-# TODO: Move to docs
-$(PACKAGE).info: README.org
-	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t texinfo | $(MAKEINFO) -o $@
-
 README: README.org
 	$(call org-clean,$^) | $(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
@@ -41,8 +37,10 @@ ChangeLog: NEWS
 $(PACKAGE)-pkg.el: $(PACKAGE).el
 	@$(CASK) pkg-file
 
-$(ARCHIVE_NAME).tar: README ChangeLog LICENSE $(PACKAGE).el $(PACKAGE)-pkg.el $(PACKAGE).info dir
+$(ARCHIVE_NAME).tar: README ChangeLog LICENSE $(PACKAGE).el $(PACKAGE)-pkg.el
+	@$(MAKE) info
 	@$(TAR) -c -v -f $(ARCHIVE_NAME).tar --transform "s@^@$(ARCHIVE_NAME)/@" $^
+	@cd docs && $(TAR) -r -f ../$(ARCHIVE_NAME).tar --transform "s@^@$(ARCHIVE_NAME)/@" $(PACKAGE).info dir
 
 ## Public targets
 
@@ -73,7 +71,7 @@ clean: clean-docs
 	@$(RM) README ChangeLog $(PACKAGE).info coverage-final.json
 	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar
 
-.PHONY:
+.PHONY: clean-docs
 clean-docs:
 	@$(MAKE) -C docs clean
 

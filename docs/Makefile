@@ -31,7 +31,7 @@ dir: $(INFOPAGES)
 	$(info Generating dir)
 	@echo $^ | xargs -n 1 $(INSTALL_INFO) --dir=$@
 
-.PHONY:
+.PHONY: clean
 clean:
 	$(info Cleaning documentation...)
 	@$(RM) dir $(INFOPAGES)
