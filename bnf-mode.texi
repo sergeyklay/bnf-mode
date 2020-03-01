@@ -273,10 +273,10 @@ current buffer use @kbd{M-x} @code{bnf-mode} @kbd{RET}.
 @cindex Customizing
 @vindex bnf-mode-algol-comments-style
 
-There are not so much BNF Mode customize options yet.  The most
-interested option is @code{bnf-mode-algol-comments-style}.  Setting it
-to non-nill means use for BNF comments style introduced in ALGOL 60.
-The following "comment" conventions will hold:
+There are not so much customize options yet.  The most interested
+option is @code{bnf-mode-algol-comments-style}.  Setting it to non-nil
+means use for BNF comments style introduced in ALGOL 60.  The
+following "comment" conventions will hold:
 
 @multitable @columnfractions .7 .3
 @headitem The sequence of basic symbols @tab Is equivalent to
