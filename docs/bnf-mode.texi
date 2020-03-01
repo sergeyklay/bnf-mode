@@ -20,7 +20,6 @@ This document is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE@.  See the GNU
 General Public License for more details.
-
 @end quotation
 @end copying
 
@@ -30,16 +29,11 @@ General Public License for more details.
 @end direntry
 
 @finalout
-
 @titlepage
 @title BNF Mode User Manual
 @subtitle for version 0.4.4
 @author Serghei Iakovlev
-
 @page
-@c Put in zero points of mandatory whitespace,
-@c and as much optional whitespace as needed to push the
-@c following text to the bottom of the page.
 @vskip 0pt plus 1filll
 @insertcopying
 @end titlepage
@@ -69,6 +63,7 @@ This manual is for BNF Mode version 0.4.4.
 * Project Links::    Some important project links.
 * Bibliography::     External resources used in the project.
 * Index::            Complete index.
+* Variable Index::   Variable index.
 
 @detailmenu
 --- The Detailed Node Listing ---
@@ -166,9 +161,10 @@ after each commit or formal release.  For more detail on setting up
 see @uref{https://melpa.org/#/getting-started, MELPA Getting Started}.
 
 Once you have added your preferred archive, you need to update the
-local package list using @code{M-x package-refresh-contents RET}.
-Finally, use @code{M-x package-list-packages RET} to get to the
-package listing and install @code{bnf-mode} from there.
+local package list using @kbd{M-x} @code{package-refresh-contents}
+@kbd{RET}.  Finally, use @kbd{M-x} @code{package-list-packages}
+@kbd{RET} to get to the package listing and install @code{bnf-mode}
+from there.
 
 There are several ways to install @code{bnf-mode} after package
 initialization:
@@ -225,9 +221,9 @@ If you use el-get, just create a recipe file @code{bnf.rcp}:
  :pkgname "sergeyklay/bnf-mode")
 @end lisp
 
-Then add it to a directory present in @code{el-get-recipe-path}.  Then,
-use @code{M-x el-get-install RET bnf-mode RET} or add to your init
-file:
+Then add it to a directory present in @code{el-get-recipe-path}.
+Then, use @kbd{M-x} @code{el-get-install} @kbd{RET} @code{bnf-mode}
+@kbd{RET} or add to your init file:
 
 @lisp
 (el-get-bundle bnf-mode)
@@ -269,13 +265,13 @@ startup of GNU Emacs:
 
 By default any file that matches the glob @code{*.bnf} is
 automatically opened in @code{bnf-mode}.  To toggle the mode in the
-current buffer use @code{M-x bnf-mode RET}.
+current buffer use @kbd{M-x} @code{bnf-mode} @kbd{RET}.
 
 @node Customizing
 @chapter Customizing
 
 @cindex Customizing
-@cindex @code{bnf-mode-algol-comments-style}, customizing
+@vindex bnf-mode-algol-comments-style
 
 There are not so much BNF Mode customize options yet.  The most
 interested option is @code{bnf-mode-algol-comments-style}.  Setting it
@@ -377,5 +373,10 @@ EBNF: A Notation to Describe Syntax.
 @unnumbered Index
 
 @printindex cp
+
+@node Variable Index
+@unnumbered Variable Index
+
+@printindex vr
 
 @bye
