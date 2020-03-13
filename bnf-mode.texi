@@ -8,9 +8,19 @@
 @c %**end of header
 
 @copying
-@quotation
+@ifnottex
+BNF Mode is a GNU Emacs major mode for editing BNF grammars.
+Currently this mode provides basic syntax and font-locking for BNF
+files.  BNF notation is supported exactly form as it was first
+announced in the ALGOL 60 report.
+
+@noindent
+This manual is for BNF Mode version 0.4.4.
+@end ifnottex
+
 Copyright @copyright{} 2019, 2020 Free Software Foundation, Inc.
 
+@quotation
 You can redistribute this document and/or modify it under the terms of
 the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any
@@ -43,16 +53,6 @@ General Public License for more details.
 @ifnottex
 @node Top
 @top BNF Mode User Manual
-
-BNF Mode is a GNU Emacs major mode for editing BNF grammars.
-Currently this mode provides basic syntax and font-locking for BNF
-files.  BNF notation is supported exactly form as it was first
-announced in the ALGOL 60 report.
-
-@noindent
-This manual is for BNF Mode version 0.4.4.
-
-@insertcopying
 @end ifnottex
 
 @menu
@@ -126,8 +126,6 @@ To use Elpa:
 
 @lisp
 (require 'package)
-(add-to-list 'package-archives
-             '("gnu" . "https://elpa.gnu.org/packages/") t)
 (package-initialize)
 @end lisp
 
@@ -140,7 +138,7 @@ For those who want only formal, tagged releases use Melpa Stable:
 @lisp
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 @end lisp
 
@@ -152,7 +150,7 @@ For those who want rolling releases as they happen use Melpa:
 @lisp
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 @end lisp
 
@@ -273,10 +271,11 @@ current buffer use @kbd{M-x} @code{bnf-mode} @kbd{RET}.
 @cindex Customizing
 @vindex bnf-mode-algol-comments-style
 
-There are not so much customize options yet.  The most interested
-option is @code{bnf-mode-algol-comments-style}.  Setting it to non-nil
-means use for BNF comments style introduced in ALGOL 60.  The
-following "comment" conventions will hold:
+There are not so much customization options yet.  The most interested
+option is @code{bnf-mode-algol-comments-style}.  This variable can be
+changed to control comments style used in grammars.  Setting it to
+non-nil means use for BNF comments style introduced in ALGOL 60.  In
+this case the following "comment" conventions will hold:
 
 @multitable @columnfractions .7 .3
 @headitem The sequence of basic symbols @tab Is equivalent to
@@ -286,14 +285,25 @@ following "comment" conventions will hold:
 @tab @code{begin}
 @end multitable
 
-@*Enabling this feature will disable comments recognition which use
-semicolon only (@code{;}).
+Note: enabling this feature will disable comments recognition, which
+start with semicolons only (@code{;}).
 
-@*To customize BNF Mode options, use command as follows:
+To customize @code{abbrev-mode} for @code{bnf-mode}, simple add a hook
+to @code{bnf-mode-hook}.  The code may looks as follows:
 
-@example
-M-x customize-group bnf RET
-@end example
+@lisp
+(add-hook 'bnf-mode-hook
+	  '(lambda () (define-abbrev
+			bnf-mode-abbrev-table
+			"lng" "language")))
+@end lisp
+
+If you want, you can go without any customizations at all. The above
+settings are the most bang for the buck in terms of customization.  So
+users that typically don't like customize a lot are advised to look at
+these settings first.  To customize BNF Mode options using textual GUI
+system, use the following command: @kbd{M-x} @code{customize-group}
+@kbd{RET} @code{bnf} @kbd{RET}.
 
 @node Project Links
 @chapter Project Links

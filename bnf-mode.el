@@ -63,8 +63,8 @@ following \"comment\" conventions will hold:
   | begin comment <any sequence not containing ;>; | begin            |
   :------------------------------------------------:------------------:
 
-Note: Enabling this feature will disable comments recognition which use
-semicolon only (\";\")."
+Note: enabling this feature will disable comments recognition, which
+start with semicolons only (\";\")."
   :type 'boolean)
 
 
@@ -189,7 +189,7 @@ See `rx' documentation for more information about REGEXPS param."
    ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
   "Apply syntax table properties to special constructs.
 Provide a macro to apply syntax table properties to comments in ALGOL 60
-style.  Will be used only if `bnf-mode-algol-comments-style' is set to t")
+style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")
 
 
 ;;; Initialization
