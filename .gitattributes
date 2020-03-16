@@ -1,0 +1,5 @@
+.git*        export-ignore
+.codecov.yml export-ignore
+.elpaignore  export-ignore
+
+bnf-mode.el  export-subst
