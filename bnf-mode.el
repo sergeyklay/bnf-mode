@@ -24,11 +24,15 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
+;; This field is expanded to commit SHA, date & associated heads/tags during
+;; archive creation.
+;; Revision: $Format:%h (%cD %d)$
+
 ;;; Commentary:
 
-;;   BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Currently
-;; this mode provides basic syntax and font-locking for BNF files.  BNF notation
-;; is supported exactly form as it was first announced in the ALGOL 60 report.
+;;   BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Presently it
+;; provides basic syntax and font-locking for BNF files.  BNF notation is
+;; supported exactly form as it was first announced in the ALGOL 60 report.
 
 ;;; Code:
 
