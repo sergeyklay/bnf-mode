@@ -1,24 +1,25 @@
 This is bnf-mode.info, produced by makeinfo version 6.5 from
 bnf-mode.texi.
 
-BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Currently
-this mode provides basic syntax and font-locking for BNF files.  BNF
-notation is supported exactly form as it was first announced in the
-ALGOL 60 report.
+BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Presently
+it provides basic syntax and font-locking for BNF files.  BNF notation
+is supported exactly form as it was first announced in the ALGOL 60
+report.
 
 This manual is for BNF Mode version 0.4.4.
 
    Copyright © 2019, 2020 Free Software Foundation, Inc.
 
-     You can redistribute this document and/or modify it under the terms
-     of the GNU General Public License as published by the Free Software
-     Foundation, either version 3 of the License, or (at your option)
-     any later version.
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU Free Documentation License,
+     Version 1.3 or any later version published by the Free Software
+     Foundation; with no Invariant Sections, with the Front-Cover Texts
+     being “A GNU Manual,” and with the Back-Cover Texts as in (a)
+     below.  A copy of the license is included in the section entitled
+     “GNU Free Documentation License.”
 
-     This document is distributed in the hope that it will be useful,
-     but WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-     General Public License for more details.
+     (a) The FSF’s Back-Cover Text is: “You have the freedom to copy and
+     modify this GNU manual.”
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
 * BNF Mode: (bnf-mode).         Major mode for editing BNF grammars.
@@ -62,10 +63,10 @@ File: bnf-mode.info,  Node: Introduction,  Next: Installation,  Prev: Top,  Up: 
 1 Introduction
 **************
 
-BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Currently
-this mode provides basic syntax and font-locking for BNF files.  BNF
-notation is supported exactly form as it was first announced in the
-ALGOL 60 report.
+BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Presently
+it provides basic syntax and font-locking for BNF files.  BNF notation
+is supported exactly form as it was first announced in the ALGOL 60
+report.
 
 
 File: bnf-mode.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up: Top
@@ -350,20 +351,20 @@ Variable Index
 
 
 Tag Table:
-Node: Top1036
-Node: Introduction1735
-Node: Installation2080
-Node: Installing from Elpa or Melpa2602
-Node: Installing using El-get4819
-Node: Installing from the Git Repository5498
-Node: Usage6399
-Node: Customizing6684
-Node: Project Links8160
-Node: Bugs Tracker8331
-Node: Change Log8564
-Node: Bibliography8813
-Node: Index9971
-Node: Variable Index10678
+Node: Top1104
+Node: Introduction1803
+Node: Installation2141
+Node: Installing from Elpa or Melpa2663
+Node: Installing using El-get4880
+Node: Installing from the Git Repository5559
+Node: Usage6460
+Node: Customizing6745
+Node: Project Links8221
+Node: Bugs Tracker8392
+Node: Change Log8625
+Node: Bibliography8874
+Node: Index10032
+Node: Variable Index10739
 
 End Tag Table
 
