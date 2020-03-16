@@ -34,6 +34,11 @@
 ;; Make sure the exact Emacs version can be found in the build output
 (message "Running tests on Emacs %s" emacs-version)
 
+;; `ert--print-backtrace' has been removed in GNU Emacs > 26.
+;; See URL `https://github.com/emacs-mirror/emacs/commit/e09120d'.
+(when (> emacs-major-version 26)
+  (defalias 'ert--print-backtrace 'backtrace-to-string))
+
 (when (require 'undercover nil t)
   ;; Track coverage, but don't send to coverage serivice.  Save in parent
   ;; directory as undercover saves paths relative to the repository root.
