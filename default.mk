@@ -25,9 +25,17 @@ TAR    ?= tar
 INSTALL_INFO ?= $(shell command -v ginstall-info || printf install-info)
 MAKEINFO     ?= makeinfo
 
+EMACSFLAGS ?=
+TESTFLAGS  ?= --reporter ert+duration
+PANDOCLAGS ?= --fail-if-warnings \
+	--reference-links \
+	--atx-headers \
+	-f org+empty_paragraphs
+
 EMACSBATCH = $(EMACS) -Q --batch -L . $(EMACSFLAGS)
 RUNEMACS   =
 
+# Program availability
 HAVE_CASK := $(shell sh -c "command -v $(CASK)")
 ifndef HAVE_CASK
 $(warning "$(CASK) is not available.  Please run make help")
@@ -36,18 +44,12 @@ else
 RUNEMACS = $(CASK) exec $(EMACSBATCH)
 endif
 
-EMACSFLAGS ?=
-TESTFLAGS  ?= --reporter ert+duration
-PANDOCLAGS ?= --fail-if-warnings \
-	--reference-links \
-	--atx-headers \
-	-f org+empty_paragraphs
+VERSION = 0.4.4
 
 PACKAGE = bnf-mode
 ARCHIVE_NAME = $(PACKAGE)-$(VERSION)
 
-VERSION = 0.4.4
-
+# File lists
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
 

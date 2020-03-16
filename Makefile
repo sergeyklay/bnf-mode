@@ -17,6 +17,7 @@
 
 include default.mk
 
+# Run “make build” by default
 .DEFAULT_GOAL = build
 
 %.info: %.texi
@@ -63,7 +64,8 @@ init: Cask
 
 .PHONY: checkdoc
 checkdoc:
-	$(EMACSBATCH) --eval '(checkdoc-file "$(SRCS)")'
+	@$(EMACSBATCH) --eval '(checkdoc-file "$(SRCS)")'
+	$(info Done.)
 
 .PHONY: build
 build: $(OBJS)
