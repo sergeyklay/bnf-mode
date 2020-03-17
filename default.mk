@@ -26,7 +26,7 @@ INSTALL_INFO ?= $(shell command -v ginstall-info || printf install-info)
 MAKEINFO     ?= makeinfo
 
 EMACSFLAGS ?=
-TESTFLAGS  ?= --reporter ert+duration
+TESTFLAGS  ?= -L .
 PANDOCLAGS ?= --fail-if-warnings \
 	--reference-links \
 	--atx-headers \
