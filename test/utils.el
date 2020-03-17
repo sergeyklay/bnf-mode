@@ -1,4 +1,4 @@
-;;; test-helper.el --- BNF Mode: Non-interactive unit-test setup -*- lexical-binding: t; -*-
+;;; utils.el --- BNF Mode: Non-interactive unit-test setup -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019, 2020 Free Software Foundation, Inc
 
@@ -28,8 +28,8 @@
 
 ;;; Code:
 
-(require 's)      ; `s-contains?'
-(require 'cl-lib) ; `cl-defmacro'
+(require 'buttercup)
+(require 'cl-lib)    ; `cl-defmacro'
 
 ;; Make sure the exact Emacs version can be found in the build output
 (message "Running tests on Emacs %s" emacs-version)
@@ -60,16 +60,18 @@
   `(with-temp-buffer
      (insert ,content)
      (bnf-mode)
+
      ,(if (fboundp 'font-lock-ensure)
           '(font-lock-ensure)
         '(with-no-warnings (font-lock-fontify-buffer)))
 
+     (pop-to-buffer (current-buffer))
      (goto-char (point-min))
-     ,@body))
+     (unwind-protect
+         (progn ,@body))))
 
 (defun bnf-test-face-at (pos &optional content)
   "Get the face at POS in CONTENT.
-
 If CONTENT is not given, return the face at POS in the current
 buffer."
   (if content
@@ -77,12 +79,4 @@ buffer."
                                  (get-text-property pos 'face))
     (get-text-property pos 'face)))
 
-(when (s-contains? "--win" (getenv "ERT_RUNNER_ARGS"))
-  (defun ert-runner/run-tests-batch-and-exit (selector)
-    (ert-run-tests-interactively selector)))
-
-;; Local Variables:
-;; indent-tabs-mode: nil
-;; End:
-
-;;; test-helper.el ends here
+;;; utils.el ends here
