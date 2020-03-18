@@ -17,6 +17,9 @@
 
 TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 
+# Run “make build” by default
+.DEFAULT_GOAL = build
+
 EMACS  ?= emacs
 CASK   ?= cask
 PANDOC ?= pandoc
@@ -44,7 +47,7 @@ else
 RUNEMACS = $(CASK) exec $(EMACSBATCH)
 endif
 
-VERSION = 0.4.4
+VERSION="$(shell sed -nre '/^;; Version:/ { s/^;; Version:[ \t]+//; p }' bnf-mode.el)"
 
 PACKAGE = bnf-mode
 ARCHIVE_NAME = $(PACKAGE)-$(VERSION)
