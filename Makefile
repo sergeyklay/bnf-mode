@@ -17,9 +17,6 @@
 
 include default.mk
 
-# Run “make build” by default
-.DEFAULT_GOAL = build
-
 %.info: %.texi
 	$(info Generating $@)
 	@$(MAKEINFO) --no-split $< -o $@
@@ -56,7 +53,7 @@ $(ARCHIVE_NAME).tar: $(ARCHIVE_CONTENTS)
 
 .PHONY: .title
 .title:
-	$(info BNF Mode $(VERSION))
+	@echo "BNF Mode $(VERSION)"
 
 .PHONY: init
 init: Cask
@@ -115,5 +112,5 @@ help: .title
 	@echo '  $(CASK): $(if $(HAVE_CASK),yes,no)'
 	@echo ''
 	@echo 'You need $(CASK) to develop BNF Mode.'
-	@echo 'See http://cask.readthedocs.io/ for more.'
+	@echo 'See https://cask.readthedocs.io/ for more.'
 	@echo ''

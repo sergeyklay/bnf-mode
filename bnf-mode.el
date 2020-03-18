@@ -8,6 +8,7 @@
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
+;; Revision: $Format:%h (%cD %d)$
 
 ;;;; License
 
@@ -23,10 +24,6 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
-
-;; This field is expanded to commit SHA, date & associated heads/tags during
-;; archive creation.
-;; Revision: $Format:%h (%cD %d)$
 
 ;;; Commentary:
 
