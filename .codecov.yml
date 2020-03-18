@@ -49,4 +49,4 @@ ignore:
   # ignore folders and all its contents
   - ".cask/.*"
   - ".github/.*"
-  - "test/.*"
+  - "test/test-.*"
