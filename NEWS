@@ -10,6 +10,7 @@ Previously BNF Mode used ert through ert-runner for testing
 purposes.  However, it seems ert-runner is abandoned (the last
 commit a few years ago), it still uses only Emacs 24 on its own
 tests and in general it looks as not maintained anymore project.
+** Added abbreviation table used in bnf-mode buffers
 
 * BNF Mode 0.4.4
 ** Rework documentation and provide Info-file.

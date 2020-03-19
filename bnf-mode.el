@@ -68,6 +68,9 @@ Note: enabling this feature will disable comments recognition, which
 start with semicolons only (\";\")."
   :type 'boolean)
 
+(defvar bnf-mode-abbrev-table nil
+  "Abbreviation table used in `bnf-mode' buffers.")
+
 
 ;;; Specialized rx
 
@@ -94,7 +97,7 @@ are available:
 
 See `rx' documentation for more information about REGEXPS param."
      (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
-       (rx-to-string (cond ((null sexps) (error "No regexp"))
+       (rx-to-string (cond ((null sexps) (error "No regexp is provided"))
                            ((cdr sexps)  `(and ,@sexps))
                            (t            (car sexps)))
                      t))))
@@ -203,8 +206,9 @@ style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")
 The variable `bnf-mode-algol-comments-style' can be changed to control
 comments style used in grammars.
 
-Turning on BNF mode calls the value of `prog-mode-hook' and then of
+Turning on BNF Mode calls the value of `prog-mode-hook' and then of
 `bnf-mode-hook', if they are non-nil."
+  :abbrev-table bnf-mode-abbrev-table
   :syntax-table bnf-mode-syntax-table
 
   ;; Comments setup
