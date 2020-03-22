@@ -46,128 +46,60 @@
 
 (describe "BNF Fontification"
   (it "does not fontify strings"
-    (bnf-test-with-temp-buffer
-     "<string delimers> ::= \" | ' | ` | ”"
-     (should-not (bnf-get-face-at 23))
-     (should-not (bnf-get-face-at 27))
-     (should-not (bnf-get-face-at 31))
-     (should-not (bnf-get-face-at 35))))
+    (expect "<string delimers> ::= \" | ' | ` | ”"
+            :to-be-fontified-as
+            '(("string delimers" function-name "::=" constant "|" warning
+               "|" warning "|" warning))))
 
-  (it "fontify line comments"
-    (custom-set-variables '(bnf-mode-algol-comments-style nil))
-    (bnf-test-with-temp-buffer
-     "; A
+  (it "fontifies line comments with default comments style"
+    (expect "; A
+     <stm> ::= <decl> ; foo"
+            :to-be-fontified-as
+            '(("; " comment-delimiter "A" comment)
+              ("stm" function-name "::=" constant "decl" builtin
+               "; foo" comment))))
 
-<stm> ::= <decl> ; foo"
-     (should (eq (bnf-get-face-at 1) 'font-lock-comment-delimiter-face))
-     (should (eq (bnf-get-face-at 3) 'font-lock-comment-face))
-     (should-not (bnf-get-face-at 5))
-     (should (eq (bnf-get-face-at 24) 'font-lock-comment-face))))
 
-  ;; TODO(sergei): Implement me
-  (it "fontify ALGOL comments"
-    (custom-set-variables '(bnf-mode-algol-comments-style t))
-    (bnf-test-with-temp-buffer "" ))
+  ;; TODO(sergei): Add test for bnf-mode-algol-comments-style
 
-  (it "fontify nonterminals"
-    (bnf-test-with-temp-buffer
-     "<stm> ::= <decl>
-angle-brackets ::= are-optional"
-     ;; angle bracket
-     (should-not (bnf-get-face-at 1))
-     ;; "stm"
-     (should (eq (bnf-get-face-at 2) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 4) 'font-lock-function-name-face))
-     ;; angle bracket
-     (should-not (bnf-get-face-at 5))
-     ;; "::=" symbol
-     (should (eq (bnf-get-face-at 7) 'font-lock-constant-face))
-     (should (eq (bnf-get-face-at 9) 'font-lock-constant-face))
-     ;; angle bracket
-     (should-not (bnf-get-face-at 11))
-     ;; "dec" symbol
-     (should (eq (bnf-get-face-at 12) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 15) 'font-lock-builtin-face))))
+  (it "does not mix terminals and nonterminals"
+    (expect "<stm> ::= <decl>
+     angle-brackets ::= are-optional"
+            :to-be-fontified-as
+            '(("stm" function-name "::=" constant "decl" builtin)
+              ("::=" constant))))
 
-  (it "fontify nonterminals despite the case"
-    (bnf-test-with-temp-buffer
-     "<RULE> ::= <foo>
-<RuLe> ::= <foO>"
-     (should (eq (bnf-get-face-at 2) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 5) 'font-lock-function-name-face))
-     (should-not (bnf-get-face-at 17))
-     (should (eq (bnf-get-face-at 19) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 22) 'font-lock-function-name-face))
-     (should-not (bnf-get-face-at 23))
-     (should (eq (bnf-get-face-at 30) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 32) 'font-lock-builtin-face))
-     (should-not (bnf-get-face-at 33))))
+  (it "fontifies nonterminals despite the case"
+    (expect "<RULE> ::= <foo>
+     <RuLe> ::= <foO>"
+            :to-be-fontified-as
+            '(("RULE" function-name "::=" constant "foo" builtin)
+              ("RuLe" function-name "::=" constant "foO" builtin))))
 
-  (it "fontify nonterminals despite the indentation"
-    (bnf-test-with-temp-buffer
-     "   <rule> ::= <foo>"
-     (should-not (bnf-get-face-at 4))
-     (should (eq (bnf-get-face-at 5) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 6) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 7) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 8) 'font-lock-function-name-face))
-     (should-not (bnf-get-face-at 9))))
+  (it "fontifies nonterminals despite the indentation"
+    (expect "   <rule> ::= <subrule>"
+            :to-be-fontified-as
+            '(("rule" function-name "::=" constant "subrule" builtin))))
 
-  (it "fontify sequences"
-    (bnf-test-with-temp-buffer
-     "<rule> ::= <foo> <bar> <baz>"
-     ;; "<" angle bracket
-     (should-not (bnf-get-face-at 1))
-     ;; "rule"
-     (should (eq (bnf-get-face-at 2) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 5) 'font-lock-function-name-face))
-     ;; ">" angle bracket
-     (should-not (bnf-get-face-at 6))
-     ;; "foo"
-     (should (eq (bnf-get-face-at 13) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 15) 'font-lock-builtin-face))
-     ;; space
-     (should-not (bnf-get-face-at 17))
-     ;; "bar"
-     (should (eq (bnf-get-face-at 19) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 21) 'font-lock-builtin-face))
-     ;; space
-     (should-not (bnf-get-face-at 23))
-     ;; "baz"
-     (should (eq (bnf-get-face-at 25) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 27) 'font-lock-builtin-face))))
+  (it "fontifies sequences"
+    (expect "<rule> ::= <foo> <bar> <baz>"
+            :to-be-fontified-as
+            '(("rule" function-name "::=" constant "foo" builtin
+               "bar" builtin "baz" builtin))))
 
-  (it "fontify alternatives"
-    (bnf-test-with-temp-buffer
-     "<foo> | <bar> | <baz>"
-     ;; "foo"
-     (should (eq (bnf-get-face-at 2) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 4) 'font-lock-builtin-face))
-     ;; "|"
-     (should (eq (bnf-get-face-at 7) 'font-lock-warning-face))
-     ;; "bar"
-     (should (eq (bnf-get-face-at 10) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 12) 'font-lock-builtin-face))
-     ;; "|"
-     (should (eq (bnf-get-face-at 15) 'font-lock-warning-face))
-     ;; "baz"
-     (should (eq (bnf-get-face-at 18) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 20) 'font-lock-builtin-face))))
+  (it "fontifies alternatives"
+    (expect "<foo> | <bar> | <baz>"
+            :to-be-fontified-as
+            '(("foo" builtin "|" warning "bar" builtin
+               "|" warning "baz" builtin))))
 
-  (it "fontify rule punctuation"
-    (bnf-test-with-temp-buffer
-     "
-<proper string> ::=
+  (it "fontifies rule punctuation"
+    (expect "<proper string> ::=
         <any sequence of symbols not containing ` or ' >
         | <empty>"
-     ;; "proper string"
-     (should (eq (bnf-get-face-at 3) 'font-lock-function-name-face))
-     (should (eq (bnf-get-face-at 15) 'font-lock-function-name-face))
-     ;; "any sequence of symbols not containing ` or ' "
-     (should (eq (bnf-get-face-at 31) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 76) 'font-lock-builtin-face))
-     ;; "empty"
-     (should (eq (bnf-get-face-at 90) 'font-lock-builtin-face))
-     (should (eq (bnf-get-face-at 94) 'font-lock-builtin-face)))))
+            :to-be-fontified-as
+            '(("proper string" function-name "::=" constant)
+              ("any sequence of symbols not containing ` or ' " builtin)
+              ("|" warning "empty" builtin)))))
 
 ;;; test-bnf-mode-font-lock.el ends here
