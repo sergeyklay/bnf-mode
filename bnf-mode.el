@@ -68,10 +68,6 @@ Note: enabling this feature will disable comments recognition, which
 start with semicolons only (\";\")."
   :type 'boolean)
 
-(defvar bnf-mode-abbrev-table nil
-  "Abbreviation table used in `bnf-mode' buffers.")
-(define-abbrev-table 'bnf-mode-abbrev-table ())
-
 
 ;;;; Specialized rx
 
@@ -209,7 +205,6 @@ comments style used in grammars.
 
 Turning on BNF Mode calls the value of `prog-mode-hook' and then of
 `bnf-mode-hook', if they are non-nil."
-  :abbrev-table bnf-mode-abbrev-table
   :syntax-table bnf-mode-syntax-table
 
   ;; Comments setup

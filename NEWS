@@ -12,9 +12,6 @@ purposes.  However, it seems `ert-runner' is semi-abandoned.  Thus,
 tests were migrated to use more aggressively maintained test
 framework calles `buttercup'.
 
-** Added abbreviation table to use in bnf-mode buffers.
-To use abbreviations in BNF buffers refers to `bnf-mode-abbrev-table'.
-
 * BNF Mode 0.4.4
 ** Rework documentation and provide Info-file.
 Previous releases of BNF Mode were bundled with incorrect “dir” file
