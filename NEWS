@@ -4,26 +4,29 @@ Copyright (C) 2019, 2020 Free Software Foundation, Inc.
 See the end of the file for license conditions.
 
 This file is about changes in BNF Mode.
+
 * Unreleased
-** Migrate tests from ert-runner to buttercup
-Previously BNF Mode used ert through ert-runner for testing
-purposes.  However, it seems ert-runner is abandoned (the last
-commit a few years ago), it still uses only Emacs 24 on its own
-tests and in general it looks as not maintained anymore project.
-** Added abbreviation table used in bnf-mode buffers
+** Tests were migrated from ert-runner to buttercup.
+Previously BNF Mode used `ert' through `ert-runner' for testing
+purposes.  However, it seems `ert-runner' is semi-abandoned.  Thus,
+tests were migrated to use more aggressively maintained test
+framework calles `buttercup'.
+
+** Added abbreviation table to use in bnf-mode buffers.
+To use abbreviations in BNF buffers refers to `bnf-mode-abbrev-table'.
 
 * BNF Mode 0.4.4
 ** Rework documentation and provide Info-file.
-Previous releases of BNF Mode were bundled with incorrect "dir" file
-which contained an invalid link to documentation.  This was
-resolved.  All documentation now lives in "info bnf-mode".
+Previous releases of BNF Mode were bundled with incorrect “dir” file
+that contained an invalid link to documentation.  This was
+resolved.  All documentation now lives in “info bnf-mode”.
 
 * BNF Mode 0.4.3
 ** Fixed dependency list in the Cask file.
 Dependency list was fixed by specifying `cl-lib' version as well as
 removing `rx' (`rx' is part of GNU Emacs actually).  This fixed the
 issue reported in <https://github.com/sergeyklay/bnf-mode/issues/5>.
-The issue related to installation from the TAR file.
+The issue is related to installation from the TAR file.
 
 ** CI/CD process was moved on GitHub Actions.
 
@@ -33,7 +36,7 @@ The issue related to installation from the TAR file.
 ** Introduced ALGOL 60 comments style. Disabled by default.
 
 ** Use semicolons as a comments.
-Only setting bnf-mode-algol-comments-style to non-nil will allow use
+Only setting `bnf-mode-algol-comments-style' to non-nil will allow use
 semicolons as a regular terminal symbols.
 
 * BNF Mode 0.4.1
@@ -80,8 +83,6 @@ interactively if they want to get this information.
 
 
 ----------------------------------------------------------------------
-This file is part of GNU Emacs.
-
 GNU Emacs is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
