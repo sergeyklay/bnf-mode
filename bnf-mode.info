@@ -230,13 +230,8 @@ The sequence of basic symbols                      Is equivalent to
    Note: enabling this feature will disable comments recognition, which
 start with semicolons only (‘;’).
 
-   To customize ‘abbrev-mode’ for ‘bnf-mode’, simple add a hook to
-‘bnf-mode-hook’.  The code may looks as follows:
-
-     (add-hook 'bnf-mode-hook
-     	  '(lambda () (define-abbrev
-     			bnf-mode-abbrev-table
-     			"lng" "language")))
+   To customize ‘abbrev-mode’ for ‘bnf-mode’, simple add preffered
+abbreviations to ‘bnf-mode-abbrev-table’.
 
    If you want, you can go without any customizations at all.  The above
 settings are the most bang for the buck in terms of customization.  So
@@ -359,12 +354,12 @@ Node: Installing using El-get4880
 Node: Installing from the Git Repository5559
 Node: Usage6460
 Node: Customizing6745
-Node: Project Links8221
-Node: Bugs Tracker8392
-Node: Change Log8625
-Node: Bibliography8874
-Node: Index10032
-Node: Variable Index10739
+Node: Project Links8090
+Node: Bugs Tracker8261
+Node: Change Log8494
+Node: Bibliography8743
+Node: Index9901
+Node: Variable Index10608
 
 End Tag Table
 

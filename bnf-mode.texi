@@ -288,15 +288,8 @@ this case the following "comment" conventions will hold:
 Note: enabling this feature will disable comments recognition, which
 start with semicolons only (@code{;}).
 
-To customize @code{abbrev-mode} for @code{bnf-mode}, simple add a hook
-to @code{bnf-mode-hook}.  The code may looks as follows:
-
-@lisp
-(add-hook 'bnf-mode-hook
-	  '(lambda () (define-abbrev
-			bnf-mode-abbrev-table
-			"lng" "language")))
-@end lisp
+To customize @code{abbrev-mode} for @code{bnf-mode}, simple add preffered
+abbreviations to @code{bnf-mode-abbrev-table}.
 
 If you want, you can go without any customizations at all. The above
 settings are the most bang for the buck in terms of customization.  So
