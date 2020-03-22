@@ -34,13 +34,13 @@
 ;;; Code:
 
 
-;;; Requirements
+;;;; Requirements
 
 (eval-when-compile
   (require 'rx))    ; `rx'
 
 
-;;; Customization
+;;;; Customization
 
 ;;;###autoload
 (defgroup bnf nil
@@ -70,9 +70,10 @@ start with semicolons only (\";\")."
 
 (defvar bnf-mode-abbrev-table nil
   "Abbreviation table used in `bnf-mode' buffers.")
+(define-abbrev-table 'bnf-mode-abbrev-table ())
 
 
-;;; Specialized rx
+;;;; Specialized rx
 
 (eval-when-compile
   (defconst bnf-rx-constituents
@@ -103,7 +104,7 @@ See `rx' documentation for more information about REGEXPS param."
                      t))))
 
 
-;;; Font Locking
+;;;; Font Locking
 
 (defvar bnf-font-lock-keywords
   `(
@@ -139,7 +140,7 @@ See `rx' documentation for more information about REGEXPS param."
   "Font lock BNF keywords for BNF Mode.")
 
 
-;;; Syntax
+;;;; Syntax
 
 (defvar bnf-mode-syntax-table
   (let ((table (make-syntax-table)))
@@ -196,7 +197,7 @@ Provide a macro to apply syntax table properties to comments in ALGOL 60
 style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")
 
 
-;;; Initialization
+;;;; Initialization
 
 ;;;###autoload
 (define-derived-mode bnf-mode prog-mode "BNF"
