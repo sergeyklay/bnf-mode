@@ -59,8 +59,12 @@
               ("stm" function-name "::=" constant "decl" builtin
                "; foo" comment))))
 
-
-  ;; TODO(sergei): Add test for bnf-mode-algol-comments-style
+  (it "fontifies line comments using ALGOL style"
+    (setq-default bnf-mode-algol-comments-style t)
+    (expect "; comment here"
+            :to-be-fontified-as
+            '(("; comment here" comment)))
+    (setq-default bnf-mode-algol-comments-style nil))
 
   (it "does not mix terminals and nonterminals"
     (expect "<stm> ::= <decl>
