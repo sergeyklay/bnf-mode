@@ -5,21 +5,17 @@ See the end of the file for license conditions.
 
 This file is about changes in BNF Mode.
 
-* Unreleased
+* BNF Mode 0.4.5
 ** Tests were migrated from ert-runner to buttercup.
 Previously BNF Mode used `ert' through `ert-runner' for testing
 purposes.  However, it seems `ert-runner' is semi-abandoned.  Thus,
 tests were migrated to use more aggressively maintained test
 framework calles `buttercup'.
 
-** Fixed comments recognition in ALGOL 60 style.
-Now, when `bnf-mode-algol-comments-style' is set to non-nil value
-the following line:
-  “begin comment Some text; Not a comment”
-will be correctly fontified as follows:
-  - “begin”: N/A
-  - “comment Some text;”: comment
-  - “Not a comment”: N/A
+** Removed support of ALGOL 60 style comments.
+Actually, this syntax was never part of the BNF and was mistakenly
+interpreted as an alternative way of commenting BNF grammars
+introduced by Peter Naur.
 
 * BNF Mode 0.4.4
 ** Rework documentation and provide Info-file.

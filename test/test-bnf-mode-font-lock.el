@@ -51,20 +51,13 @@
             '(("string delimers" function-name "::=" constant "|" warning
                "|" warning "|" warning))))
 
-  (it "fontifies line comments with default comments style"
+  (it "fontifies line comments"
     (expect "; A
      <stm> ::= <decl> ; foo"
             :to-be-fontified-as
             '(("; " comment-delimiter "A" comment)
               ("stm" function-name "::=" constant "decl" builtin
                "; foo" comment))))
-
-  (it "fontifies line comments using ALGOL style"
-    (setq-default bnf-mode-algol-comments-style t)
-    (expect "begin comment here ; not comment"
-            :to-be-fontified-as
-            '(("comment" comment ";" comment-delimiter)))
-    (setq-default bnf-mode-algol-comments-style nil))
 
   (it "does not mix terminals and nonterminals"
     (expect "<stm> ::= <decl>

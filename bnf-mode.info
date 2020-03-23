@@ -8,7 +8,7 @@ report.
 
 This manual is for BNF Mode version 0.4.4.
 
-   Copyright © 2019, 2020 Free Software Foundation, Inc.
+   Copyright © 2019-2020 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -216,19 +216,7 @@ File: bnf-mode.info,  Node: Customizing,  Next: Project Links,  Prev: Usage,  Up
 4 Customizing
 *************
 
-There are not so much customization options yet.  The most interested
-option is ‘bnf-mode-algol-comments-style’.  This variable can be changed
-to control comments style used in grammars.  Setting it to non-nil means
-use for BNF comments style introduced in ALGOL 60.  In this case the
-following "comment" conventions will hold:
-
-The sequence of basic symbols                      Is equivalent to
---------------------------------------------------------------------------
-‘; comment <any sequence not containing ;>;’       ‘;’
-‘begin comment <any sequence not containing ;>;’   ‘begin’
-
-   Note: enabling this feature will disable comments recognition, which
-start with semicolons only (‘;’).
+There are not so much customization options yet.
 
    To customize ‘abbrev-mode’ for ‘bnf-mode’, simple add preffered
 abbreviations to ‘bnf-mode-abbrev-table’.
@@ -338,28 +326,23 @@ File: bnf-mode.info,  Node: Variable Index,  Prev: Index,  Up: Top
 Variable Index
 **************
 
- [index ]
-* Menu:
-
-* bnf-mode-algol-comments-style:         Customizing.           (line 6)
-
 
 
 Tag Table:
-Node: Top1104
-Node: Introduction1803
-Node: Installation2141
-Node: Installing from Elpa or Melpa2663
-Node: Installing using El-get4880
-Node: Installing from the Git Repository5559
-Node: Usage6460
-Node: Customizing6745
-Node: Project Links8090
-Node: Bugs Tracker8261
-Node: Change Log8494
-Node: Bibliography8743
-Node: Index9901
-Node: Variable Index10608
+Node: Top1103
+Node: Introduction1802
+Node: Installation2140
+Node: Installing from Elpa or Melpa2662
+Node: Installing using El-get4879
+Node: Installing from the Git Repository5558
+Node: Usage6459
+Node: Customizing6744
+Node: Project Links7421
+Node: Bugs Tracker7592
+Node: Change Log7825
+Node: Bibliography8074
+Node: Index9232
+Node: Variable Index9939
 
 End Tag Table
 

@@ -269,24 +269,8 @@ current buffer use @kbd{M-x} @code{bnf-mode} @kbd{RET}.
 @chapter Customizing
 
 @cindex Customizing
-@vindex bnf-mode-algol-comments-style
 
-There are not so much customization options yet.  The most interested
-option is @code{bnf-mode-algol-comments-style}.  This variable can be
-changed to control comments style used in grammars.  Setting it to
-non-nil means use for BNF comments style introduced in ALGOL 60.  In
-this case the following "comment" conventions will hold:
-
-@multitable @columnfractions .7 .3
-@headitem The sequence of basic symbols @tab Is equivalent to
-@item @code{; comment <any sequence not containing ;>;}
-@tab @code{;}
-@item @code{begin comment <any sequence not containing ;>;}
-@tab @code{begin}
-@end multitable
-
-Note: enabling this feature will disable comments recognition, which
-start with semicolons only (@code{;}).
+There are not so much customization options yet.
 
 To customize @code{abbrev-mode} for @code{bnf-mode}, simple add preffered
 abbreviations to @code{bnf-mode-abbrev-table}.

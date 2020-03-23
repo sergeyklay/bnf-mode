@@ -51,23 +51,6 @@
   :link '(url-link :tag "GitHub Page" "https://github.com/sergeyklay/bnf-mode")
   :link '(emacs-commentary-link :tag "Commentary" "bnf-mode"))
 
-(defcustom bnf-mode-algol-comments-style nil
-  "Non-nil means use for BNF comments style introduced in ALGOL 60.
-
-For the purpose of including text among the symbols of a program the
-following \"comment\" conventions will hold:
-
-  :------------------------------------------------:------------------:
-  | The sequence of basic symbols:                 | is equivalent to |
-  :------------------------------------------------:------------------:
-  | ; comment <any sequence not containing ;>;     | ;                |
-  | begin comment <any sequence not containing ;>; | begin            |
-  :------------------------------------------------:------------------:
-
-Note: enabling this feature will disable comments recognition, which
-start with semicolons only (\";\")."
-  :type 'boolean)
-
 
 ;;;; Specialized rx
 
@@ -170,21 +153,12 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\< "(>" table)
     (modify-syntax-entry ?\> ")<" table)
 
-    ;; Comments setup
-    (unless bnf-mode-algol-comments-style
-      (modify-syntax-entry ?\; "<" table)
-      (modify-syntax-entry ?\n ">" table))
+    ;; Comments are begins with “;” and ends with “\n”
+    (modify-syntax-entry ?\; "<" table)
+    (modify-syntax-entry ?\n ">" table)
 
     table)
   "Syntax table in use in `bnf-mode' buffers.")
-
-(defconst bnf--syntax-propertize
-  (syntax-propertize-rules
-   ;; Fontify comments in ALGOL 60 style.
-   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)[^;]*\\(;\\)" (1 "<") (2 ">")))
-  "Apply syntax table properties to special constructs.
-Provide a macro to apply syntax table properties to comments in ALGOL 60
-style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")
 
 
 ;;;; Initialization
@@ -194,8 +168,6 @@ style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")
   "A major mode for editing BNF grammars.
 
 \\{bnf-mode-map}
-The variable `bnf-mode-algol-comments-style' can be changed to control
-comments style used in grammars.
 
 Turning on BNF Mode calls the value of `prog-mode-hook' and then of
 `bnf-mode-hook', if they are non-nil."
@@ -203,16 +175,9 @@ Turning on BNF Mode calls the value of `prog-mode-hook' and then of
 
   ;; Comments setup
   (setq-local comment-use-syntax nil)
-  (if bnf-mode-algol-comments-style
-      (progn
-        (setq-local comment-start "; comment ")
-        (setq-local comment-end ";")
-        (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\)comment\\)\\s-+")
-        (setq-local syntax-propertize-function bnf--syntax-propertize))
-    (progn
-      (setq-local comment-start "; ")
-      (setq-local comment-end "")
-      (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")))
+  (setq-local comment-start "; ")
+  (setq-local comment-end "")
+  (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")
 
   ;; Font locking
   (setq font-lock-defaults
