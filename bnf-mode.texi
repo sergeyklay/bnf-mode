@@ -15,7 +15,7 @@ BNF notation is supported exactly form as it was first announced in
 the ALGOL 60 report.
 
 @noindent
-This manual is for BNF Mode version 0.4.4.
+This manual is for BNF Mode version 0.4.5.
 @end ifnottex
 
 Copyright @copyright{} 2019-2020 Free Software Foundation, Inc.
@@ -41,7 +41,7 @@ modify this GNU manual.”
 @finalout
 @titlepage
 @title BNF Mode User Manual
-@subtitle for version 0.4.4
+@subtitle for version 0.4.5
 @author Serghei Iakovlev
 @page
 @vskip 0pt plus 1filll
@@ -91,6 +91,36 @@ BNF Mode is a GNU Emacs major mode for editing BNF grammars.
 Presently it provides basic syntax and font-locking for BNF files.
 BNF notation is supported exactly form as it was first announced in
 the ALGOL 60 report.
+
+Bellow canonical BNF notation represented with a BNF is presented.  The syntax of the BNF has been carefully copied from Revised ALGOL 60 report.  For more see @url{http://www.masswerk.at/algol60/report.htm}.
+
+@example
+<syntax>         ::= <rule> | <rule> <syntax>
+<rule>           ::= <opt-ws> < <rule-name> > <opt-ws>
+                     ::= <opt-ws> <expression> <line-end>
+<opt-ws>         ::= <space> <opt-ws> | <empty>
+<expression>     ::= <list> | <list> <opt-ws> <or> <opt-ws>
+                     <expression>
+<line-end>       ::= <opt-ws> <EOL> | <line-end> <line-end>
+<list>           ::= <term> | <term> <opt-ws> <list>
+<term>           ::= <literal> | < <rule-name> >
+<literal>        ::= <character> <text>
+<character>      ::= <letter> | <digit> | <symbol>
+<letter>         ::= A | B | C | D | E | F | G | H | I | J | K | L |
+                     M | N | O | P | Q | R | S | T | U | V | W | X |
+                     Y | Z | a | b | c | d | e | f | g | h | i | j |
+                     k | l | m | n | o | p | q | r | s | t | u | v |
+                     w | x | y | z
+<digit>          ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<symbol>         ::= <or>  | <space>   | ! | # | $ | % | & | ( | ) |
+                     * | + | @comma{} | - | . | / | : | ~ | > | = | < | ? |
+                     @atchar{} | [ | @backslashchar{} | ] | ^ | _ | ` | ' | " | @{ | @} | ;
+<rule-name>      ::= <letter> | <rule-name> <rule-char>
+<rule-char>      ::= <letter> | <digit> | -
+<space>          ::= <space, tab or new line character>
+<or>             ::= |
+<empty>          ::=
+@end example
 
 @node Installation
 @chapter Installation
@@ -269,24 +299,8 @@ current buffer use @kbd{M-x} @code{bnf-mode} @kbd{RET}.
 @chapter Customizing
 
 @cindex Customizing
-@vindex bnf-mode-algol-comments-style
 
-There are not so much customization options yet.  The most interested
-option is @code{bnf-mode-algol-comments-style}.  This variable can be
-changed to control comments style used in grammars.  Setting it to
-non-nil means use for BNF comments style introduced in ALGOL 60.  In
-this case the following "comment" conventions will hold:
-
-@multitable @columnfractions .7 .3
-@headitem The sequence of basic symbols @tab Is equivalent to
-@item @code{; comment <any sequence not containing ;>;}
-@tab @code{;}
-@item @code{begin comment <any sequence not containing ;>;}
-@tab @code{begin}
-@end multitable
-
-Note: enabling this feature will disable comments recognition, which
-start with semicolons only (@code{;}).
+There are not so much customization options yet.
 
 To customize @code{abbrev-mode} for @code{bnf-mode}, simple add preffered
 abbreviations to @code{bnf-mode-abbrev-table}.

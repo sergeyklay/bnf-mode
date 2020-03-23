@@ -6,9 +6,9 @@ it provides basic syntax and font-locking for BNF files.  BNF notation
 is supported exactly form as it was first announced in the ALGOL 60
 report.
 
-This manual is for BNF Mode version 0.4.4.
+This manual is for BNF Mode version 0.4.5.
 
-   Copyright © 2019, 2020 Free Software Foundation, Inc.
+   Copyright © 2019-2020 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -67,6 +67,36 @@ BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Presently
 it provides basic syntax and font-locking for BNF files.  BNF notation
 is supported exactly form as it was first announced in the ALGOL 60
 report.
+
+   Bellow canonical BNF notation represented with a BNF is presented.
+The syntax of the BNF has been carefully copied from Revised ALGOL 60
+report.  For more see <http://www.masswerk.at/algol60/report.htm>.
+
+     <syntax>         ::= <rule> | <rule> <syntax>
+     <rule>           ::= <opt-ws> < <rule-name> > <opt-ws>
+                          ::= <opt-ws> <expression> <line-end>
+     <opt-ws>         ::= <space> <opt-ws> | <empty>
+     <expression>     ::= <list> | <list> <opt-ws> <or> <opt-ws>
+                          <expression>
+     <line-end>       ::= <opt-ws> <EOL> | <line-end> <line-end>
+     <list>           ::= <term> | <term> <opt-ws> <list>
+     <term>           ::= <literal> | < <rule-name> >
+     <literal>        ::= <character> <text>
+     <character>      ::= <letter> | <digit> | <symbol>
+     <letter>         ::= A | B | C | D | E | F | G | H | I | J | K | L |
+                          M | N | O | P | Q | R | S | T | U | V | W | X |
+                          Y | Z | a | b | c | d | e | f | g | h | i | j |
+                          k | l | m | n | o | p | q | r | s | t | u | v |
+                          w | x | y | z
+     <digit>          ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+     <symbol>         ::= <or>  | <space>   | ! | # | $ | % | & | ( | ) |
+                          * | + | , | - | . | / | : | ~ | > | = | < | ? |
+                          @ | [ | \ | ] | ^ | _ | ` | ' | " | { | } | ;
+     <rule-name>      ::= <letter> | <rule-name> <rule-char>
+     <rule-char>      ::= <letter> | <digit> | -
+     <space>          ::= <space, tab or new line character>
+     <or>             ::= |
+     <empty>          ::=
 
 
 File: bnf-mode.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up: Top
@@ -216,19 +246,7 @@ File: bnf-mode.info,  Node: Customizing,  Next: Project Links,  Prev: Usage,  Up
 4 Customizing
 *************
 
-There are not so much customization options yet.  The most interested
-option is ‘bnf-mode-algol-comments-style’.  This variable can be changed
-to control comments style used in grammars.  Setting it to non-nil means
-use for BNF comments style introduced in ALGOL 60.  In this case the
-following "comment" conventions will hold:
-
-The sequence of basic symbols                      Is equivalent to
---------------------------------------------------------------------------
-‘; comment <any sequence not containing ;>;’       ‘;’
-‘begin comment <any sequence not containing ;>;’   ‘begin’
-
-   Note: enabling this feature will disable comments recognition, which
-start with semicolons only (‘;’).
+There are not so much customization options yet.
 
    To customize ‘abbrev-mode’ for ‘bnf-mode’, simple add preffered
 abbreviations to ‘bnf-mode-abbrev-table’.
@@ -338,28 +356,23 @@ File: bnf-mode.info,  Node: Variable Index,  Prev: Index,  Up: Top
 Variable Index
 **************
 
- [index ]
-* Menu:
-
-* bnf-mode-algol-comments-style:         Customizing.           (line 6)
-
 
 
 Tag Table:
-Node: Top1104
-Node: Introduction1803
-Node: Installation2141
-Node: Installing from Elpa or Melpa2663
-Node: Installing using El-get4880
-Node: Installing from the Git Repository5559
-Node: Usage6460
-Node: Customizing6745
-Node: Project Links8090
-Node: Bugs Tracker8261
-Node: Change Log8494
-Node: Bibliography8743
-Node: Index9901
-Node: Variable Index10608
+Node: Top1103
+Node: Introduction1802
+Node: Installation3803
+Node: Installing from Elpa or Melpa4325
+Node: Installing using El-get6542
+Node: Installing from the Git Repository7221
+Node: Usage8122
+Node: Customizing8407
+Node: Project Links9084
+Node: Bugs Tracker9255
+Node: Change Log9488
+Node: Bibliography9737
+Node: Index10895
+Node: Variable Index11602
 
 End Tag Table
 

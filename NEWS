@@ -5,15 +5,17 @@ See the end of the file for license conditions.
 
 This file is about changes in BNF Mode.
 
-* Unreleased
+* BNF Mode 0.4.5
 ** Tests were migrated from ert-runner to buttercup.
 Previously BNF Mode used `ert' through `ert-runner' for testing
 purposes.  However, it seems `ert-runner' is semi-abandoned.  Thus,
 tests were migrated to use more aggressively maintained test
 framework calles `buttercup'.
 
-** Added abbreviation table to use in bnf-mode buffers.
-To use abbreviations in BNF buffers refers to `bnf-mode-abbrev-table'.
+** Removed support of ALGOL 60 style comments.
+Actually, this syntax was never part of the BNF and was mistakenly
+interpreted as an alternative way of commenting BNF grammars
+introduced by Peter Naur.
 
 * BNF Mode 0.4.4
 ** Rework documentation and provide Info-file.
