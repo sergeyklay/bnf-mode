@@ -175,11 +175,9 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\> ")<" table)
 
     ;; Comments setup
-    (if bnf-mode-algol-comments-style
-        (modify-syntax-entry ?\; ">" table)
-      (progn
-        (modify-syntax-entry ?\; "<" table)
-        (modify-syntax-entry ?\n ">" table)))
+    (unless bnf-mode-algol-comments-style
+      (modify-syntax-entry ?\; "<" table)
+      (modify-syntax-entry ?\n ">" table))
 
     table)
   "Syntax table in use in `bnf-mode' buffers.")
@@ -187,8 +185,7 @@ See `rx' documentation for more information about REGEXPS param."
 (defconst bnf--syntax-propertize
   (syntax-propertize-rules
    ;; Fontify comments in ALGOL 60 style.
-   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\)" (1 "<") (2 ">"))
-   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\s-+[^;]*\\(;\\)" (1 "<") (2 ">")))
+   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)[^;]*\\(;\\)" (1 "<") (2 ">")))
   "Apply syntax table properties to special constructs.
 Provide a macro to apply syntax table properties to comments in ALGOL 60
 style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")
