@@ -12,6 +12,15 @@ purposes.  However, it seems `ert-runner' is semi-abandoned.  Thus,
 tests were migrated to use more aggressively maintained test
 framework calles `buttercup'.
 
+** Fixed comments recognition in ALGOL 60 style.
+Now, when `bnf-mode-algol-comments-style' is set to non-nil value
+the following line:
+  “begin comment Some text; Not a comment”
+will be correctly fontified as follows:
+  - “begin”: N/A
+  - “comment Some text;”: comment
+  - “Not a comment”: N/A
+
 * BNF Mode 0.4.4
 ** Rework documentation and provide Info-file.
 Previous releases of BNF Mode were bundled with incorrect “dir” file

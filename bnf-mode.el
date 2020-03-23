@@ -187,7 +187,8 @@ See `rx' documentation for more information about REGEXPS param."
 (defconst bnf--syntax-propertize
   (syntax-propertize-rules
    ;; Fontify comments in ALGOL 60 style.
-   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\|\\s-+[^;]*;\\)" (1 "<")))
+   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\(;\\)" (1 "<") (2 ">"))
+   ("\\(?:begin\\s-+\\|;\\s-*\\)\\(comment\\)\\s-+[^;]*\\(;\\)" (1 "<") (2 ">")))
   "Apply syntax table properties to special constructs.
 Provide a macro to apply syntax table properties to comments in ALGOL 60
 style.  Will be used only if `bnf-mode-algol-comments-style' is set to t.")

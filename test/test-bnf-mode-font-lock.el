@@ -61,9 +61,9 @@
 
   (it "fontifies line comments using ALGOL style"
     (setq-default bnf-mode-algol-comments-style t)
-    (expect "; comment here"
+    (expect "begin comment here ; not comment"
             :to-be-fontified-as
-            '(("; comment here" comment)))
+            '(("comment" comment ";" comment-delimiter)))
     (setq-default bnf-mode-algol-comments-style nil))
 
   (it "does not mix terminals and nonterminals"
