@@ -140,10 +140,6 @@ See `rx' documentation for more information about REGEXPS param."
 
 (defvar bnf-mode-syntax-table
   (let ((table (make-syntax-table)))
-    ;; Give CR the same syntax as newline
-    ;; FIXME: Why?
-    (modify-syntax-entry ?\^m "> b" table)
-
     ;; FIXME: "_" doesn't mean "symbol" but "symbol constituent".
     ;; I.e. the settings below mean that Emacs will consider "a:b=(c" as one
     ;; symbol (aka "identifier") which can be seen if you try to C-M-f and
