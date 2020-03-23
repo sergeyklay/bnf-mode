@@ -15,7 +15,7 @@ BNF notation is supported exactly form as it was first announced in
 the ALGOL 60 report.
 
 @noindent
-This manual is for BNF Mode version 0.4.4.
+This manual is for BNF Mode version 0.4.5.
 @end ifnottex
 
 Copyright @copyright{} 2019-2020 Free Software Foundation, Inc.
@@ -41,7 +41,7 @@ modify this GNU manual.”
 @finalout
 @titlepage
 @title BNF Mode User Manual
-@subtitle for version 0.4.4
+@subtitle for version 0.4.5
 @author Serghei Iakovlev
 @page
 @vskip 0pt plus 1filll

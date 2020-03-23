@@ -6,7 +6,7 @@ it provides basic syntax and font-locking for BNF files.  BNF notation
 is supported exactly form as it was first announced in the ALGOL 60
 report.
 
-This manual is for BNF Mode version 0.4.4.
+This manual is for BNF Mode version 0.4.5.
 
    Copyright © 2019-2020 Free Software Foundation, Inc.
 
