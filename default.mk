@@ -53,6 +53,7 @@ PACKAGE = bnf-mode
 ARCHIVE_NAME = $(PACKAGE)-$(VERSION)
 
 # File lists
+AUTOLOADS = bnf-mode-autoloads.el
 SRCS = bnf-mode.el
 OBJS = $(SRCS:.el=.elc)
 
@@ -60,6 +61,7 @@ INFOPAGES = $(addsuffix .info,$(PACKAGE))
 ARCHIVE_CONTENTS = README \
 	ChangeLog \
 	LICENSE \
+	$(AUTOLOADS) \
 	$(PACKAGE).el \
 	$(PACKAGE)-pkg.el \
 	$(INFOPAGES) dir
