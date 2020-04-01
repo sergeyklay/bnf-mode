@@ -68,10 +68,10 @@ decorate each of symbol."
 
 (defun get-str-faces (str)
   "Find contiguous spans of non-default faces in STR.
-E.g. for properly fontified Lua string \"local x = 100\" it should return
-  '(\"local\" font-lock-keyword-face
-    \"x\" font-lock-variable-name-face
-    \"100\" font-lock-constant-face)"
+E.g. for properly fontified BNF string \"<stm> ::= <decl>\" it should return
+  '(\"stm\" font-lock-function-name-face
+    \"::=\" font-lock-constant-face
+    \"decl\" font-lock-builtin-face)"
   (let ((pos 0)
         nextpos
         result prop newprop)
