@@ -67,8 +67,10 @@ init: Cask
 
 .PHONY: checkdoc
 checkdoc:
-	@$(EMACSBATCH) --eval '(checkdoc-file "$(SRCS)")'
-	$(info Done.)
+	@for f in $(SRCS) ; do                                  \
+		echo "Checking $$f ...";                        \
+		$(EMACSBATCH) --eval "(checkdoc-file \"$$f\")"; \
+	done && echo "Done."
 
 .PHONY: build
 build: $(OBJS)
@@ -86,7 +88,7 @@ clean:
 	@$(CASK) clean-elc
 	$(info Remove build artifacts...)
 	@$(RM) README ChangeLog coverage-final.json
-	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar
+	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar $(AUTOLOADS)
 
 .PHONY: package
 package: $(ARCHIVE_NAME).tar
