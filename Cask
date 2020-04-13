@@ -10,6 +10,5 @@
 (depends-on "cl-lib" "0.5")
 
 (development
- (depends-on "f")
  (depends-on "buttercup")
  (depends-on "undercover"))
