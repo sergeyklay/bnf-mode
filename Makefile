@@ -43,7 +43,7 @@ endef
 
 README: README.org
 	$(call org-clean,$^) | \
-		$(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
+		$(PANDOC) $(PANDOCFLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
 ChangeLog: NEWS
 	@cp $^ $@

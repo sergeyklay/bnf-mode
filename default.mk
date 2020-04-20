@@ -30,7 +30,7 @@ MAKEINFO     ?= makeinfo
 
 EMACSFLAGS ?=
 TESTFLAGS  ?= -L .
-PANDOCLAGS ?= --fail-if-warnings \
+PANDOCFLAGS ?= --fail-if-warnings \
 	--reference-links \
 	--atx-headers \
 	-f org+empty_paragraphs
