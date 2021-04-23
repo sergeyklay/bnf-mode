@@ -30,6 +30,12 @@ dir: $(INFOPAGES)
 	$(info Generating dir)
 	@echo $^ | xargs -n 1 $(INSTALL_INFO) --dir=$@
 
+$(AUTOLOADS): $(SRCS)
+	@$(EMACSBATCH) --eval \
+		"(progn \
+		  (require 'package) \
+		  (package-generate-autoloads \"bnf-mode\" default-directory))"
+
 # Remove badges
 define org-clean
 	@cat $^ | sed -e "s/\[\[.*\.svg\]\]//g"
@@ -37,7 +43,7 @@ endef
 
 README: README.org
 	$(call org-clean,$^) | \
-		$(PANDOC) $(PANDOCLAGS) -t plain | sed -e "s/\[\]//g" > $@
+		$(PANDOC) $(PANDOCFLAGS) -t plain | sed -e "s/\[\]//g" > $@
 
 ChangeLog: NEWS
 	@cp $^ $@
@@ -61,11 +67,16 @@ init: Cask
 
 .PHONY: checkdoc
 checkdoc:
-	@$(EMACSBATCH) --eval '(checkdoc-file "$(SRCS)")'
-	$(info Done.)
+	@for f in $(SRCS) ; do                                  \
+		echo "Checking $$f ...";                        \
+		$(EMACSBATCH) --eval "(checkdoc-file \"$$f\")"; \
+	done && echo "Done."
 
 .PHONY: build
 build: $(OBJS)
+
+.PHONY: autoloads
+autoloads: $(AUTOLOADS)
 
 .PHONY: test
 test:
@@ -75,9 +86,9 @@ test:
 clean:
 	$(info Remove all byte compiled Elisp files...)
 	@$(CASK) clean-elc
-	$(info Remove build artefacts...)
+	$(info Remove build artifacts...)
 	@$(RM) README ChangeLog coverage-final.json
-	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar
+	@$(RM) $(PACKAGE)-pkg.el $(PACKAGE)-*.tar $(AUTOLOADS)
 
 .PHONY: package
 package: $(ARCHIVE_NAME).tar
@@ -101,9 +112,10 @@ help: .title
 	@echo '  init:       Initialize the project (has to be launched first)'
 	@echo '  checkdoc:   Checks BNF Mode code for errors in the documentation'
 	@echo '  build:      Byte compile BNF Mode package'
+	@echo '  autoloads:  Generate autoloads file'
 	@echo '  test:       Run the non-interactive unit test suite'
 	@echo '  clean:      Remove all byte compiled Elisp files, documentation,'
-	@echo '              build artefacts and tarball'
+	@echo '              build artifacts and tarball'
 	@echo '  package:    Build package'
 	@echo '  install:    Install BNF Mode'
 	@echo '  info:       Generate info manual'
