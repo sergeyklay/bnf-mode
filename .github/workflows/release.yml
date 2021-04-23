@@ -39,7 +39,7 @@ jobs:
           version: 26.3
 
       - name: Setup Cask
-        run: curl -fsSkL https://raw.github.com/cask/cask/master/go | python
+        run: git clone https://github.com/cask/cask ~/.cask
 
       - name: Set Environment Variables
         run: |
