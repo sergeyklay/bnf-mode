@@ -43,8 +43,8 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "::set-env name=PATH::$HOME/.cask/bin:$PATH"
-          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+          echo "$HOME/.cask/bin" >> $GITHUB_PATH
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Common settings
         run: |
