@@ -18,7 +18,7 @@ the ALGOL 60 report.
 This manual is for BNF Mode version 0.4.5.
 @end ifnottex
 
-Copyright @copyright{} 2019-2020 Free Software Foundation, Inc.
+Copyright @copyright{} 2019-2022 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
