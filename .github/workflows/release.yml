@@ -29,22 +29,38 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2-beta
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
       - name: Setup GNU Emacs
         uses: purcell/setup-emacs@master
         with:
-          version: 26.3
+          version: 28.2
+
+      - uses: actions/cache@v3
+        id: cache-cask-packages
+        with:
+          path: .cask
+          key: cask-packages-${{ matrix.emacs_version }}-${{ hashFiles('**/Cask') }}
+
+      - uses: actions/cache@v3
+        id: cache-cask-executable
+        with:
+          path: ~/.cask
+          key: cask-executable-${{ matrix.emacs_version }}
 
       - name: Setup Cask
-        run: git clone https://github.com/cask/cask ~/.cask
+        uses: cask/setup-cask@master
+        if: steps.cache-cask-executable.outputs.cache-hit != 'true'
+        with:
+          version: snapshot
 
       - name: Set Environment Variables
         run: |
           echo "$HOME/.cask/bin" >> $GITHUB_PATH
           echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo DEBIAN_FRONTEND=noninteractive >> $GITHUB_ENV
 
       - name: Common settings
         run: |
@@ -60,13 +76,14 @@ jobs:
           sudo rm -f /etc/apt/sources.list.d/azure*.list
 
           sudo apt-get update --quiet --yes 1>/dev/null
-          sudo apt-get install texinfo
+          sudo apt-get install --no-install-recommends -q -y texinfo pandoc
 
-          _repo=https://github.com/jgm/pandoc
-          wget -q "$_repo/releases/download/2.9.1.1/pandoc-2.9.1.1-1-amd64.deb"
-          sudo dpkg -i pandoc-2.7.2-1-amd64.deb
+          # _repo=https://github.com/jgm/pandoc
+          # wget -q "$_repo/releases/download/2.19.2/pandoc-2.19.2-1-amd64.deb"
+          # sudo dpkg -i pandoc-2.19.2-1-amd64.deb
 
       - name: Initialize the Project
+        if: steps.cache-cask-packages.outputs.cache-hit != 'true'
         run: make init
 
       - name: Build Package
@@ -79,7 +96,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1.0.0
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -90,7 +107,7 @@ jobs:
 
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
