@@ -7,12 +7,10 @@ This file is about changes in BNF Mode.
 
 * BNF Mode 0.5.0
 ** GNU Emacs < 25.1 is no longer supported.
-It is tricky to maintain bnf-mode tests and its environament
-for GNU Emacs older than 25.1 in the end of 2022. BNF Mode still may
-work with older versions of GNU Emacs, like 24.3, or with other
-flavors of Emacs (e.g. XEmacs) but this is not guaranteed due to
-the fact that it is difficult to test and even more difficult to
-automate these tests.
+Due to difficulties in setting up the environment and test automation, the
+version of GNU Emacs older than 25.1 is no longer officially supported. BNF Mode
+may still work with older versions of GNU Emacs, like 24.3, or with other
+flavors of Emacs (e.g. XEmacs) but this is not guaranteed anymore.
 
 * BNF Mode 0.4.5
 ** Tests were migrated from ert-runner to buttercup.
