@@ -62,13 +62,27 @@ jobs:
         with:
           version: ${{ matrix.emacs_version }}
 
+      - uses: actions/cache@v3
+        id: cache-cask-packages
+        with:
+          path: .cask
+          key: cask-packages-${{ matrix.emacs_version }}-${{ hashFiles('**/Cask') }}
+
+      - uses: actions/cache@v3
+        id: cache-cask-executable
+        with:
+          path: ~/.cask
+          key: cask-executable-${{ matrix.emacs_version }}
+
       - name: Setup Cask
-        run: git clone https://github.com/cask/cask ~/.cask
+        uses: cask/setup-cask@master
+        if: steps.cache-cask-executable.outputs.cache-hit != 'true'
+        with:
+          version: snapshot
 
       - name: Set Environment Variables
         run: |
           echo "$HOME/.cask/bin" >> $GITHUB_PATH
-
           if [ "${{ matrix.emacs_version }}" != "snapshot" ]; then
             echo UNDERCOVER_FORCE=1 >> $GITHUB_ENV
           fi
@@ -77,13 +91,13 @@ jobs:
         run: make help
 
       - name: Initialize the Project
+        if: steps.cache-cask-packages.outputs.cache-hit != 'true'
         run: make init
 
       - name: Byte Compile BNF Mode
         run: make build
 
       - name: Check for Errors in the Documentation
-        if: matrix.emacs_version >= '25.1'
         run: make checkdoc
 
       - name: Run Unit Tests
