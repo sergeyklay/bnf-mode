@@ -7,7 +7,7 @@
 ;; Version: 0.4.5
 ;; URL: https://github.com/sergeyklay/bnf-mode
 ;; Keywords: languages
-;; Package-Requires: ((cl-lib "0.5") (emacs "24.3"))
+;; Package-Requires: ((cl-lib "0.5") (emacs "25.1"))
 ;; Revision: $Format:%h (%cD %d)$
 
 ;;;; License

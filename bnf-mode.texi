@@ -127,7 +127,7 @@ Bellow canonical BNF notation represented with a BNF is presented.  The syntax o
 
 @cindex Installation
 
-BNF Mode known to work with GNU Emacs 24.3 and later.  BNF Mode may
+BNF Mode known to work with GNU Emacs 25.1 and later.  BNF Mode may
 work with older versions of Emacs, or with other flavors of Emacs
 (e.g. XEmacs) but this is @i{not} guaranteed.  Bug reports for problems
 related to using BNF Mode with older versions of Emacs will most like
