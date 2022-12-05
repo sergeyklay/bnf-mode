@@ -1,4 +1,4 @@
-This is bnf-mode.info, produced by makeinfo version 6.5 from
+This is bnf-mode.info, produced by makeinfo version 7.0.1 from
 bnf-mode.texi.
 
 BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Presently
@@ -104,7 +104,7 @@ File: bnf-mode.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up
 2 Installation
 **************
 
-BNF Mode known to work with GNU Emacs 24.3 and later.  BNF Mode may work
+BNF Mode known to work with GNU Emacs 25.1 and later.  BNF Mode may work
 with older versions of Emacs, or with other flavors of Emacs (e.g.
 XEmacs) but this is not guaranteed.  Bug reports for problems related to
 using BNF Mode with older versions of Emacs will most like not be
@@ -359,20 +359,20 @@ Variable Index
 
 
 Tag Table:
-Node: Top1103
-Node: Introduction1802
-Node: Installation3803
-Node: Installing from Elpa or Melpa4325
-Node: Installing using El-get6542
-Node: Installing from the Git Repository7221
-Node: Usage8122
-Node: Customizing8407
-Node: Project Links9084
-Node: Bugs Tracker9255
-Node: Change Log9488
-Node: Bibliography9737
-Node: Index10895
-Node: Variable Index11602
+Node: Top1105
+Node: Introduction1804
+Node: Installation3805
+Node: Installing from Elpa or Melpa4327
+Node: Installing using El-get6544
+Node: Installing from the Git Repository7223
+Node: Usage8124
+Node: Customizing8409
+Node: Project Links9086
+Node: Bugs Tracker9257
+Node: Change Log9490
+Node: Bibliography9739
+Node: Index10897
+Node: Variable Index11604
 
 End Tag Table
 
