@@ -24,6 +24,7 @@ EMACS  ?= emacs
 CASK   ?= cask
 PANDOC ?= pandoc
 TAR    ?= tar
+SED    ?= sed
 
 INSTALL_INFO ?= $(shell command -v ginstall-info || printf install-info)
 MAKEINFO     ?= makeinfo
@@ -47,7 +48,7 @@ else
 RUNEMACS = $(CASK) exec $(EMACSBATCH)
 endif
 
-VERSION="$(shell sed -nre '/^;; Version:/ { s/^;; Version:[ \t]+//; p }' bnf-mode.el)"
+VERSION="$(shell $(SED) -nre '/^;; Version:/ { s/^;; Version:[ \t]+//; p }' bnf-mode.el)"
 
 PACKAGE = bnf-mode
 ARCHIVE_NAME = $(PACKAGE)-$(VERSION)
