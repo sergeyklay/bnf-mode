@@ -32,9 +32,9 @@ MAKEINFO     ?= makeinfo
 EMACSFLAGS ?=
 TESTFLAGS  ?= -L .
 PANDOCFLAGS ?= --fail-if-warnings \
-	--reference-links \
-	--atx-headers \
-	-f org+empty_paragraphs
+    --reference-links \
+    --markdown-headings=atx \
+    -f org+empty_paragraphs
 
 EMACSBATCH = $(EMACS) -Q --batch -L . $(EMACSFLAGS)
 RUNEMACS   =
