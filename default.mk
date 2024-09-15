@@ -24,7 +24,7 @@ EMACS  ?= emacs
 CASK   ?= cask
 PANDOC ?= pandoc
 TAR    ?= tar
-SED    ?= sed
+AWK    ?= awk
 
 INSTALL_INFO ?= $(shell command -v ginstall-info || printf install-info)
 MAKEINFO     ?= makeinfo
@@ -48,10 +48,10 @@ else
 RUNEMACS = $(CASK) exec $(EMACSBATCH)
 endif
 
-VERSION="$(shell $(SED) -nre '/^;; Version:/ { s/^;; Version:[ \t]+//; p }' bnf-mode.el)"
-
 PACKAGE = bnf-mode
 ARCHIVE_NAME = $(PACKAGE)-$(VERSION)
+
+VERSION="$(shell $(AWK) '/^;; Version:/ { sub(/^;; Version:[ \t]+/, ""); print $$0 }' $(PACKAGE).el)"
 
 # File lists
 AUTOLOADS = bnf-mode-autoloads.el
