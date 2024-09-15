@@ -3,4 +3,4 @@
 
 The non-interactive Unit Test Suite for the BNF Mode.
 
-For a detailed description of the BNF Mode, refer to [[https://github.com/sergeyklay/bnf-mode/blob/master/README.org][README.org]] file.
+For a detailed description of the BNF Mode, refer to [[https://github.com/sergeyklay/bnf-mode/blob/main/README.org][README.org]] file.

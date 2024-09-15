@@ -22,10 +22,10 @@ on:
     branches:
       # This is to make sure that there is no broken CI on
       # the default branch.
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
