@@ -136,7 +136,7 @@ See `rx' documentation for more information about REGEXPS param."
     (modify-syntax-entry ?\| "_" table)
 
     ;; In BNF there are no strings
-    ;; so treat ' and " as a symbols
+    ;; so treat ' and " as symbols
     (modify-syntax-entry ?\" "_" table)
     (modify-syntax-entry ?\' "_" table)
 
