@@ -6,11 +6,13 @@ See the end of the file for license conditions.
 This file is about changes in BNF Mode.
 
 * BNF Mode 0.5.0
-** GNU Emacs < 25.1 is no longer supported.
-Due to difficulties in setting up the environment and test automation, the
-version of GNU Emacs older than 25.1 is no longer officially supported. BNF Mode
-may still work with older versions of GNU Emacs, like 24.3, or with other
-flavors of Emacs (e.g. XEmacs) but this is not guaranteed anymore.
+** GNU Emacs < 27.1 is no longer supported.  Support for versions of
+GNU Emacs older than 27.1 has been discontinued, primarily due to the
+adoption of more modern APIs, such as `rx-define', and the increased
+complexity of CI workflows required for maintaining older versions.
+If you are still using GNU Emacs versions older than 27.1 or other
+Emacs flavors (e.g., XEmacs), please continue using an earlier version
+of BNF Mode.
 
 * BNF Mode 0.4.5
 ** Tests were migrated from ert-runner to buttercup.
