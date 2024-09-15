@@ -54,32 +54,16 @@
 
 ;;;; Specialized rx
 
-(eval-when-compile
-  ;; Additional special sexps for `bnf-rx'.
-  (rx-define bnf-rule-name
-    (seq
-     (1+ (or alnum digit))
-     (0+ (or alnum digit
-             (in "!\"#$%&'()*+,-./:;=?@[]^_`{|}~")
-             (in " \t")))))
-
-  (defmacro bnf-rx (&rest sexps)
-     "BNF-specific replacement for `rx'.
-
-In addition to the standard forms of `rx', the following forms
-are available:
-
-`bnf-rule-name'
-      Any valid BNF rule name.  This rule was obtained by studying
-      ALGOL 60 report, where the BNF was officially announced.
-      Please note: This rule is not suitable for ABNF or EBNF
-      (see URL `https://www.masswerk.at/algol60/report.htm').
-
-See `rx' documentation for more information about REGEXPS param."
-     (rx-to-string (cond ((null sexps) (error "No regexp is provided"))
-                         ((cdr sexps)  `(and ,@sexps))
-                         (t            (car sexps)))
-                   t)))
+;; Any valid BNF rule name.  This rule was obtained by studying
+;; ALGOL 60 report, where the BNF was officially announced.
+;; Please note: This rule is not suitable for ABNF or EBNF
+;; (see URL `https://www.masswerk.at/algol60/report.htm').
+(rx-define bnf-rule-name
+  (seq
+   (1+ (or alnum digit))
+   (0+ (or alnum digit
+           (in "!\"#$%&'()*+,-./:;=?@[]^_`{|}~")
+           (in " \t")))))
 
 
 ;;;; Font Locking
@@ -88,32 +72,32 @@ See `rx' documentation for more information about REGEXPS param."
   `(
     ;; LHS nonterminals may be preceded
     ;; by an unlimited number of spaces
-    (,(bnf-rx (and line-start
-                   (0+ space)
-                   "<"
-                   (group bnf-rule-name)
-                   ">"
-                   (0+ space)
-                   "::="))
+    (,(rx (and line-start
+               (0+ space)
+               "<"
+               (group bnf-rule-name)
+               ">"
+               (0+ space)
+               "::="))
      1 font-lock-function-name-face)
     ;; Other nonterminals
-    (,(bnf-rx (and (0+ space)
-                   "<"
-                   (group bnf-rule-name)
-                   ">"
-                   (0+ space)))
+    (,(rx (and (0+ space)
+               "<"
+               (group bnf-rule-name)
+               ">"
+               (0+ space)))
      1 font-lock-builtin-face)
     ;; “may expand into” symbol
-    (,(bnf-rx (and symbol-start
-                   (group "::=")
-                   symbol-end))
+    (,(rx (and symbol-start
+               (group "::=")
+               symbol-end))
      1 font-lock-constant-face)
     ;; Alternatives
-    (,(bnf-rx (and (0+ space)
-                   symbol-start
-                   (group "|")
-                   symbol-end
-                   (0+ space)))
+    (,(rx (and (0+ space)
+               symbol-start
+               (group "|")
+               symbol-end
+               (0+ space)))
      1 font-lock-warning-face))
   "Font lock BNF keywords for BNF Mode.")
 
