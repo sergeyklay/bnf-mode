@@ -6,13 +6,23 @@ See the end of the file for license conditions.
 This file is about changes in BNF Mode.
 
 * BNF Mode 0.5.0
-** GNU Emacs < 27.1 is no longer supported.  Support for versions of
-GNU Emacs older than 27.1 has been discontinued, primarily due to the
-adoption of more modern APIs, such as `rx-define', and the increased
-complexity of CI workflows required for maintaining older versions.
-If you are still using GNU Emacs versions older than 27.1 or other
-Emacs flavors (e.g., XEmacs), please continue using an earlier version
-of BNF Mode.
+** Incompatible changes.
+*** Dropped support for GNU Emacs < 27.1.
+BNF Mode no longer support GNU Emacs versions older than 27.1.  This
+change allows to use modern APIs, like 'rx-define', and simplifies CI
+workflows by not having to accommodate outdated Emacs versions.  If
+you are still using an older version of Emacs or other flavors (e.g.,
+XEmacs), please stick with an earlier version of BNF Mode.
+
+*** Removed the 'bnf-rx' macro.
+The 'bnf-rx' macro is no longer part of BNF Mode as it's no longer
+necessary.  BNF Mode now fully utilizes the modern 'rx' API, relying
+directly on 'rx-define' for pattern definitions.
+
+*** Removed the 'bnf-rx-constituents' constant.
+BNF Mode no longer uses the 'bnf-rx-constituents' constant.  Instead,
+it now relies on 'rx-define' to define patterns directly, utilizing
+the modern 'rx' API to simplify and streamline pattern definitions.
 
 * BNF Mode 0.4.5
 ** Tests were migrated from ert-runner to buttercup.
@@ -94,22 +104,22 @@ interactively if they want to get this information.
 
 
 ----------------------------------------------------------------------
-GNU Emacs is free software: you can redistribute it and/or modify
+BNF Mode is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-GNU Emacs is distributed in the hope that it will be useful,
+BNF Mode is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+along with BNF Mode.  If not, see <https://www.gnu.org/licenses/>.
 
 
 Local variables:
 coding: utf-8
-mode: outline
+mode: emacs-news
 paragraph-separate: "[ 	]*$"
 end:
