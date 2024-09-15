@@ -330,7 +330,7 @@ Bug tracking is currently handled using the GitHub
 @section Change Log
 
 History is tracked in the
-@uref{https://github.com/sergeyklay/bnf-mode/blob/master/NEWS, Git
+@uref{https://github.com/sergeyklay/bnf-mode/blob/main/NEWS, Git
 repository} rather than in this documentation.
 
 @node Bibliography
