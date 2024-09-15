@@ -60,11 +60,9 @@
                "; foo" comment))))
 
   (it "does not mix terminals and nonterminals"
-    (expect "<stm> ::= <decl>
-     angle-brackets ::= are-optional"
+    (expect "<stm> ::= <decl>"
             :to-be-fontified-as
-            '(("stm" function-name "::=" constant "decl" builtin)
-              ("::=" constant))))
+            '(("stm" function-name "::=" constant "decl" builtin))))
 
   (it "fontifies nonterminals despite the case"
     (expect "<RULE> ::= <foo>

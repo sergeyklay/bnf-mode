@@ -9,20 +9,45 @@ This file is about changes in BNF Mode.
 ** Incompatible changes.
 *** Dropped support for GNU Emacs < 27.1.
 BNF Mode no longer support GNU Emacs versions older than 27.1.  This
-change allows to use modern APIs, like 'rx-define', and simplifies CI
+change allows to use modern APIs, like `rx-define', and simplifies CI
 workflows by not having to accommodate outdated Emacs versions.  If
 you are still using an older version of Emacs or other flavors (e.g.,
 XEmacs), please stick with an earlier version of BNF Mode.
 
 *** Removed the 'bnf-rx' macro.
-The 'bnf-rx' macro is no longer part of BNF Mode as it's no longer
-necessary.  BNF Mode now fully utilizes the modern 'rx' API, relying
-directly on 'rx-define' for pattern definitions.
+The `bnf-rx' macro is no longer part of BNF Mode as it's no longer
+necessary.  BNF Mode now fully utilizes the modern `rx' API, relying
+directly on `rx-define' for pattern definitions.
 
 *** Removed the 'bnf-rx-constituents' constant.
-BNF Mode no longer uses the 'bnf-rx-constituents' constant.  Instead,
-it now relies on 'rx-define' to define patterns directly, utilizing
-the modern 'rx' API to simplify and streamline pattern definitions.
+BNF Mode no longer uses the `bnf-rx-constituents' constant.  Instead,
+it now relies on `rx-define' to define patterns directly, utilizing
+the modern `rx' API to simplify and streamline pattern definitions.
+
+** Syntax Table changes.
+*** Improved Syntax Table Handling.
+Changed the syntax classification of :, =, and | from symbol
+constituents to punctuation characters.  This adjustment ensures that
+navigation commands like C-M-f and C-M-b work as expected, treating
+these characters as separate tokens rather than part of a symbol.
+
+*** Improved Handling of Angle Brackets.
+Changed the default syntax classification of < and > to punctuation
+characters.  Introduced the `bnf--syntax-propertize' constant that
+performs a detailed examination of the buffer content.  It selectively
+reclassifies < and > as angle brackets (delimiter characters) only
+when they enclose nonterminal symbols.  This approach allows for more
+accurate syntax highlighting and parsing, especially in lines where
+angle brackets are not part of nonterminals.  By defaulting to
+punctuation and then dynamically adjusting the syntax properties as
+needed, we ensure that angle brackets are correctly interpreted in
+various contexts within BNF grammar files.
+
+*** Fixed Incorrect Symbol Classification.
+Adjusted the syntax entries for characters like ', ", (, ), {, }, [,
+and ] to be treated as punctuation rather than symbols.  This change
+prevents these characters from being incorrectly grouped with adjacent
+symbols, enhancing text manipulation and editing commands.
 
 * BNF Mode 0.4.5
 ** Tests were migrated from ert-runner to buttercup.

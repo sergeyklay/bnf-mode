@@ -37,7 +37,7 @@
 ;;;; Requirements
 
 (eval-when-compile
-  (require 'rx))    ; `rx'
+  (require 'rx))    ; `rx', `rx-define'
 
 
 ;;;; Customization
@@ -69,8 +69,7 @@
 ;;;; Font Locking
 
 (defvar bnf-font-lock-keywords
-  `(
-    ;; LHS nonterminals may be preceded
+  `(;; LHS nonterminals may be preceded
     ;; by an unlimited number of spaces
     (,(rx (and line-start
                (0+ space)
@@ -88,15 +87,14 @@
                (0+ space)))
      1 font-lock-builtin-face)
     ;; “may expand into” symbol
-    (,(rx (and symbol-start
+    (,(rx (and ">"
+               (0+ (in " \t\n"))
                (group "::=")
-               symbol-end))
+               (0+ space)))
      1 font-lock-constant-face)
     ;; Alternatives
     (,(rx (and (0+ space)
-               symbol-start
                (group "|")
-               symbol-end
                (0+ space)))
      1 font-lock-warning-face))
   "Font lock BNF keywords for BNF Mode.")
@@ -106,35 +104,29 @@
 
 (defvar bnf-mode-syntax-table
   (let ((table (make-syntax-table)))
-    ;; FIXME: "_" doesn't mean "symbol" but "symbol constituent".
-    ;; I.e. the settings below mean that Emacs will consider "a:b=(c" as one
-    ;; symbol (aka "identifier") which can be seen if you try to C-M-f and
-    ;; C-M-b to move by sexps.
-
-    ;; Treat ::= as sequence of symbols
-    (modify-syntax-entry ?\: "_" table)
-    (modify-syntax-entry ?\= "_" table)
-
-    ;; Treat | as a symbol
-    (modify-syntax-entry ?\| "_" table)
+    ;; Treat :, =, and | as punctuation
+    (modify-syntax-entry ?\: "." table)
+    (modify-syntax-entry ?\= "." table)
+    (modify-syntax-entry ?\| "." table)
 
     ;; In BNF there are no strings
-    ;; so treat ' and " as symbols
-    (modify-syntax-entry ?\" "_" table)
-    (modify-syntax-entry ?\' "_" table)
+    ;; so treat ' and " as punctuation
+    (modify-syntax-entry ?\" "." table)
+    (modify-syntax-entry ?\' "." table)
 
     ;; In BNF there are no grouping
     ;; brackets except angle ones
-    (modify-syntax-entry ?\( "_" table)
-    (modify-syntax-entry ?\) "_" table)
-    (modify-syntax-entry ?\{ "_" table)
-    (modify-syntax-entry ?\} "_" table)
-    (modify-syntax-entry ?\[ "_" table)
-    (modify-syntax-entry ?\] "_" table)
+    (modify-syntax-entry ?\( "." table)
+    (modify-syntax-entry ?\) "." table)
+    (modify-syntax-entry ?\{ "." table)
+    (modify-syntax-entry ?\} "." table)
+    (modify-syntax-entry ?\[ "." table)
+    (modify-syntax-entry ?\] "." table)
 
-    ;; Group angle brackets
-    (modify-syntax-entry ?\< "(>" table)
-    (modify-syntax-entry ?\> ")<" table)
+    ;; Treat angle brackets as punctuation by default.
+    ;; We'll ajust them later, in `bnf--syntax-propertize'.
+    (modify-syntax-entry ?\< "." table)
+    (modify-syntax-entry ?\> "." table)
 
     ;; Comments are begins with “;” and ends with “\n”
     (modify-syntax-entry ?\; "<" table)
@@ -142,6 +134,18 @@
 
     table)
   "Syntax table in use in `bnf-mode' buffers.")
+
+(defconst bnf--syntax-propertize
+  (syntax-propertize-rules
+   ;; Group angle brackets
+   ("\\(<\\)\\([^<>]*\\)\\(>\\)"
+    (1 "(>")
+    (3 ")<")))
+  "Syntax propertization rules for `bnf-mode'.
+
+These rules assign appropriate syntax properties to specific
+sequences in BNF grammar files, ensuring correct syntax
+highlighting and code navigation in `bnf-mode' buffers.")
 
 
 ;;;; Initialization
@@ -161,6 +165,9 @@ Turning on BNF Mode calls the value of `prog-mode-hook' and then of
   (setq-local comment-start "; ")
   (setq-local comment-end "")
   (setq-local comment-start-skip "\\(?:\\(\\W\\|^\\);+\\)\\s-+")
+
+  ;; Enable dynamic syntax properties for accurate parsing
+  (setq-local syntax-propertize-function bnf--syntax-propertize)
 
   ;; Font locking
   (setq font-lock-defaults
