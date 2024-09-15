@@ -65,7 +65,7 @@ jobs:
       - name: Common settings
         run: |
           git config --global user.name "Serghei Iakovlev"
-          git config --global user.email egrep@protonmail.ch
+          git config --global user.email git@serghei.pl
 
       - name: Setup Prerequisites
         run: |
