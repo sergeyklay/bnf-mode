@@ -1,4 +1,4 @@
-This is bnf-mode.info, produced by makeinfo version 7.0.1 from
+This is bnf-mode.info, produced by makeinfo version 7.1.1 from
 bnf-mode.texi.
 
 BNF Mode is a GNU Emacs major mode for editing BNF grammars.  Presently
@@ -8,7 +8,7 @@ report.
 
 This manual is for BNF Mode version 0.4.5.
 
-   Copyright © 2019-2022 Free Software Foundation, Inc.
+   Copyright © 2019-2024 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -18,7 +18,7 @@ This manual is for BNF Mode version 0.4.5.
      below.  A copy of the license is included in the section entitled
      “GNU Free Documentation License.”
 
-     (a) The FSF’s Back-Cover Text is: “You have the freedom to copy and
+     (a) The FSF's Back-Cover Text is: “You have the freedom to copy and
      modify this GNU manual.”
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
@@ -42,7 +42,7 @@ BNF Mode User Manual
 * Index::            Complete index.
 * Variable Index::   Variable index.
 
-— The Detailed Node Listing —
+-- The Detailed Node Listing --
 
 Installation
 
@@ -104,11 +104,11 @@ File: bnf-mode.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up
 2 Installation
 **************
 
-BNF Mode known to work with GNU Emacs 25.1 and later.  BNF Mode may work
-with older versions of Emacs, or with other flavors of Emacs (e.g.
-XEmacs) but this is not guaranteed.  Bug reports for problems related to
-using BNF Mode with older versions of Emacs will most like not be
-addressed.
+The current version of BNF Mode known to work with GNU Emacs 27.1 and
+later.  It may still function with older versions of Emacs, or with
+other flavors of Emacs (e.g.  XEmacs) but this is not guaranteed.  Bug
+reports for problems related to using this version of BNF Mode with
+older versions of Emacs will most like not be addressed.
 
 * Menu:
 
@@ -122,8 +122,8 @@ File: bnf-mode.info,  Node: Installing from Elpa or Melpa,  Next: Installing usi
 2.1 Installing from Elpa or Melpa
 =================================
 
-BNF Mode is available from Elpa, Melpa and Melpa-Stable.  If you haven’t
-used Emacs’ package manager before, then it is high time you familiarize
+BNF Mode is available from Elpa, Melpa and Melpa-Stable.  If you haven't
+used Emacs' package manager before, then it is high time you familiarize
 yourself with it by reading the documentation in the Emacs manual, see
 *note (emacs)Packages::.  Then add one of the archives to
 ‘package-archives’:
@@ -147,7 +147,7 @@ yourself with it by reading the documentation in the Emacs manual, see
                   '("melpa" . "https://melpa.org/packages/") t)
      (package-initialize)
 
-   Melpa tracks BNF Mode’s Git repository and updates relatively soon
+   Melpa tracks BNF Mode's Git repository and updates relatively soon
 after each commit or formal release.  For more detail on setting up see
 MELPA Getting Started (https://melpa.org/#/getting-started).
 
@@ -209,7 +209,7 @@ File: bnf-mode.info,  Node: Installing from the Git Repository,  Prev: Installin
 ======================================
 
 BNF Mode depends only on the ‘cl-lib’, which is bundled with GNU Emacs.
-Thus you don’t have to install any additional library to satisfy BNF
+Thus you don't have to install any additional library to satisfy BNF
 Mode dependencies.  Below are simple steps to install BNF Mode using
 manual approach:
 
@@ -253,7 +253,7 @@ abbreviations to ‘bnf-mode-abbrev-table’.
 
    If you want, you can go without any customizations at all.  The above
 settings are the most bang for the buck in terms of customization.  So
-users that typically don’t like customize a lot are advised to look at
+users that typically don't like customize a lot are advised to look at
 these settings first.  To customize BNF Mode options using textual GUI
 system, use the following command: ‘M-x’ ‘customize-group’ ‘RET’ ‘bnf’
 ‘RET’.
@@ -285,7 +285,7 @@ File: bnf-mode.info,  Node: Change Log,  Prev: Bugs Tracker,  Up: Project Links
 ==============
 
 History is tracked in the Git repository
-(https://github.com/sergeyklay/bnf-mode/blob/master/NEWS) rather than in
+(https://github.com/sergeyklay/bnf-mode/blob/main/NEWS) rather than in
 this documentation.
 
 
@@ -359,20 +359,20 @@ Variable Index
 
 
 Tag Table:
-Node: Top1105
-Node: Introduction1804
-Node: Installation3805
-Node: Installing from Elpa or Melpa4327
-Node: Installing using El-get6544
-Node: Installing from the Git Repository7223
-Node: Usage8124
-Node: Customizing8409
-Node: Project Links9086
-Node: Bugs Tracker9257
-Node: Change Log9490
-Node: Bibliography9739
-Node: Index10897
-Node: Variable Index11604
+Node: Top1103
+Node: Introduction1800
+Node: Installation3801
+Node: Installing from Elpa or Melpa4367
+Node: Installing using El-get6578
+Node: Installing from the Git Repository7257
+Node: Usage8156
+Node: Customizing8441
+Node: Project Links9116
+Node: Bugs Tracker9287
+Node: Change Log9520
+Node: Bibliography9767
+Node: Index10925
+Node: Variable Index11632
 
 End Tag Table
 
