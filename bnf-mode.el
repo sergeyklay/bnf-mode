@@ -55,13 +55,13 @@
 ;;;; Specialized rx
 
 (eval-when-compile
-  (defconst bnf-rx-constituents
-    `((bnf-rule-name . ,(rx (and
-                             (1+ (or alnum digit))
-                             (0+ (or alnum digit
-                                     (in "!\"#$%&'()*+,-./:;=?@[]^_`{|}~")
-                                     (in " \t"))))))
-    "Additional special sexps for `bnf-rx'."))
+  ;; Additional special sexps for `bnf-rx'.
+  (rx-define bnf-rule-name
+    (seq
+     (1+ (or alnum digit))
+     (0+ (or alnum digit
+             (in "!\"#$%&'()*+,-./:;=?@[]^_`{|}~")
+             (in " \t")))))
 
   (defmacro bnf-rx (&rest sexps)
      "BNF-specific replacement for `rx'.
@@ -76,11 +76,10 @@ are available:
       (see URL `https://www.masswerk.at/algol60/report.htm').
 
 See `rx' documentation for more information about REGEXPS param."
-     (let ((rx-constituents (append bnf-rx-constituents rx-constituents)))
-       (rx-to-string (cond ((null sexps) (error "No regexp is provided"))
-                           ((cdr sexps)  `(and ,@sexps))
-                           (t            (car sexps)))
-                     t))))
+     (rx-to-string (cond ((null sexps) (error "No regexp is provided"))
+                         ((cdr sexps)  `(and ,@sexps))
+                         (t            (car sexps)))
+                   t)))
 
 
 ;;;; Font Locking
